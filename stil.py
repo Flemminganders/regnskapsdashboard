@@ -315,7 +315,7 @@ header[data-testid="stHeader"] {{
 .rd-driver .stav i.minus {{ background: var(--muted); }}
 .rd-balsider {{ display: grid; grid-template-columns: 1fr 1fr; gap: 8px 32px; }}
 @media (max-width: 860px) {{ .rd-balsider {{ grid-template-columns: 1fr; }} }}
-.rd-balside h4 {{ margin: 0 0 10px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+.rd-balside h4 {{ margin: 0 0 10px; display: flex; flex-direction: column; gap: 2px;
   color: var(--ink); font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; }}
 .rd-balside h4 span {{ color: var(--muted); font-size: .8125rem; font-weight: 500; font-variant-numeric: tabular-nums; }}
 .rd-tabell td.sterkest {{ font-weight: 600; color: var(--up); }}
@@ -465,7 +465,7 @@ def ikon_css() -> str:
 def topp() -> str:
     return ('<div class="rd-brand"><img src="app/static/favicon.png" alt="">Regnskap</div>'
             '<h1 class="rd-h1">Regnskapsdashboard</h1>'
-            '<p class="rd-lede">Skriv inn et organisasjonsnummer og se nøkkeltallene fra siste årsregnskap. '
+            '<p class="rd-lede">Søk opp et selskap på Oslo Børs, eller skriv inn et hvilket som helst org.nr, og se nøkkeltallene fra siste årsregnskap. '
             'Data rett fra Brønnøysundregistrene.</p>')
 
 

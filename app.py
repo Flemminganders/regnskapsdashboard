@@ -35,13 +35,20 @@ st.set_page_config(page_title="Regnskapsdashboard", page_icon=str(MAPPE / "stati
 # og iPhone ved «Legg til på Hjem-skjerm». Komponenten er usynlig (høyde 0).
 components.html("""<script>
 const d = window.parent.document;
-if (!d.querySelector('link[rel="apple-touch-icon"]')) {
-  const l = d.createElement('link');
-  l.rel = 'apple-touch-icon';
-  l.href = window.parent.location.origin + '/app/static/apple-touch-icon.png';
-  d.head.appendChild(l);
-  const m = d.createElement('meta'); m.name = 'apple-mobile-web-app-title'; m.content = 'Regnskap';
-  d.head.appendChild(m);
+// Ikonet ligger relativt til app-dokumentet: /app/static/ lokalt, /~/+/app/static/ på Streamlit Cloud.
+const ikon = new URL('app/static/apple-touch-icon.png', window.parent.location.href.split('?')[0]).href;
+// På Streamlit Cloud kjører appen i en iframe, og det ytre dokumentet (samme origin) har Streamlits
+// eget ikon. Sett vårt i begge, og erstatt det som finnes.
+const dokumenter = [d];
+try { if (window.top.document !== d) dokumenter.push(window.top.document); } catch (e) {}
+for (const doc of dokumenter) {
+  let l = doc.querySelector('link[rel="apple-touch-icon"]');
+  if (!l) { l = doc.createElement('link'); l.rel = 'apple-touch-icon'; doc.head.appendChild(l); }
+  if (l.href !== ikon) l.href = ikon;
+  if (!doc.querySelector('meta[name="apple-mobile-web-app-title"]')) {
+    const m = doc.createElement('meta'); m.name = 'apple-mobile-web-app-title'; m.content = 'Regnskap';
+    doc.head.appendChild(m);
+  }
 }
 // Forklaringsbobler («i»): lukk ved klikk utenfor eller Esc, og bare én åpen om gangen.
 if (!d.rdInfo) {
