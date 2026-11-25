@@ -1,0 +1,8 @@
+# Versjonene appen er testet med. Streamlit er låst fordi CSS-en bruker
+# interne klassenavn (st-key-*, data-testid) som kan endre seg mellom versjoner.
+streamlit==1.50.0
+requests~=2.32
+plotly~=7.1
+openpyxl~=3.1
+pandas~=2.3
+pytest~=8.4

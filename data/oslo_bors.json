@@ -1,0 +1,3198 @@
+{
+ "oppdatert": "2026-11-25",
+ "kilde": "Euronext + Enhetsregisteret",
+ "selskaper": [
+  {
+   "navn": "2020 Bulkers",
+   "kortnavn": "2020 Bulkers",
+   "orgnr": null,
+   "tickere": [
+    "2020"
+   ],
+   "isin": "BMG9156K1018",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "3030 DVD AS",
+   "kortnavn": "3030 Dvd",
+   "orgnr": "926410652",
+   "tickere": [
+    "DVD"
+   ],
+   "isin": "NO0010955917",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "5Th Planet Games",
+   "kortnavn": "5Th Planet Games",
+   "orgnr": null,
+   "tickere": [
+    "5PG"
+   ],
+   "isin": "DK0060945467",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "AASEN SPAREBANK",
+   "kortnavn": "Aasen Sparebank",
+   "orgnr": "937903502",
+   "tickere": [
+    "AASB"
+   ],
+   "isin": "NO0010672181",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ABG SUNDAL COLLIER ASA",
+   "kortnavn": "Abg Sundal Collier",
+   "orgnr": "883603362",
+   "tickere": [
+    "ABG"
+   ],
+   "isin": "NO0003021909",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ACE DIGITAL AS",
+   "kortnavn": "Ace Digital",
+   "orgnr": "924665297",
+   "tickere": [
+    "ACED"
+   ],
+   "isin": "NO0013531616",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Ads Maritime Hold",
+   "kortnavn": "Ads Maritime Hold",
+   "orgnr": null,
+   "tickere": [
+    "ADS"
+   ],
+   "isin": "CY0108052115",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "AF GRUPPEN ASA",
+   "kortnavn": "Af Gruppen",
+   "orgnr": "938702675",
+   "tickere": [
+    "AFG"
+   ],
+   "isin": "NO0003078107",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AGILYX ASA",
+   "kortnavn": "Agilyx",
+   "orgnr": "923974709",
+   "tickere": [
+    "AGLX"
+   ],
+   "isin": "NO0010872468",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Ajax Resources",
+   "kortnavn": "Ajax Resources",
+   "orgnr": null,
+   "tickere": [
+    "AJAXR"
+   ],
+   "isin": "GB00BLNBD412",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "AKASTOR ASA",
+   "kortnavn": "Akastor",
+   "orgnr": "986529551",
+   "tickere": [
+    "AKAST"
+   ],
+   "isin": "NO0010215684",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AKER ASA",
+   "kortnavn": "Aker",
+   "orgnr": "886581432",
+   "tickere": [
+    "AKER"
+   ],
+   "isin": "NO0010234552",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AKER BP ASA",
+   "kortnavn": "Aker Bp",
+   "orgnr": "989795848",
+   "tickere": [
+    "AKRBP"
+   ],
+   "isin": "NO0010345853",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AKER SOLUTIONS ASA",
+   "kortnavn": "Aker Solutions",
+   "orgnr": "913748174",
+   "tickere": [
+    "AKSO"
+   ],
+   "isin": "NO0010716582",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Akobo Minerals",
+   "kortnavn": "Akobo Minerals",
+   "orgnr": null,
+   "tickere": [
+    "AKOBO"
+   ],
+   "isin": "SE0015193412",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "AKVA GROUP ASA",
+   "kortnavn": "Akva Group",
+   "orgnr": "931693670",
+   "tickere": [
+    "AKVA"
+   ],
+   "isin": "NO0003097503",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ALNG ASA",
+   "kortnavn": "Alng",
+   "orgnr": "996564894",
+   "tickere": [
+    "ALNG"
+   ],
+   "isin": "NO0010607971",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ANDFJORD SALMON GROUP AS",
+   "kortnavn": "Andfjord Salmon Gr",
+   "orgnr": "913379403",
+   "tickere": [
+    "ANDF"
+   ],
+   "isin": "NO0010829765",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "APPEAR ASA",
+   "kortnavn": "Appear",
+   "orgnr": "986942033",
+   "tickere": [
+    "APR"
+   ],
+   "isin": "NO0013683821",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AQUA BIO TECHNOLOGY ASA",
+   "kortnavn": "Aqua Bio Techno",
+   "orgnr": "886582412",
+   "tickere": [
+    "ABTEC"
+   ],
+   "isin": "NO0013735894",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AQUALIS ASA",
+   "kortnavn": "Aqualis",
+   "orgnr": "913757424",
+   "tickere": [
+    "AQUA"
+   ],
+   "isin": "NO0010715394",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Archer",
+   "kortnavn": "Archer",
+   "orgnr": null,
+   "tickere": [
+    "ARCH"
+   ],
+   "isin": "BMG0451H2087",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "ARCTIC BIOSCIENCE AS",
+   "kortnavn": "Arctic Bioscience",
+   "orgnr": "996638812",
+   "tickere": [
+    "ABS"
+   ],
+   "isin": "NO0010859580",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ARCTIC FISH HOLDING AS",
+   "kortnavn": "Arctic Fish Holdin",
+   "orgnr": "825904042",
+   "tickere": [
+    "AFISH"
+   ],
+   "isin": "NO0010917719",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ARCTICZYMES TECHNOLOGIES ASA",
+   "kortnavn": "Arcticzymes Techno",
+   "orgnr": "959033560",
+   "tickere": [
+    "AZT"
+   ],
+   "isin": "NO0010014632",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ARENDALS FOSSEKOMPANI ASA",
+   "kortnavn": "Arendals Fossekomp",
+   "orgnr": "910261525",
+   "tickere": [
+    "AFK"
+   ],
+   "isin": "NO0003572802",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ARRIBATEC GROUP ASA",
+   "kortnavn": "Arribatec Group",
+   "orgnr": "979867654",
+   "tickere": [
+    "ARR"
+   ],
+   "isin": "NO0013682948",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ATEA ASA",
+   "kortnavn": "Atea",
+   "orgnr": "920237126",
+   "tickere": [
+    "ATEA"
+   ],
+   "isin": "NO0004822503",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AURSKOG SPAREBANK",
+   "kortnavn": "Aurskog Sparebank",
+   "orgnr": "937885644",
+   "tickere": [
+    "AURG"
+   ],
+   "isin": "NO0006001601",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AUSTEVOLL SEAFOOD ASA",
+   "kortnavn": "Austevoll Seafood",
+   "orgnr": "929975200",
+   "tickere": [
+    "AUSS"
+   ],
+   "isin": "NO0010073489",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Autostore Holdings",
+   "kortnavn": "Autostore Holdings",
+   "orgnr": null,
+   "tickere": [
+    "AUTO"
+   ],
+   "isin": "BMG0670A1099",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "AXACTOR ASA",
+   "kortnavn": "Axactor",
+   "orgnr": "921896328",
+   "tickere": [
+    "ACR"
+   ],
+   "isin": "NO0010840515",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "AYFIE INTERNATIONAL AS",
+   "kortnavn": "Ayfie Internationa",
+   "orgnr": "917913773",
+   "tickere": [
+    "AIX"
+   ],
+   "isin": "NO0012861683",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "B2 IMPACT ASA",
+   "kortnavn": "B2 Impact",
+   "orgnr": "992249986",
+   "tickere": [
+    "B2I"
+   ],
+   "isin": "NO0010633951",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Bakkafrost",
+   "kortnavn": "Bakkafrost",
+   "orgnr": null,
+   "tickere": [
+    "BAKKA"
+   ],
+   "isin": "FO0000000179",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "BALTIC SEA PROPERTIES AS",
+   "kortnavn": "Baltic Sea Prop",
+   "orgnr": "988691771",
+   "tickere": [
+    "BALT"
+   ],
+   "isin": "NO0010810476",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Barramundi Group",
+   "kortnavn": "Barramundi Group",
+   "orgnr": null,
+   "tickere": [
+    "BARRA"
+   ],
+   "isin": "SGXZ33675836",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "BERGEN CARBON SOLUTIONS AS",
+   "kortnavn": "Bergen Carbon Sol",
+   "orgnr": "917453527",
+   "tickere": [
+    "BCS"
+   ],
+   "isin": "NO0010950249",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "BEVEST ASA",
+   "kortnavn": "Bevest",
+   "orgnr": "990727007",
+   "tickere": [
+    "BINT"
+   ],
+   "isin": "NO0013711721",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "BEWI ASA",
+   "kortnavn": "Bewi",
+   "orgnr": "925437948",
+   "tickere": [
+    "BEWI"
+   ],
+   "isin": "NO0010890965",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "BIEN SPAREBANK ASA",
+   "kortnavn": "Bien Sparebank",
+   "orgnr": "991853995",
+   "tickere": [
+    "BIEN"
+   ],
+   "isin": "NO0012706763",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "BLACK SEA PROPERTY AS",
+   "kortnavn": "Black Sea Property",
+   "orgnr": "914892902",
+   "tickere": [
+    "BSP"
+   ],
+   "isin": "NO0013685750",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "BLUENORD ASA",
+   "kortnavn": "Bluenord",
+   "orgnr": "987989297",
+   "tickere": [
+    "BNOR"
+   ],
+   "isin": "NO0010379266",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "BOHUS ASA",
+   "kortnavn": "Bohus",
+   "orgnr": "992618175",
+   "tickere": [
+    "BOHUS"
+   ],
+   "isin": "NO0013753343",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Bonheur ASA",
+   "kortnavn": "Bonheur",
+   "orgnr": "830357432",
+   "tickere": [
+    "BONHR"
+   ],
+   "isin": "NO0003110603",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "BORGESTAD ASA",
+   "kortnavn": "Borgestad",
+   "orgnr": "920639674",
+   "tickere": [
+    "BOR"
+   ],
+   "isin": "NO0013256180",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Borr Drilling",
+   "kortnavn": "Borr Drilling",
+   "orgnr": null,
+   "tickere": [
+    "BORR"
+   ],
+   "isin": "BMG1466R1732",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "BORREGAARD ASA",
+   "kortnavn": "Borregaard",
+   "orgnr": "998753562",
+   "tickere": [
+    "BRG"
+   ],
+   "isin": "NO0010657505",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "BOUVET ASA",
+   "kortnavn": "Bouvet",
+   "orgnr": "974442167",
+   "tickere": [
+    "BOUV"
+   ],
+   "isin": "NO0010360266",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Bruton",
+   "kortnavn": "Bruton",
+   "orgnr": null,
+   "tickere": [
+    "BRUT"
+   ],
+   "isin": "NO0013036814",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Bw Energy Limited",
+   "kortnavn": "Bw Energy Limited",
+   "orgnr": null,
+   "tickere": [
+    "BWE"
+   ],
+   "isin": "BMG0702P1086",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Bw Lpg",
+   "kortnavn": "Bw Lpg",
+   "orgnr": null,
+   "tickere": [
+    "BWLPG"
+   ],
+   "isin": "SGXZ69436764",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Bw Offshore Ltd",
+   "kortnavn": "Bw Offshore Ltd",
+   "orgnr": null,
+   "tickere": [
+    "BWO"
+   ],
+   "isin": "BMG1738J1247",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "BYGGMA ASA",
+   "kortnavn": "Byggma",
+   "orgnr": "979165285",
+   "tickere": [
+    "BMA"
+   ],
+   "isin": "NO0003087603",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Cadeler",
+   "kortnavn": "Cadeler",
+   "orgnr": null,
+   "tickere": [
+    "CADLR"
+   ],
+   "isin": "DK0061412772",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Cadeler",
+   "kortnavn": "Cadeler",
+   "orgnr": null,
+   "tickere": [
+    "CDLR"
+   ],
+   "isin": "GB00BN49H029",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "CAMBI ASA",
+   "kortnavn": "Cambi",
+   "orgnr": "976929284",
+   "tickere": [
+    "CAMBI"
+   ],
+   "isin": "NO0010078850",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Capital Tankers",
+   "kortnavn": "Capital Tankers",
+   "orgnr": null,
+   "tickere": [
+    "CAPT"
+   ],
+   "isin": "MHY1096C1093",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "CAPSOL TECHNOLOGIES ASA",
+   "kortnavn": "Capsol Technologi",
+   "orgnr": "914620457",
+   "tickere": [
+    "CAPSL"
+   ],
+   "isin": "NO0010923121",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "CAVENDISH HYDROGEN ASA",
+   "kortnavn": "Cavendish Hydrogen",
+   "orgnr": "933187764",
+   "tickere": [
+    "CAVEN"
+   ],
+   "isin": "NO0013219535",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Cetus Maritime",
+   "kortnavn": "Cetus Maritime",
+   "orgnr": null,
+   "tickere": [
+    "CTUS"
+   ],
+   "isin": "KYG203121077",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "CIRCIO HOLDING ASA",
+   "kortnavn": "Circio Holding",
+   "orgnr": "996162095",
+   "tickere": [
+    "CRNA"
+   ],
+   "isin": "NO0013033795",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "CLOUDBERRY CLEAN ENERGY ASA",
+   "kortnavn": "Cloudberry Clean",
+   "orgnr": "919967072",
+   "tickere": [
+    "CLOUD"
+   ],
+   "isin": "NO0010876642",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Cmb.Tech",
+   "kortnavn": "Cmb.Tech",
+   "orgnr": null,
+   "tickere": [
+    "CMBTO"
+   ],
+   "isin": "BE0003816338",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "CODELAB CAPITAL AS",
+   "kortnavn": "Codelab Capital",
+   "orgnr": "919763930",
+   "tickere": [
+    "CODE"
+   ],
+   "isin": "NO0013483503",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Constellation Oil",
+   "kortnavn": "Constellation Oil",
+   "orgnr": null,
+   "tickere": [
+    "COSH"
+   ],
+   "isin": "NO0013597419",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Contextvision",
+   "kortnavn": "Contextvision",
+   "orgnr": null,
+   "tickere": [
+    "CONTX"
+   ],
+   "isin": "SE0014731154",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "CYVIZ AS",
+   "kortnavn": "Cyviz",
+   "orgnr": "965451129",
+   "tickere": [
+    "CYVIZ"
+   ],
+   "isin": "NO0010015175",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "DELLIA GROUP ASA",
+   "kortnavn": "Dellia Group",
+   "orgnr": "918280634",
+   "tickere": [
+    "DELIA"
+   ],
+   "isin": "NO0013755728",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "DESERT CONTROL AS",
+   "kortnavn": "Desert Control",
+   "orgnr": "919415630",
+   "tickere": [
+    "DSRT"
+   ],
+   "isin": "NO0010963275",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "DNB BANK ASA",
+   "kortnavn": "Dnb Bank",
+   "orgnr": "984851006",
+   "tickere": [
+    "DNB"
+   ],
+   "isin": "NO0010161896",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "DNO ASA",
+   "kortnavn": "Dno",
+   "orgnr": "921526121",
+   "tickere": [
+    "DNO"
+   ],
+   "isin": "NO0003921009",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "DOF GROUP ASA",
+   "kortnavn": "Dof Group",
+   "orgnr": "930053112",
+   "tickere": [
+    "DOFG"
+   ],
+   "isin": "NO0012851874",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "DOLPHIN DRILLING AS",
+   "kortnavn": "Dolphin Drilling",
+   "orgnr": "929255038",
+   "tickere": [
+    "DDRIL"
+   ],
+   "isin": "NO0013711739",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "EAM SOLAR AS",
+   "kortnavn": "Eam Solar",
+   "orgnr": "996411265",
+   "tickere": [
+    "EAM"
+   ],
+   "isin": "NO0013601245",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "EIDESVIK OFFSHORE ASA",
+   "kortnavn": "Eidesvik Offshore",
+   "orgnr": "986942785",
+   "tickere": [
+    "EIOF"
+   ],
+   "isin": "NO0010263023",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ELKEM ASA",
+   "kortnavn": "Elkem",
+   "orgnr": "911382008",
+   "tickere": [
+    "ELK"
+   ],
+   "isin": "NO0010816093",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ELLIPTIC LABORATORIES ASA",
+   "kortnavn": "Elliptic Laborator",
+   "orgnr": "989750186",
+   "tickere": [
+    "ELABS"
+   ],
+   "isin": "NO0010722283",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ELOPAK ASA",
+   "kortnavn": "Elopak",
+   "orgnr": "811413682",
+   "tickere": [
+    "ELO"
+   ],
+   "isin": "NO0011002586",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ENDÚR ASA",
+   "kortnavn": "Endúr",
+   "orgnr": "991279539",
+   "tickere": [
+    "ENDUR"
+   ],
+   "isin": "NO0012555459",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ENERGEIA AS",
+   "kortnavn": "Energeia",
+   "orgnr": "995807866",
+   "tickere": [
+    "ENERG"
+   ],
+   "isin": "NO0013698431",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ENSURGE MICROPOWER ASA",
+   "kortnavn": "Ensurge Micropower",
+   "orgnr": "889186232",
+   "tickere": [
+    "ENSU"
+   ],
+   "isin": "NO0013186460",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ENTRA ASA",
+   "kortnavn": "Entra",
+   "orgnr": "999296432",
+   "tickere": [
+    "ENTRA"
+   ],
+   "isin": "NO0010716418",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Envipco Holding",
+   "kortnavn": "Envipco Holding",
+   "orgnr": null,
+   "tickere": [
+    "ENVIP"
+   ],
+   "isin": "NL0015000GX8",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "EQUINOR ASA",
+   "kortnavn": "Equinor",
+   "orgnr": "923609016",
+   "tickere": [
+    "EQNR"
+   ],
+   "isin": "NO0010096985",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "EQVA ASA",
+   "kortnavn": "Eqva",
+   "orgnr": "980832708",
+   "tickere": [
+    "EQVA"
+   ],
+   "isin": "NO0010708605",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "EUROPRIS ASA",
+   "kortnavn": "Europris",
+   "orgnr": "997639588",
+   "tickere": [
+    "EPR"
+   ],
+   "isin": "NO0010735343",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "FJORD DEFENCE GROUP ASA",
+   "kortnavn": "Fjord Defence Gr",
+   "orgnr": "917811288",
+   "tickere": [
+    "DFENS"
+   ],
+   "isin": "NO0013647693",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "FLEKKEFJORD SPAREBANK",
+   "kortnavn": "Flekkefjord Spareb",
+   "orgnr": "937894627",
+   "tickere": [
+    "FFSB"
+   ],
+   "isin": "NO0013209858",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Frontline",
+   "kortnavn": "Frontline",
+   "orgnr": null,
+   "tickere": [
+    "FRO"
+   ],
+   "isin": "CY0200352116",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "GENERAL OCEANS ASA",
+   "kortnavn": "General Oceans",
+   "orgnr": "927002264",
+   "tickere": [
+    "GENO"
+   ],
+   "isin": "NO0013713115",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "GENTIAN DIAGNOSTICS ASA",
+   "kortnavn": "Gentian Diagnostic",
+   "orgnr": "983860516",
+   "tickere": [
+    "GENT"
+   ],
+   "isin": "NO0010748866",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "GIGANTE SALMON AS",
+   "kortnavn": "Gigante Salmon",
+   "orgnr": "983478638",
+   "tickere": [
+    "GIGA"
+   ],
+   "isin": "NO0011013765",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "GJENSIDIGE FORSIKRING ASA",
+   "kortnavn": "Gjensidige Forsikr",
+   "orgnr": "995568217",
+   "tickere": [
+    "GJF"
+   ],
+   "isin": "NO0010582521",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Gold Road Intl",
+   "kortnavn": "Gold Road Intl",
+   "orgnr": null,
+   "tickere": [
+    "GOLDR"
+   ],
+   "isin": "MT0003060101",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "GOLDEN ENERGY OFFSHORE SERVICES ASA",
+   "kortnavn": "Golden Energy Off",
+   "orgnr": "913011384",
+   "tickere": [
+    "GEOS"
+   ],
+   "isin": "NO0013228585",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "GOODTECH ASA",
+   "kortnavn": "Goodtech",
+   "orgnr": "914769922",
+   "tickere": [
+    "GOD"
+   ],
+   "isin": "NO0004913609",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "GREEN MINERALS AS",
+   "kortnavn": "Green Minerals",
+   "orgnr": "925852481",
+   "tickere": [
+    "GEM"
+   ],
+   "isin": "NO0010907744",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "GRIEG SEAFOOD ASA",
+   "kortnavn": "Grieg Seafood",
+   "orgnr": "946598038",
+   "tickere": [
+    "GSF"
+   ],
+   "isin": "NO0010365521",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "GRONG SPAREBANK",
+   "kortnavn": "Grong Sparebank",
+   "orgnr": "937903146",
+   "tickere": [
+    "GRONG"
+   ],
+   "isin": "NO0010636491",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Gulf Keystone Pet",
+   "kortnavn": "Gulf Keystone Pet",
+   "orgnr": null,
+   "tickere": [
+    "GKP"
+   ],
+   "isin": "BMG4209G2077",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "GYLDENDAL ASA",
+   "kortnavn": "Gyldendal",
+   "orgnr": "812206222",
+   "tickere": [
+    "GYL"
+   ],
+   "isin": "NO0004288200",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Hafnia Limited",
+   "kortnavn": "Hafnia Limited",
+   "orgnr": null,
+   "tickere": [
+    "HAFNI"
+   ],
+   "isin": "SGXZ53070850",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "HAUGESUND SPAREBANK",
+   "kortnavn": "Haugesund Spb",
+   "orgnr": "837895502",
+   "tickere": [
+    "HGSB"
+   ],
+   "isin": "NO0010764053",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HAV GROUP ASA",
+   "kortnavn": "Hav Group",
+   "orgnr": "926311581",
+   "tickere": [
+    "HAV"
+   ],
+   "isin": "NO0010931918",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HAVILA KYSTRUTEN AS",
+   "kortnavn": "Havila Kystruten",
+   "orgnr": "927216841",
+   "tickere": [
+    "HKY"
+   ],
+   "isin": "NO0013696799",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HAVILA SHIPPING ASA",
+   "kortnavn": "Havila Shipping",
+   "orgnr": "882811972",
+   "tickere": [
+    "HAVI"
+   ],
+   "isin": "NO0010257728",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HEDER BANK ASA",
+   "kortnavn": "Heder Bank",
+   "orgnr": "916012683",
+   "tickere": [
+    "HEDER"
+   ],
+   "isin": "NO0013774166",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HERMANA HOLDING ASA",
+   "kortnavn": "Hermana Holding",
+   "orgnr": "932142457",
+   "tickere": [
+    "HERMA"
+   ],
+   "isin": "NO0013401380",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HEXAGON COMPOSITES ASA",
+   "kortnavn": "Hexagon Composites",
+   "orgnr": "938992185",
+   "tickere": [
+    "HEX"
+   ],
+   "isin": "NO0003067902",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HEXAGON PURUS ASA",
+   "kortnavn": "Hexagon Purus",
+   "orgnr": "919317558",
+   "tickere": [
+    "HPUR"
+   ],
+   "isin": "NO0013751966",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Himalaya Shipping",
+   "kortnavn": "Himalaya Shipping",
+   "orgnr": null,
+   "tickere": [
+    "HSHP"
+   ],
+   "isin": "BMG4660A1036",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "HOFSETH BIOCARE ASA",
+   "kortnavn": "Hofseth Biocare",
+   "orgnr": "994464663",
+   "tickere": [
+    "HBC"
+   ],
+   "isin": "NO0010598683",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HUDDLESTOCK FINTECH AS",
+   "kortnavn": "Huddlestock Fintec",
+   "orgnr": "821888522",
+   "tickere": [
+    "HUDL"
+   ],
+   "isin": "NO0010859648",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HUDDLY AS",
+   "kortnavn": "Huddly",
+   "orgnr": "913292049",
+   "tickere": [
+    "HDLY"
+   ],
+   "isin": "NO0013470534",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HUNTER GROUP ASA",
+   "kortnavn": "Hunter Group",
+   "orgnr": "985955107",
+   "tickere": [
+    "HUNT"
+   ],
+   "isin": "NO0012953720",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HYDROGENPRO ASA",
+   "kortnavn": "Hydrogenpro",
+   "orgnr": "912305198",
+   "tickere": [
+    "HYPRO"
+   ],
+   "isin": "NO0010892359",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HÖEGH AUTOLINERS ASA",
+   "kortnavn": "Höegh Autoliners",
+   "orgnr": "985459614",
+   "tickere": [
+    "HAUTO"
+   ],
+   "isin": "NO0011082075",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "HØLAND OG SETSKOG SPAREBANK",
+   "kortnavn": "Høland Og Setskog",
+   "orgnr": "937885822",
+   "tickere": [
+    "HSPG"
+   ],
+   "isin": "NO0010012636",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ICELANDIC SALMON AS",
+   "kortnavn": "Icelandic Salmon",
+   "orgnr": "983621112",
+   "tickere": [
+    "ISLAX"
+   ],
+   "isin": "NO0010724701",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "IDEX BIOMETRICS ASA",
+   "kortnavn": "Idex Biometrics",
+   "orgnr": "976846923",
+   "tickere": [
+    "IDEX"
+   ],
+   "isin": "NO0013536078",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "INDUCT AS",
+   "kortnavn": "Induct",
+   "orgnr": "992036230",
+   "tickere": [
+    "INDCT"
+   ],
+   "isin": "NO0010536048",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Inify Laboratories",
+   "kortnavn": "Inify Laboratories",
+   "orgnr": null,
+   "tickere": [
+    "INIFY"
+   ],
+   "isin": "SE0017486103",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "ININ GROUP AS",
+   "kortnavn": "Inin Group",
+   "orgnr": "911631474",
+   "tickere": [
+    "ININ"
+   ],
+   "isin": "NO0010864036",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "INSTABANK ASA",
+   "kortnavn": "Instabank",
+   "orgnr": "816914582",
+   "tickere": [
+    "INSTA"
+   ],
+   "isin": "NO0010762792",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "INTEGRATED WIND SOLUTIONS ASA",
+   "kortnavn": "Integrated Wind So",
+   "orgnr": "925558745",
+   "tickere": [
+    "IWS"
+   ],
+   "isin": "NO0013461350",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "INTEROIL EXPLORATION AND PRODUCTION ASA",
+   "kortnavn": "Interoil Expl Prod",
+   "orgnr": "988247006",
+   "tickere": [
+    "IOX"
+   ],
+   "isin": "NO0013119255",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ITERA ASA",
+   "kortnavn": "Itera",
+   "orgnr": "980250547",
+   "tickere": [
+    "ITERA"
+   ],
+   "isin": "NO0010001118",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "JACKTEL AS",
+   "kortnavn": "Jacktel",
+   "orgnr": "994152300",
+   "tickere": [
+    "JACK"
+   ],
+   "isin": "NO0012477704",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Jinhui Shipp Trans",
+   "kortnavn": "Jinhui Shipp Trans",
+   "orgnr": null,
+   "tickere": [
+    "JIN"
+   ],
+   "isin": "BMG5137R1088",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "JÆREN SPAREBANK",
+   "kortnavn": "Jæren Sparebank",
+   "orgnr": "937895976",
+   "tickere": [
+    "JAREN"
+   ],
+   "isin": "NO0010359433",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KALDVIK AS",
+   "kortnavn": "Kaldvik",
+   "orgnr": "924824913",
+   "tickere": [
+    "KLDVK"
+   ],
+   "isin": "NO0010884794",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KID ASA",
+   "kortnavn": "Kid",
+   "orgnr": "988384135",
+   "tickere": [
+    "KID"
+   ],
+   "isin": "NO0010743545",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KITRON ASA",
+   "kortnavn": "Kitron",
+   "orgnr": "976605713",
+   "tickere": [
+    "KIT"
+   ],
+   "isin": "NO0003079709",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KLAVENESS COMBINATION CARRIERS ASA",
+   "kortnavn": "Klaveness Combinat",
+   "orgnr": "920662838",
+   "tickere": [
+    "KCC"
+   ],
+   "isin": "NO0010833262",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KOMPLETT ASA",
+   "kortnavn": "Komplett",
+   "orgnr": "980213250",
+   "tickere": [
+    "KOMPL"
+   ],
+   "isin": "NO0011016040",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KONGSBERG AUTOMOTIVE ASA",
+   "kortnavn": "Kongsberg Automot",
+   "orgnr": "942593821",
+   "tickere": [
+    "KOA"
+   ],
+   "isin": "NO0003033102",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KONGSBERG GRUPPEN ASA",
+   "kortnavn": "Kongsberg Gruppen",
+   "orgnr": "943753709",
+   "tickere": [
+    "KOG"
+   ],
+   "isin": "NO0013536151",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KONGSBERG MARITIME ASA",
+   "kortnavn": "Kongsberg Maritime",
+   "orgnr": "936346340",
+   "tickere": [
+    "KMAR"
+   ],
+   "isin": "NO0013697029",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "KRAFT BANK ASA",
+   "kortnavn": "Kraft Bank",
+   "orgnr": "918315446",
+   "tickere": [
+    "KRAB"
+   ],
+   "isin": "NO0010815103",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "LERØY SEAFOOD GROUP ASA",
+   "kortnavn": "Lerøy Seafood Gp",
+   "orgnr": "975350940",
+   "tickere": [
+    "LSG"
+   ],
+   "isin": "NO0003096208",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "LIFECARE ASA",
+   "kortnavn": "Lifecare",
+   "orgnr": "990251657",
+   "tickere": [
+    "LIFE"
+   ],
+   "isin": "NO0013355859",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "LINK MOBILITY GROUP HOLDING ASA",
+   "kortnavn": "Link Mobility Grp",
+   "orgnr": "920901336",
+   "tickere": [
+    "LINK"
+   ],
+   "isin": "NO0010894231",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "LOKOTECH GROUP AS",
+   "kortnavn": "Lokotech Group",
+   "orgnr": "818709692",
+   "tickere": [
+    "LOKO"
+   ],
+   "isin": "NO0010921299",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "LUMI EDUCATION GROUP AS",
+   "kortnavn": "Lumi Education Gr",
+   "orgnr": "919871237",
+   "tickere": [
+    "LUMI"
+   ],
+   "isin": "NO0010927288",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "LYTIX BIOPHARMA ASA",
+   "kortnavn": "Lytix Biopharma",
+   "orgnr": "985889635",
+   "tickere": [
+    "LYTIX"
+   ],
+   "isin": "NO0010405780",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "M VEST WATER AS",
+   "kortnavn": "M Vest Water",
+   "orgnr": "914631408",
+   "tickere": [
+    "MVW"
+   ],
+   "isin": "NO0010976343",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "MAGNORA ASA",
+   "kortnavn": "Magnora",
+   "orgnr": "983218180",
+   "tickere": [
+    "MGN"
+   ],
+   "isin": "NO0010187032",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "MAGNORA DATA CENTER ASA",
+   "kortnavn": "Magnora Data Cente",
+   "orgnr": "837620112",
+   "tickere": [
+    "MDATA"
+   ],
+   "isin": "NO0013750893",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "MEDISTIM ASA",
+   "kortnavn": "Medistim",
+   "orgnr": "936656013",
+   "tickere": [
+    "MEDI"
+   ],
+   "isin": "NO0010159684",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "MELHUS SPAREBANK",
+   "kortnavn": "Melhus Sparebank",
+   "orgnr": "937901291",
+   "tickere": [
+    "MELG"
+   ],
+   "isin": "NO0006001908",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "MORELD ASA",
+   "kortnavn": "Moreld",
+   "orgnr": "927396483",
+   "tickere": [
+    "MORLD"
+   ],
+   "isin": "NO0013325506",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "MOWI ASA",
+   "kortnavn": "Mowi",
+   "orgnr": "964118191",
+   "tickere": [
+    "MOWI"
+   ],
+   "isin": "NO0003054108",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "MPC CONTAINER SHIPS ASA",
+   "kortnavn": "Mpc Container Ship",
+   "orgnr": "918494316",
+   "tickere": [
+    "MPCC"
+   ],
+   "isin": "NO0010791353",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Mpc Energy Solutio",
+   "kortnavn": "Mpc Energy Solutio",
+   "orgnr": null,
+   "tickere": [
+    "MPCES"
+   ],
+   "isin": "NL0015268814",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "MULTICONSULT ASA",
+   "kortnavn": "Multiconsult",
+   "orgnr": "910253158",
+   "tickere": [
+    "MULTI"
+   ],
+   "isin": "NO0010734338",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "MÅSØVAL AS",
+   "kortnavn": "Måsøval",
+   "orgnr": "933792854",
+   "tickere": [
+    "MAS"
+   ],
+   "isin": "NO0010974983",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Napatech",
+   "kortnavn": "Napatech",
+   "orgnr": null,
+   "tickere": [
+    "NAPA"
+   ],
+   "isin": "DK0060520450",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "NAVAMEDIC ASA",
+   "kortnavn": "Navamedic",
+   "orgnr": "985012059",
+   "tickere": [
+    "NAVA"
+   ],
+   "isin": "NO0010205966",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NEKKAR ASA",
+   "kortnavn": "Nekkar",
+   "orgnr": "932142104",
+   "tickere": [
+    "NKR"
+   ],
+   "isin": "NO0003049405",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NEL ASA",
+   "kortnavn": "Nel",
+   "orgnr": "979938799",
+   "tickere": [
+    "NEL"
+   ],
+   "isin": "NO0010081235",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NIDAROS SPAREBANK",
+   "kortnavn": "Nidaros Sparebank",
+   "orgnr": "937902719",
+   "tickere": [
+    "NISB"
+   ],
+   "isin": "NO0010733082",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORAM DRILLING AS",
+   "kortnavn": "Noram Drilling",
+   "orgnr": "990947619",
+   "tickere": [
+    "NORAM"
+   ],
+   "isin": "NO0010360019",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORBIT ASA",
+   "kortnavn": "Norbit",
+   "orgnr": "992718196",
+   "tickere": [
+    "NORBT"
+   ],
+   "isin": "NO0010856511",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORCOD AS",
+   "kortnavn": "Norcod",
+   "orgnr": "821489962",
+   "tickere": [
+    "NCOD"
+   ],
+   "isin": "NO0010892912",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORCONSULT ASA",
+   "kortnavn": "Norconsult",
+   "orgnr": "963865724",
+   "tickere": [
+    "NORCO"
+   ],
+   "isin": "NO0013052209",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORDHEALTH AS",
+   "kortnavn": "Nordhealth A-Aksje",
+   "orgnr": "926978209",
+   "tickere": [
+    "NORDH"
+   ],
+   "isin": "NO0011002651",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORDIC AQUA PARTNERS AS",
+   "kortnavn": "Nordic Aqua Part",
+   "orgnr": "928958280",
+   "tickere": [
+    "NOAP"
+   ],
+   "isin": "NO0012928805",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORDIC FINANCIALS ASA",
+   "kortnavn": "Nordic Financials",
+   "orgnr": "997410440",
+   "tickere": [
+    "NOFIN"
+   ],
+   "isin": "NO0013683409",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORDIC HALIBUT AS",
+   "kortnavn": "Nordic Halibut",
+   "orgnr": "974526441",
+   "tickere": [
+    "NOHAL"
+   ],
+   "isin": "NO0003058109",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORDIC MINING ASA",
+   "kortnavn": "Nordic Mining",
+   "orgnr": "989796739",
+   "tickere": [
+    "NOM"
+   ],
+   "isin": "NO0013162693",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORDIC SEMICONDUCTOR ASA",
+   "kortnavn": "Nordic Semiconduc",
+   "orgnr": "966011726",
+   "tickere": [
+    "NOD"
+   ],
+   "isin": "NO0003055501",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORDIC TECHNOLOGY GROUP AS",
+   "kortnavn": "Nordic Technology",
+   "orgnr": "926789759",
+   "tickere": [
+    "NTG"
+   ],
+   "isin": "NO0011018434",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORSE ATLANTIC ASA",
+   "kortnavn": "Norse Atlantic",
+   "orgnr": "926645986",
+   "tickere": [
+    "NORSE"
+   ],
+   "isin": "NO0012885252",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Norsk Hydro ASA",
+   "kortnavn": "Norsk Hydro",
+   "orgnr": "914778271",
+   "tickere": [
+    "NHY"
+   ],
+   "isin": "NO0005052605",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORSK TITANIUM AS",
+   "kortnavn": "Norsk Titanium",
+   "orgnr": "991457429",
+   "tickere": [
+    "NTI"
+   ],
+   "isin": "NO0010969108",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORSKE SKOG ASA",
+   "kortnavn": "Norske Skog",
+   "orgnr": "914483549",
+   "tickere": [
+    "NSKOG"
+   ],
+   "isin": "NO0010861115",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORTH ENERGY ASA",
+   "kortnavn": "North Energy",
+   "orgnr": "891797702",
+   "tickere": [
+    "NORTH"
+   ],
+   "isin": "NO0010550056",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Northern Ocean Ltd",
+   "kortnavn": "Northern Ocean Ltd",
+   "orgnr": null,
+   "tickere": [
+    "NOL"
+   ],
+   "isin": "BMG6682J1036",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "NORWEGIAN AIR SHUTTLE ASA",
+   "kortnavn": "Norwegian Air Shut",
+   "orgnr": "965920358",
+   "tickere": [
+    "NAS"
+   ],
+   "isin": "NO0010196140",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NORWEGIAN BLOCK EXCHANGE AS",
+   "kortnavn": "Norwegian Block Ex",
+   "orgnr": "920245676",
+   "tickere": [
+    "NBX"
+   ],
+   "isin": "NO0010984966",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NOS NOVA AS",
+   "kortnavn": "Nos Nova",
+   "orgnr": "923377476",
+   "tickere": [
+    "NOSN"
+   ],
+   "isin": "NO0010917339",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NRC GROUP ASA",
+   "kortnavn": "Nrc Group",
+   "orgnr": "910686909",
+   "tickere": [
+    "NRC"
+   ],
+   "isin": "NO0003679102",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "NYKODE THERAPEUTICS ASA",
+   "kortnavn": "Nykode Therapeutic",
+   "orgnr": "990646066",
+   "tickere": [
+    "NYKD"
+   ],
+   "isin": "NO0010714785",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "OBSERVE MEDICAL ASA",
+   "kortnavn": "Observe Medical",
+   "orgnr": "822907822",
+   "tickere": [
+    "OBSRV"
+   ],
+   "isin": "NO0013457952",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "OCEAN GEOLOOP ASA",
+   "kortnavn": "Ocean Geoloop",
+   "orgnr": "824505802",
+   "tickere": [
+    "OCEAN"
+   ],
+   "isin": "NO0010914641",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "OCEAN SUN AS",
+   "kortnavn": "Ocean Sun",
+   "orgnr": "917619751",
+   "tickere": [
+    "OSUN"
+   ],
+   "isin": "NO0010887565",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Odfjell Drilling",
+   "kortnavn": "Odfjell Drilling",
+   "orgnr": null,
+   "tickere": [
+    "ODL"
+   ],
+   "isin": "BMG671801022",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "ODFJELL SE",
+   "kortnavn": "Odfjell Ser. A",
+   "orgnr": "930192503",
+   "tickere": [
+    "ODF",
+    "ODFB"
+   ],
+   "isin": "NO0003399909",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Odfjell Technology",
+   "kortnavn": "Odfjell Technology",
+   "orgnr": null,
+   "tickere": [
+    "OTL"
+   ],
+   "isin": "BMG6716L1081",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "OKEA ASA",
+   "kortnavn": "Okea",
+   "orgnr": "915419062",
+   "tickere": [
+    "OKEA"
+   ],
+   "isin": "NO0010816895",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Okeanis Eco Tanker",
+   "kortnavn": "Okeanis Eco Tanker",
+   "orgnr": null,
+   "tickere": [
+    "OET"
+   ],
+   "isin": "MHY641771016",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Omc Tankers",
+   "kortnavn": "Omc Tankers",
+   "orgnr": null,
+   "tickere": [
+    "OMC"
+   ],
+   "isin": "NO0013759159",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "OMDA AS",
+   "kortnavn": "Omda",
+   "orgnr": "998138833",
+   "tickere": [
+    "OMDA"
+   ],
+   "isin": "NO0010894512",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ONCOINVENT ASA",
+   "kortnavn": "Oncoinvent",
+   "orgnr": "992219688",
+   "tickere": [
+    "ONCIN"
+   ],
+   "isin": "NO0013711713",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ORKLA ASA",
+   "kortnavn": "Orkla",
+   "orgnr": "910747711",
+   "tickere": [
+    "ORK"
+   ],
+   "isin": "NO0003733800",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "OTELLO CORPORATION ASA",
+   "kortnavn": "Otello Corporation",
+   "orgnr": "974529459",
+   "tickere": [
+    "OTEC"
+   ],
+   "isin": "NO0010040611",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "OTOVO ASA",
+   "kortnavn": "Otovo",
+   "orgnr": "915501680",
+   "tickere": [
+    "OTOVO"
+   ],
+   "isin": "NO0013721613",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "OUTLET GROUP HOLDING ASA",
+   "kortnavn": "Outlet Group Hold",
+   "orgnr": "915663494",
+   "tickere": [
+    "OUTLT"
+   ],
+   "isin": "NO0013757500",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "PANORO ENERGY ASA",
+   "kortnavn": "Panoro Energy",
+   "orgnr": "994051067",
+   "tickere": [
+    "PEN"
+   ],
+   "isin": "NO0010564701",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Paratus Energy Ser",
+   "kortnavn": "Paratus Energy Ser",
+   "orgnr": null,
+   "tickere": [
+    "PLSV"
+   ],
+   "isin": "BMG6904D1083",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "PARETO BANK ASA",
+   "kortnavn": "Pareto Bank",
+   "orgnr": "990906475",
+   "tickere": [
+    "PARB"
+   ],
+   "isin": "NO0010397581",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Pelagic Credit",
+   "kortnavn": "Pelagic Credit",
+   "orgnr": null,
+   "tickere": [
+    "PLGC"
+   ],
+   "isin": "CY0201332216",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Pelican Aqua Hldng",
+   "kortnavn": "Pelican Aqua Hldng",
+   "orgnr": null,
+   "tickere": [
+    "PLCAN"
+   ],
+   "isin": "CY0201461213",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Petrolia",
+   "kortnavn": "Petrolia",
+   "orgnr": null,
+   "tickere": [
+    "PSE"
+   ],
+   "isin": "CY0102630916",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "PETRONOR E&P ASA",
+   "kortnavn": "Petronor E&P",
+   "orgnr": "927866951",
+   "tickere": [
+    "PNOR"
+   ],
+   "isin": "NO0012942525",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "PEXIP HOLDING ASA",
+   "kortnavn": "Pexip Holding",
+   "orgnr": "919850175",
+   "tickere": [
+    "PEXIP"
+   ],
+   "isin": "NO0010840507",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "PHOTOCURE ASA",
+   "kortnavn": "Photocure",
+   "orgnr": "967598593",
+   "tickere": [
+    "PHO"
+   ],
+   "isin": "NO0010000045",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "PIONEER PROPERTY GROUP ASA",
+   "kortnavn": "Pioneer Property",
+   "orgnr": "914839327",
+   "tickere": [
+    "PPG"
+   ],
+   "isin": "NO0010735681",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "POLAR RESOURCES AS",
+   "kortnavn": "Polar Resources",
+   "orgnr": "930061050",
+   "tickere": [
+    "POLAR"
+   ],
+   "isin": "NO0013756361",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "POLARIS MEDIA ASA",
+   "kortnavn": "Polaris Media",
+   "orgnr": "992614145",
+   "tickere": [
+    "POL"
+   ],
+   "isin": "NO0010466022",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "POLIGHT ASA",
+   "kortnavn": "Polight",
+   "orgnr": "988862703",
+   "tickere": [
+    "PLT"
+   ],
+   "isin": "NO0012535832",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Ppi Public Prop",
+   "kortnavn": "Ppi Public Prop",
+   "orgnr": null,
+   "tickere": [
+    "PUBLI"
+   ],
+   "isin": "SE0028799411",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "PROSAFE SE",
+   "kortnavn": "Prosafe",
+   "orgnr": "823139772",
+   "tickere": [
+    "PRS"
+   ],
+   "isin": "NO0010861990",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "PROTECTOR FORSIKRING ASA",
+   "kortnavn": "Protector Forsikrg",
+   "orgnr": "985279721",
+   "tickere": [
+    "PROT"
+   ],
+   "isin": "NO0010209331",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "PROXIMAR SEAFOOD AS",
+   "kortnavn": "Proximar Seafood",
+   "orgnr": "915565697",
+   "tickere": [
+    "PROXI"
+   ],
+   "isin": "NO0010893902",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Pyrum Innovations",
+   "kortnavn": "Pyrum Innovations",
+   "orgnr": null,
+   "tickere": [
+    "PYRUM"
+   ],
+   "isin": "DE000A2G8ZX8",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Questerre En Pref",
+   "kortnavn": "Questerre En Pref",
+   "orgnr": null,
+   "tickere": [
+    "QGAS"
+   ],
+   "isin": "CA74836K4072",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Questerre Energy",
+   "kortnavn": "Questerre Energy",
+   "orgnr": null,
+   "tickere": [
+    "QEC"
+   ],
+   "isin": "CA74836K1003",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "REACH SUBSEA ASA",
+   "kortnavn": "Reach Subsea",
+   "orgnr": "922493626",
+   "tickere": [
+    "REACH"
+   ],
+   "isin": "NO0003117202",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Refuels",
+   "kortnavn": "Refuels",
+   "orgnr": null,
+   "tickere": [
+    "REFL"
+   ],
+   "isin": "NL0015001BF4",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "River Tech",
+   "kortnavn": "River Tech",
+   "orgnr": null,
+   "tickere": [
+    "RIVER"
+   ],
+   "isin": "MT0001710103",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "ROGALAND SPAREBANK",
+   "kortnavn": "Rogaland Sparebank",
+   "orgnr": "915691161",
+   "tickere": [
+    "ROGS"
+   ],
+   "isin": "NO0006001007",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ROMERIKE SPAREBANK",
+   "kortnavn": "Romerike Sparebk",
+   "orgnr": "937885911",
+   "tickere": [
+    "ROMER"
+   ],
+   "isin": "NO0010808405",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Romreal",
+   "kortnavn": "Romreal",
+   "orgnr": null,
+   "tickere": [
+    "ROM"
+   ],
+   "isin": "BMG763301022",
+   "marked": "Euronext Expand Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "S.D. Standard Etc",
+   "kortnavn": "S.D. Standard Etc",
+   "orgnr": null,
+   "tickere": [
+    "SDSD"
+   ],
+   "isin": "CY0101550917",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "SAGA PURE ASA",
+   "kortnavn": "Saga Pure",
+   "orgnr": "995359774",
+   "tickere": [
+    "SAGA"
+   ],
+   "isin": "NO0010572589",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SALMAR ASA",
+   "kortnavn": "Salmar",
+   "orgnr": "960514718",
+   "tickere": [
+    "SALM"
+   ],
+   "isin": "NO0010310956",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SALMON EVOLUTION ASA",
+   "kortnavn": "Salmon Evolution",
+   "orgnr": "925344877",
+   "tickere": [
+    "SALME"
+   ],
+   "isin": "NO0010892094",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SATS ASA",
+   "kortnavn": "Sats",
+   "orgnr": "996739848",
+   "tickere": [
+    "SATS"
+   ],
+   "isin": "NO0010863285",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SCANA ASA",
+   "kortnavn": "Scana",
+   "orgnr": "928613941",
+   "tickere": [
+    "SCANA"
+   ],
+   "isin": "NO0003053308",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SCATEC ASA",
+   "kortnavn": "Scatec",
+   "orgnr": "990918546",
+   "tickere": [
+    "SCATC"
+   ],
+   "isin": "NO0010715139",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Sea1 Offshore",
+   "kortnavn": "Sea1 Offshore",
+   "orgnr": null,
+   "tickere": [
+    "SEA1"
+   ],
+   "isin": "KYG812291253",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Sed Energy Holding",
+   "kortnavn": "Sed Energy Holding",
+   "orgnr": null,
+   "tickere": [
+    "ENH"
+   ],
+   "isin": "CY0101162119",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "SELVAAG BOLIG ASA",
+   "kortnavn": "Selvaag Bolig",
+   "orgnr": "992587776",
+   "tickere": [
+    "SBO"
+   ],
+   "isin": "NO0010612450",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SENTIA ASA",
+   "kortnavn": "Sentia",
+   "orgnr": "999256864",
+   "tickere": [
+    "SNTIA"
+   ],
+   "isin": "NO0013573014",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Shamaran Petroleum",
+   "kortnavn": "Shamaran Petroleum",
+   "orgnr": null,
+   "tickere": [
+    "SNM"
+   ],
+   "isin": "BMG8080M1001",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "SKANDIA GREENPOWER AS",
+   "kortnavn": "Skandia Greenpower",
+   "orgnr": "815836782",
+   "tickere": [
+    "SKAND"
+   ],
+   "isin": "NO0010931207",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SKUE SPAREBANK",
+   "kortnavn": "Skue Sparebank",
+   "orgnr": "837889812",
+   "tickere": [
+    "SKUE"
+   ],
+   "isin": "NO0006001809",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SMARTOPTICS GROUP ASA",
+   "kortnavn": "Smartoptics Group",
+   "orgnr": "858905192",
+   "tickere": [
+    "SMOP"
+   ],
+   "isin": "NO0011012502",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SOFTOX SOLUTIONS AS",
+   "kortnavn": "Softox Solutions",
+   "orgnr": "998516390",
+   "tickere": [
+    "SOFTX"
+   ],
+   "isin": "NO0010811961",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Softwareone Hold",
+   "kortnavn": "Softwareone Hold",
+   "orgnr": null,
+   "tickere": [
+    "SWON"
+   ],
+   "isin": "CH0496451508",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "SOGN SPAREBANK",
+   "kortnavn": "Sogn Sparebank",
+   "orgnr": "837897912",
+   "tickere": [
+    "SOGN"
+   ],
+   "isin": "NO0006000603",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SOILTECH ASA",
+   "kortnavn": "Soiltech",
+   "orgnr": "996819884",
+   "tickere": [
+    "STECH"
+   ],
+   "isin": "NO0010713571",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SOLSTAD MARITIME ASA",
+   "kortnavn": "Solstad Maritime",
+   "orgnr": "932482185",
+   "tickere": [
+    "SOMA"
+   ],
+   "isin": "NO0013135368",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SOLSTAD OFFSHORE ASA",
+   "kortnavn": "Solstad Offshore",
+   "orgnr": "945883294",
+   "tickere": [
+    "SOFF"
+   ],
+   "isin": "NO0003080608",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 68 GRADER NORD",
+   "kortnavn": "Sparbnk 68 Gr Nord",
+   "orgnr": "937905378",
+   "tickere": [
+    "SB68"
+   ],
+   "isin": "NO0010887110",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 1 SMN",
+   "kortnavn": "Sparebank 1 Smn",
+   "orgnr": "937901003",
+   "tickere": [
+    "MING"
+   ],
+   "isin": "NO0006390301",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 1 SØR-NORGE ASA",
+   "kortnavn": "Sparebank 1 Sør-N",
+   "orgnr": "937895321",
+   "tickere": [
+    "SB1NO"
+   ],
+   "isin": "NO0010631567",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANKEN MØRE",
+   "kortnavn": "Sparebanken Møre",
+   "orgnr": "937899319",
+   "tickere": [
+    "MORG"
+   ],
+   "isin": "NO0012483207",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANKEN NORGE",
+   "kortnavn": "Sparebanken Norge",
+   "orgnr": "832554332",
+   "tickere": [
+    "SBNOR"
+   ],
+   "isin": "NO0006000900",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANKEN ØST",
+   "kortnavn": "Sparebanken Øst",
+   "orgnr": "937888937",
+   "tickere": [
+    "SPOG"
+   ],
+   "isin": "NO0006222009",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 1 NORDMØRE",
+   "kortnavn": "Spbk 1 Nordmøre",
+   "orgnr": "937899408",
+   "tickere": [
+    "SNOR"
+   ],
+   "isin": "NO0010691660",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 1 ØSTLANDET",
+   "kortnavn": "Spbk 1 Østlandet",
+   "orgnr": "920426530",
+   "tickere": [
+    "SPOL"
+   ],
+   "isin": "NO0010751910",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 1 HELGELAND",
+   "kortnavn": "Spbk1 Helgeland",
+   "orgnr": "937904029",
+   "tickere": [
+    "HELG"
+   ],
+   "isin": "NO0010029804",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 1 NORD-NORGE",
+   "kortnavn": "Spbk1 Nord-Norge",
+   "orgnr": "952706365",
+   "tickere": [
+    "NONG"
+   ],
+   "isin": "NO0006000801",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 1 RINGERIKE HADELAND",
+   "kortnavn": "Spbk1 Ringerike",
+   "orgnr": "937889275",
+   "tickere": [
+    "RING"
+   ],
+   "isin": "NO0006390400",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "SPAREBANK 1 ØSTFOLD AKERSHUS",
+   "kortnavn": "Spbk1 Østfold Ake",
+   "orgnr": "837884942",
+   "tickere": [
+    "SOAG"
+   ],
+   "isin": "NO0010285562",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "STAINLESS TANKERS ASA",
+   "kortnavn": "Stainless Tankers",
+   "orgnr": "930355054",
+   "tickere": [
+    "STST"
+   ],
+   "isin": "NO0012780958",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Stolt-Nielsen",
+   "kortnavn": "Stolt-Nielsen",
+   "orgnr": null,
+   "tickere": [
+    "SNI"
+   ],
+   "isin": "BMG850801025",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "STOREBRAND ASA",
+   "kortnavn": "Storebrand",
+   "orgnr": "916300484",
+   "tickere": [
+    "STB"
+   ],
+   "isin": "NO0003053605",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "STRONGPOINT ASA",
+   "kortnavn": "Strongpoint",
+   "orgnr": "982769221",
+   "tickere": [
+    "STRO"
+   ],
+   "isin": "NO0010098247",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Subsea 7",
+   "kortnavn": "Subsea 7",
+   "orgnr": null,
+   "tickere": [
+    "SUBC"
+   ],
+   "isin": "LU0075646355",
+   "marked": "Oslo Børs",
+   "utenlandsk": true
+  },
+  {
+   "navn": "TECHSTEP ASA",
+   "kortnavn": "Techstep",
+   "orgnr": "977037093",
+   "tickere": [
+    "TECH"
+   ],
+   "isin": "NO0012916131",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "TEKNA HOLDING ASA",
+   "kortnavn": "Tekna Holding",
+   "orgnr": "925347884",
+   "tickere": [
+    "TEKNA"
+   ],
+   "isin": "NO0010951577",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "TELENOR ASA",
+   "kortnavn": "Telenor",
+   "orgnr": "982463718",
+   "tickere": [
+    "TEL"
+   ],
+   "isin": "NO0010063308",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "TGS ASA",
+   "kortnavn": "Tgs",
+   "orgnr": "976695372",
+   "tickere": [
+    "TGS"
+   ],
+   "isin": "NO0003078800",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "The Kingfish Comp",
+   "kortnavn": "The Kingfish Comp",
+   "orgnr": null,
+   "tickere": [
+    "KING"
+   ],
+   "isin": "NL00150001S5",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "THOR MEDICAL ASA",
+   "kortnavn": "Thor Medical",
+   "orgnr": "994297422",
+   "tickere": [
+    "TRMED"
+   ],
+   "isin": "NO0010597883",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "TINDE SPAREBANK",
+   "kortnavn": "Tinde Sparebank",
+   "orgnr": "937900775",
+   "tickere": [
+    "TINDE"
+   ],
+   "isin": "NO0010759988",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "TOMRA SYSTEMS ASA",
+   "kortnavn": "Tomra Systems",
+   "orgnr": "927124238",
+   "tickere": [
+    "TOM"
+   ],
+   "isin": "NO0012470089",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "TRØNDELAG SPAREBANK",
+   "kortnavn": "Trøndelag Spbk",
+   "orgnr": "937902174",
+   "tickere": [
+    "TRSB"
+   ],
+   "isin": "NO0010788268",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Veidekke ASA",
+   "kortnavn": "Veidekke",
+   "orgnr": "917103801",
+   "tickere": [
+    "VEI"
+   ],
+   "isin": "NO0005806802",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "VEND MARKETPLACES ASA",
+   "kortnavn": "Vend Marketplaces",
+   "orgnr": "933739384",
+   "tickere": [
+    "VEND"
+   ],
+   "isin": "NO0010736879",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Ventura Offshore",
+   "kortnavn": "Ventura Offshore",
+   "orgnr": null,
+   "tickere": [
+    "VTURA"
+   ],
+   "isin": "BMG730931091",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "VISTIN PHARMA ASA",
+   "kortnavn": "Vistin Pharma",
+   "orgnr": "915157882",
+   "tickere": [
+    "VISTN"
+   ],
+   "isin": "NO0010734122",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "VOIM ASA",
+   "kortnavn": "Voim",
+   "orgnr": "984195486",
+   "tickere": [
+    "VOIM"
+   ],
+   "isin": "NO0010358484",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Volare Shipping",
+   "kortnavn": "Volare Shipping",
+   "orgnr": null,
+   "tickere": [
+    "VLCC"
+   ],
+   "isin": "SGXZ33616145",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  },
+  {
+   "navn": "Voss Veksel- og Landmandsbank ASA",
+   "kortnavn": "Voss Veksel Ogland",
+   "orgnr": "817244742",
+   "tickere": [
+    "VVL"
+   ],
+   "isin": "NO0003025009",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "VOW ASA",
+   "kortnavn": "Vow",
+   "orgnr": "996819000",
+   "tickere": [
+    "VOW"
+   ],
+   "isin": "NO0010708068",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "VÅR ENERGI ASA",
+   "kortnavn": "Vår Energi",
+   "orgnr": "919160675",
+   "tickere": [
+    "VAR"
+   ],
+   "isin": "NO0011202772",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "WALLENIUS WILHELMSEN ASA",
+   "kortnavn": "Wallenius Wilhelms",
+   "orgnr": "995216604",
+   "tickere": [
+    "WAWI"
+   ],
+   "isin": "NO0010571680",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "WEBSTEP ASA",
+   "kortnavn": "Webstep",
+   "orgnr": "996394638",
+   "tickere": [
+    "WSTEP"
+   ],
+   "isin": "NO0010609662",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "WESTERN BULK CHARTERING AS",
+   "kortnavn": "Western Bulk Chart",
+   "orgnr": "892873232",
+   "tickere": [
+    "WEST"
+   ],
+   "isin": "NO0010768096",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "WILH. WILHELMSEN HOLDING ASA",
+   "kortnavn": "Wilh. Wilhelmsen A",
+   "orgnr": "995277905",
+   "tickere": [
+    "WWI",
+    "WWIB"
+   ],
+   "isin": "NO0010571698",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "XPLORA TECHNOLOGIES AS",
+   "kortnavn": "Xplora Technologie",
+   "orgnr": "916752628",
+   "tickere": [
+    "XPLRA"
+   ],
+   "isin": "NO0010895782",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": false
+  },
+  {
+   "navn": "YARA INTERNATIONAL ASA",
+   "kortnavn": "Yara International",
+   "orgnr": "986228608",
+   "tickere": [
+    "YAR"
+   ],
+   "isin": "NO0010208051",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ZAPTEC ASA",
+   "kortnavn": "Zaptec",
+   "orgnr": "999164137",
+   "tickere": [
+    "ZAP"
+   ],
+   "isin": "NO0010713936",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "ZELLUNA ASA",
+   "kortnavn": "Zelluna",
+   "orgnr": "996713008",
+   "tickere": [
+    "ZLNA"
+   ],
+   "isin": "NO0013524942",
+   "marked": "Oslo Børs",
+   "utenlandsk": false
+  },
+  {
+   "navn": "Zenith Energy",
+   "kortnavn": "Zenith Energy",
+   "orgnr": null,
+   "tickere": [
+    "ZENA"
+   ],
+   "isin": "CA98936C8584",
+   "marked": "Euronext Growth Oslo",
+   "utenlandsk": true
+  }
+ ]
+}

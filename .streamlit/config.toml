@@ -1,0 +1,13 @@
+[server]
+# Gjør mappa static/ tilgjengelig på /app/static/ (brukes til app-ikonet).
+enableStaticServing = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+# Skjuler «Deploy»-knappen; menyen (⋮) med innstillinger er der fortsatt.
+toolbarMode = "minimal"
+
+# Ingen [theme]-seksjon: da følger Streamlit systemets lys/mørk-modus.
+# Font, aksentfarge og runde hjørner settes i stil.py.
