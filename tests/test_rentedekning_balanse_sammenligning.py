@@ -7,7 +7,7 @@ import pytest
 from openpyxl import load_workbook
 
 import brreg_api as api
-from beregninger import HOYERE_ER_BEDRE, balansedrivere, beregn_nokkeltall, sterkest
+from beregninger import HOYERE_ER_BEDRE, balansedrivere, beregn_nokkeltall, sammenligningstyper, sterkest
 from excel_eksport import lag_excel
 
 DATA = Path(__file__).parent / "data"
@@ -124,3 +124,20 @@ class TestSterkest:
 
     def test_alle_nokkeltall_har_retning(self):
         assert {n.kode for n in beregn_nokkeltall({})} == set(HOYERE_ER_BEDRE)
+
+
+class TestSammenligningstyper:
+    BEGGE = ["SELSKAP", "KONSERN"]
+
+    def test_eierselskap_gir_konsern_for_begge(self):
+        # Equinor (selskap i hovedvisningen) mot Hydro (eierselskap)
+        assert sammenligningstyper("SELSKAP", self.BEGGE, False, self.BEGGE, "KONSERN", True) == ("KONSERN", "KONSERN")
+        assert sammenligningstyper("SELSKAP", self.BEGGE, True, self.BEGGE, "SELSKAP", False) == ("KONSERN", "KONSERN")
+
+    def test_ellers_samme_type_som_hovedvisningen(self):
+        assert sammenligningstyper("SELSKAP", self.BEGGE, False, self.BEGGE, "SELSKAP", False) == ("SELSKAP", "SELSKAP")
+        assert sammenligningstyper("KONSERN", self.BEGGE, False, self.BEGGE, "SELSKAP", False) == ("KONSERN", "KONSERN")
+
+    def test_mangler_konsern_hos_den_ene(self):
+        assert sammenligningstyper("SELSKAP", ["SELSKAP"], False, self.BEGGE, "KONSERN", True) == ("SELSKAP", "KONSERN")
+        assert sammenligningstyper("KONSERN", self.BEGGE, False, ["SELSKAP"], "SELSKAP", False) == ("KONSERN", "SELSKAP")

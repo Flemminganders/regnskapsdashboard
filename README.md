@@ -10,7 +10,9 @@ alt er vanlig Python som regner på åpne data.
 
 - **Søk** – ett felt for navn, ticker eller org.nr. Selskapene på Oslo Børs, Euronext Expand og
   Euronext Growth (ca. 290) ligger lagret med org.nr i `data/oslo_bors.json` og foreslås mens du
-  skriver. Alle andre selskaper søkes opp med org.nr. Passer et navn flere selskaper, vises valg.
+  skriver – bare forslag som faktisk inneholder teksten (ticker først, så navn). Feltet er et vanlig
+  tekstfelt med ×-knapp, piltaster, Enter og Esc. Alle andre selskaper søkes opp med org.nr.
+  Passer et navn flere selskaper, vises valg.
   Selskaper som er notert i Oslo men registrert i utlandet (f.eks. Frontline), får en forklaring
   på hvorfor de ikke har årsregnskap i Regnskapsregisteret.
 - **Selskapskort** – navn, org.nr, organisasjonsform, næring, adresse, ansatte,
@@ -53,7 +55,7 @@ alt er vanlig Python som regner på åpne data.
 - **Utvikling** – inntekter og resultat per år, og alle hovedtall og nøkkeltall i en tabell over år.
 - **Sammenlign** – søk opp et annet selskap (navn, ticker eller org.nr) og se hovedtall og nøkkeltall side om side, med det sterkeste
   nøkkeltallet uthevet og en graf over marginer og rentabilitet. Samme år og regnskapstype brukes når det
-  finnes (eierselskaper vises som konsern). Lenke: `?orgnr=923609016&mot=914778271`.
+  finnes. Er ett av selskapene et eierselskap, vises begge som konsern. Lenke: `?orgnr=923609016&mot=914778271`.
 - **Advarsel ved feil i registerdata** – går balansen ikke opp (f.eks. Telenor ASA og Yara ASA 2024,
   der én side av balansen er registrert feil i API-et), forklares det og lenkes til PDF-en for året.
 - **Excel-nedlasting** – regnskapstallene og nøkkeltallene som ekte Excel-formler,
@@ -88,6 +90,7 @@ regnskapsdashboard/
 ├── app.py              # Visning (Streamlit) – kun skjermbilde og grafer
 ├── brreg_api.py        # Henting fra Brreg, org.nr-validering, tolking av JSON
 ├── borsliste.py        # Søk på navn/ticker blant selskapene på Oslo Børs
+├── komponenter/sok/    # Eget søkefelt (HTML/JS-komponent uten byggesteg): søker i nettleseren, kan tømmes
 ├── data/oslo_bors.json # Oslo Børs-selskapene med org.nr (lages av verktoy/oppdater_oslo_bors.py)
 ├── verktoy/            # oppdater_oslo_bors.py: henter Euronext-lista og slår opp org.nr
 ├── beregninger.py      # Nøkkeltall, balansekontroll, resultatbro, resultatdrivere (rene funksjoner)

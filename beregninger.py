@@ -475,3 +475,18 @@ def sterkest(kode: str, a: Optional[float], b: Optional[float]) -> Optional[int]
     if retning is None or a is None or b is None or a == b:
         return None
     return 0 if (a > b) == retning else 1
+
+
+def sammenligningstyper(type_a: str, typer_a: List[str], eier_a: bool,
+                        typer_b: List[str], standard_b: str, eier_b: bool) -> tuple:
+    """Hvilken regnskapstype (SELSKAP/KONSERN) hvert selskap skal vises med i sammenligningen.
+
+    Er ett av dem et eierselskap, sier bare konsernet noe om driften – da brukes konsern for
+    begge når begge har det, så tallene er sammenlignbare. Ellers samme type som hovedvisningen.
+    Returnerer (type_a, type_b).
+    """
+    if (eier_a or eier_b) and "KONSERN" in typer_a and "KONSERN" in typer_b:
+        return "KONSERN", "KONSERN"
+    if type_a in typer_b and not eier_b:
+        return type_a, type_a
+    return type_a, standard_b

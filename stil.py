@@ -126,20 +126,9 @@ header[data-testid="stHeader"] {{
   background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5 20 20'/%3E%3C/svg%3E") no-repeat 20px 50% / 19px;
 }}
 .st-key-sok input::placeholder {{ color: var(--muted); opacity: 1; }}
-/* Søkefeltet er en selectbox (forslag fra Oslo Børs-lista, fritt org.nr er også lov) */
-.st-key-sok [data-testid="stSelectbox"] label {{ display: none; }}
-.st-key-sok div[data-baseweb="select"] > div {{
-  min-height: 52px; border: none !important; border-radius: 980px !important; padding-left: 38px;
-  background-color: var(--surface) !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5 20 20'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: 20px 50%; background-size: 19px;
-  box-shadow: var(--card-shadow), 0 0 0 1px var(--line); transition: box-shadow 200ms var(--spring);
-  font-size: 1.0625rem; letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
-}}
-.st-key-sok div[data-baseweb="select"] > div:focus-within {{
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 28%, transparent), 0 0 0 1px var(--accent);
-}}
-.st-key-sok div[data-baseweb="select"] input {{ height: auto; padding-left: 0 !important; background: none; }}
+/* Søkefeltet er en egen komponent (iframe); luften rundt fokusringen ligger inne i den */
+.st-key-sok iframe, .st-key-kort-sammenlign iframe[title*="sokefelt"] {{ display: block; }}
+.st-key-sok {{ margin-left: -5px; margin-right: -5px; }}
 [class*="st-key-flere"] {{ margin-top: 4px; }}
 
 /* ---------- Knapper ---------- */

@@ -24,7 +24,7 @@ import formatering as fmt
 import forklaringer
 import stil
 from beregninger import (balansedrivere, balansekontroll, beregn_nokkeltall, er_eierselskap, finans_er_netto,
-                         resultatbro, resultatdrivere, samlet_status, sterkest)
+                         resultatbro, resultatdrivere, samlet_status, sammenligningstyper, sterkest)
 from excel_eksport import POSTER, lag_excel
 
 MAPPE = Path(__file__).parent
@@ -580,7 +580,8 @@ SAMMENLIGN_PROSENT = ["driftsmargin", "resultatmargin", "totalrentabilitet", "eg
                       "egenkapitalandel"]
 
 
-def vis_sammenligning(enhet_a: Dict[str, Any], a: Dict[str, Any], type_a: str, f: Dict[str, Any]) -> None:
+def vis_sammenligning(enhet_a: Dict[str, Any], raa_a: List[Dict[str, Any]], valgt_type: str, valgt_aar: int,
+                      f: Dict[str, Any]) -> None:
     """Valgt selskap side om side med et annet org.nr."""
     st.html(stil.seksjon("Sammenlign", "Se selskapet side om side med et annet"))
     with st.container(key="kort-sammenlign"):
@@ -615,8 +616,10 @@ def vis_sammenligning(enhet_a: Dict[str, Any], a: Dict[str, Any], type_a: str, f
         if std_b is None:
             st.warning("Fant ikke et gjenkjennelig regnskap for dette selskapet.", icon=":material/inbox:")
             return
-        # Samme regnskapstype gir mest like tall – men er B et eierselskap, sier bare konsernet noe om driften.
-        type_b = std_b if eier_b or type_a not in typer_b else type_a
+        _, typer_a, eier_a = standard_regnskap(raa_a)
+        type_a, type_b = sammenligningstyper(valgt_type, typer_a, eier_a, typer_b, std_b, eier_b)
+        regnskaper_a = api.velg_regnskap(raa_a, type_a)
+        a = next((r for r in regnskaper_a if r["aar"] == valgt_aar), regnskaper_a[0])
         regnskaper_b = api.velg_regnskap(raa_b, type_b)
         b = next((r for r in regnskaper_b if r["aar"] == a["aar"]), regnskaper_b[0])
 
@@ -652,7 +655,13 @@ def vis_sammenligning(enhet_a: Dict[str, Any], a: Dict[str, Any], type_a: str, f
                 "fordi den avhenger av hvor stort selskapet er."]
         if b["aar"] != a["aar"]:
             merk.append(f"{navn_b} har ikke regnskap for {a['aar']} i API-et, så {b['aar']} brukes.")
-        if type_b != type_a:
+        if type_a == type_b == "KONSERN" and (eier_a or eier_b) and valgt_type != "KONSERN":
+            eier = " og ".join(n for n, e in ((navn_a, eier_a), (navn_b, eier_b)) if e)
+            merk.append(f"Begge vises som konsern fordi morselskapet i {eier} er et eierselskap. Da er det "
+                        "konsernet som viser driften.")
+        elif type_a == type_b == "KONSERN" and eier_b and not eier_a:
+            merk.append(f"{navn_b} vises som konsern fordi morselskapet er et eierselskap.")
+        elif type_b != type_a:
             merk.append(f"{navn_b} vises som {typenavn.get(type_b, type_b.lower())}"
                         + (" fordi morselskapet er et eierselskap." if eier_b else
                            f" fordi det ikke har {typenavn.get(type_a, type_a.lower())}sregnskap."))
@@ -699,16 +708,28 @@ def velg_eksempel(orgnr: str) -> None:
     sett_sok("sok_inn", borsliste.etikett_for_orgnr(orgnr) or orgnr)
 
 
+# Eget søkefelt (komponenter/sok/index.html): vanlig tekstfelt med forslag fra Oslo Børs-lista.
+# Streamlits selectbox søker «fuzzy» (viser treff som ikke inneholder teksten) og lar seg ikke tømme.
+_sok_komponent = components.declare_component("sokefelt", path=str(MAPPE / "komponenter" / "sok"))
+
+
 def sokefelt(nokkel: str, query: str, plassholder: str) -> Optional[str]:
     """Søkefelt med Oslo Børs-selskapene som forslag. Godtar også et hvilket som helst org.nr.
 
-    Returnerer teksten som skal tolkes som org.nr, eller None (og viser da selv en melding
-    hvis det trengs)."""
+    Valgt tekst ligger i ``st.session_state[nokkel]`` (forslagsknappene kan sette den). Returnerer
+    teksten som skal tolkes som org.nr, eller None (og viser da selv en melding hvis det trengs)."""
     if nokkel not in st.session_state:
         q = st.query_params.get(query, "")
         st.session_state[nokkel] = (borsliste.etikett_for_orgnr(q) or q) or None
-    st.selectbox("Selskap", borsliste.etiketter(), key=nokkel, accept_new_options=True,
-                 placeholder=plassholder, label_visibility="collapsed")
+    # Komponenten husker siste svar (i session_state under sin key); et nytt løpenummer betyr at brukeren
+    # har valgt noe nytt. Leses FØR komponenten tegnes, så den får den nye verdien og ikke den gamle.
+    svar = st.session_state.get(f"komp-{nokkel}")
+    if isinstance(svar, dict) and svar.get("n") != st.session_state.get(f"{nokkel}-n"):
+        st.session_state[f"{nokkel}-n"] = svar.get("n")
+        st.session_state[nokkel] = (svar.get("tekst") or "").strip() or None
+    _sok_komponent(forslag=borsliste.forslag(), verdi=st.session_state.get(nokkel) or "",
+                   plassholder=plassholder, farger=stil.TOKENS[modus()], font=stil.FONT,
+                   key=f"komp-{nokkel}", default=None)
     tekst = st.session_state.get(nokkel)
     art, verdi = borsliste.tolk(tekst)
     if art == "orgnr":
@@ -743,6 +764,9 @@ def main() -> None:
         tekst = sokefelt("sok_inn", "orgnr", "Søk på selskap på Oslo Børs, ticker eller org.nr")
 
     if not st.session_state.get("sok_inn"):
+        for q in ("orgnr", "mot"):                 # søket er tømt: fjern det fra lenken også
+            if q in st.query_params:
+                del st.query_params[q]
         st.html('<p class="rd-forslag-tittel">Prøv et kjent selskap</p>')
         with st.container(horizontal=True, gap="small", key="forslag"):
             for navn, nr in EKSEMPLER:
@@ -864,7 +888,7 @@ def main() -> None:
         graf_resultat(siste, f)
 
     vis_utvikling(regnskaper, valgt_aar, f)
-    vis_sammenligning(enhet, siste, valgt, f)
+    vis_sammenligning(enhet, raa, valgt, valgt_aar, f)
 
     st.html(stil.seksjon("Detaljer"))
     vis_ordliste(siste)

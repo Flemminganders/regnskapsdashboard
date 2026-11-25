@@ -102,3 +102,18 @@ def tolk(tekst: Optional[str]) -> Tuple[str, Any]:
     if s.get("orgnr"):
         return "orgnr", s["orgnr"]
     return "utenlandsk", s
+
+
+@lru_cache(maxsize=1)
+def forslag() -> List[Dict[str, str]]:
+    """Kompakt liste til søkefeltet i nettleseren: etikett, navn, tickere, org.nr og marked/land."""
+    ut = []
+    for e, s in _etiketter().items():
+        if s.get("orgnr"):
+            m = s["marked"]
+        elif s.get("utenlandsk"):
+            m = f"registrert i {land(s)}"
+        else:
+            m = "uten org.nr"
+        ut.append({"e": e, "n": visningsnavn(s), "t": ", ".join(s["tickere"]), "o": s.get("orgnr") or "", "m": m})
+    return ut

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  Søkefelt for Regnskapsdashboard (Streamlit-komponent uten byggesteg).
+
+  Inn (args):  forslag     – [{e: etikett, n: navn, t: tickere, o: org.nr, m: marked/land}]
+               verdi       – teksten feltet skal vise (endres fra Python, f.eks. av forslagsknappene)
+               plassholder – plassholdertekst
+               farger, font – fargetokens og font fra stil.py (lys/mørk)
+  Ut (verdi):  {tekst, n}  – teksten brukeren valgte/sendte, og et løpenummer så Python ser nye valg.
+
+  Søket skjer her i nettleseren, så det kjører ingen ny Streamlit-runde før brukeren velger.
+  Bare forslag som faktisk inneholder det som er skrevet vises (ikke «fuzzy»).
+-->
+<style>
+  :root { --surface:#fff; --ink:#1d1d1f; --muted:#6e6e73; --line:rgba(0,0,0,.07); --fill-2:rgba(118,118,128,.08);
+          --accent:#0071e3; --card-shadow:none; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: transparent; font-family: var(--font, -apple-system, system-ui, sans-serif);
+               -webkit-font-smoothing: antialiased; }
+  body { padding: 5px 5px 6px; }
+  .felt { position: relative; }
+  input {
+    width: 100%; height: 52px; border: none; outline: none; border-radius: 980px;
+    padding: 0 48px 0 50px; font: inherit; font-size: 17px; letter-spacing: -0.01em; color: var(--ink);
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5 20 20'/%3E%3C/svg%3E") no-repeat 20px 50% / 19px;
+    box-shadow: var(--card-shadow), 0 0 0 1px var(--line);
+    transition: box-shadow 200ms cubic-bezier(.2,.8,.2,1);
+    font-variant-numeric: tabular-nums;
+  }
+  input::placeholder { color: var(--muted); opacity: 1; }
+  input:focus { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 28%, transparent), 0 0 0 1px var(--accent); }
+  input::-webkit-search-cancel-button { display: none; }
+  .tom {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px;
+    border: none; border-radius: 50%; background: var(--fill-2); color: var(--muted); cursor: pointer;
+    display: none; place-items: center; padding: 0; font-size: 15px; line-height: 1;
+  }
+  .tom.vis { display: grid; }
+  .tom:hover { color: var(--ink); }
+  .tom:active { transform: translateY(-50%) scale(.92); }
+  .liste {
+    margin: 8px 0 0; padding: 6px; list-style: none; border-radius: 16px; background: var(--surface);
+    box-shadow: var(--card-shadow), 0 0 0 1px var(--line); display: none;
+  }
+  .liste.vis { display: block; }
+  .liste li {
+    display: flex; align-items: baseline; gap: 10px; padding: 10px 12px; border-radius: 10px; cursor: pointer;
+    color: var(--ink); font-size: 15px; letter-spacing: -0.01em;
+  }
+  .liste li .navn { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .liste li .info { color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+                    font-variant-numeric: tabular-nums; }
+  .liste li mark { background: none; color: var(--accent); }
+  .liste li.aktiv { background: var(--fill-2); }
+  .liste .hint { color: var(--muted); font-size: 13px; padding: 10px 12px; cursor: default; }
+  @media (max-width: 600px) { .liste li { flex-direction: column; gap: 1px; } }
+  @media (prefers-reduced-motion: reduce) { input { transition: none; } }
+</style>
+</head>
+<body>
+<div class="felt">
+  <input id="inn" type="search" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
+         role="combobox" aria-expanded="false" aria-controls="liste" aria-autocomplete="list">
+  <button class="tom" id="tom" type="button" aria-label="Tøm søket" title="Tøm">✕</button>
+</div>
+<ul class="liste" id="liste" role="listbox"></ul>
+<script>
+(function () {
+  const inn = document.getElementById("inn"), liste = document.getElementById("liste"), tom = document.getElementById("tom");
+  let forslag = [], sistVerdi = null, treff = [], aktiv = -1, apen = false;
+
+  // --- Streamlit-protokollen (komponent-API v1) ---
+  const send = (type, data) => window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type }, data), "*");
+  const hoyde = () => send("streamlit:setFrameHeight", { height: Math.ceil(document.body.scrollHeight) });
+  const velg = (tekst) => {
+    lukk();
+    inn.value = tekst; sistVerdi = tekst; oppdaterTom();
+    send("streamlit:setComponentValue", { value: { tekst, n: Date.now() }, dataType: "json" });
+    inn.blur();
+  };
+
+  // --- Søk: normaliser (små bokstaver, uten aksenter, men behold æøå) og krev at teksten faktisk finnes ---
+  const norm = (s) => (s || "").toLowerCase().replace(/å/g, "\u0001").normalize("NFD")
+    .replace(/[̀-ͯ]/g, "").replace(/\u0001/g, "å").replace(/[^a-z0-9æøå ]+/g, " ").replace(/\s+/g, " ").trim();
+  const bare = (s) => s.replace(/ /g, "");
+
+  function sok(q) {
+    const n = norm(q), kompakt = bare(n);
+    if (!n) return [];
+    const tall = /^\d+$/.test(kompakt);
+    const res = [];
+    for (const f of forslag) {
+      let r = null;
+      if (tall) {
+        if (f.o && f.o.startsWith(kompakt)) r = 0;
+      } else {
+        const navn = f._n, ord = f._ord, tick = f._t;
+        if (tick.includes(kompakt)) r = 0;                                  // eksakt ticker
+        else if (navn === n || ord.includes(n)) r = 1;                      // helt ord som stemmer («hydro»)
+        else if (navn.startsWith(n)) r = 1.5;                               // navnet starter med teksten
+        else if (ord.some(o => o.startsWith(n))) r = 2;                     // et ord starter med teksten
+        else if (tick.some(t => t.startsWith(kompakt))) r = 3;              // ticker starter med teksten
+        else if (n.length >= 3 && navn.includes(n)) r = 4;                  // teksten finnes inne i navnet
+      }
+      if (r !== null) res.push([r, f]);
+    }
+    res.sort((a, b) => a[0] - b[0] || a[1]._n.localeCompare(b[1]._n, "no"));
+    return res.slice(0, 8).map(x => x[1]);
+  }
+
+  // Uthev teksten i navnet (bare når den finnes som den står, ellers vises navnet uten utheving)
+  function uthev(navn, q) {
+    const e = (s) => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const i = q ? navn.toLowerCase().indexOf(q.toLowerCase().trim()) : -1;
+    if (!q || i < 0) return e(navn);
+    const l = q.trim().length;
+    return e(navn.slice(0, i)) + "<mark>" + e(navn.slice(i, i + l)) + "</mark>" + e(navn.slice(i + l));
+  }
+
+  function tegn() {
+    const q = inn.value;
+    treff = sok(q);
+    aktiv = treff.length ? 0 : -1;
+    if (!q.trim()) { lukk(); return; }
+    const tall = /^[\d\s.\-]+$/.test(q.trim());
+    let html = treff.map((f, i) =>
+      `<li role="option" data-i="${i}" class="${i === aktiv ? "aktiv" : ""}">` +
+      `<span class="navn">${uthev(f.n, q)}</span><span class="info">${f.t ? f.t.replace(/[<&]/g, "") + " · " : ""}${f.o || ""}${f.m ? (f.o ? " · " : "") + f.m : ""}</span></li>`).join("");
+    if (!treff.length) {
+      html = `<li class="hint">${tall ? "Trykk Enter for å slå opp org.nr" : "Ingen børsnoterte selskaper passer. Søk med org.nr (9 siffer) for andre selskaper."}</li>`;
+    }
+    liste.innerHTML = html;
+    apen = true; liste.classList.add("vis"); inn.setAttribute("aria-expanded", "true");
+    hoyde();
+  }
+  function lukk() {
+    apen = false; liste.classList.remove("vis"); inn.setAttribute("aria-expanded", "false"); aktiv = -1;
+    requestAnimationFrame(hoyde);
+  }
+  function marker(i) {
+    aktiv = i;
+    liste.querySelectorAll("li[data-i]").forEach(li => li.classList.toggle("aktiv", Number(li.dataset.i) === aktiv));
+  }
+  const oppdaterTom = () => tom.classList.toggle("vis", inn.value.length > 0);
+
+  inn.addEventListener("input", () => { oppdaterTom(); tegn(); });
+  inn.addEventListener("focus", () => { if (inn.value && inn.value === sistVerdi) inn.select(); });
+  inn.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown" && treff.length) { e.preventDefault(); if (!apen) tegn(); marker((aktiv + 1) % treff.length); }
+    else if (e.key === "ArrowUp" && treff.length) { e.preventDefault(); marker((aktiv - 1 + treff.length) % treff.length); }
+    else if (e.key === "Escape") { if (apen) lukk(); else inn.blur(); }
+    else if (e.key === "Enter") {
+      e.preventDefault();
+      const q = inn.value.trim();
+      if (apen && aktiv >= 0 && treff[aktiv]) velg(treff[aktiv].e);
+      else velg(q);                      // fritt org.nr, eller tomt felt = nullstill
+    }
+  });
+  liste.addEventListener("mousedown", (e) => {      // mousedown, så det skjer før feltet mister fokus
+    const li = e.target.closest("li[data-i]");
+    if (li) { e.preventDefault(); velg(treff[Number(li.dataset.i)].e); }
+  });
+  liste.addEventListener("mousemove", (e) => {
+    const li = e.target.closest("li[data-i]");
+    if (li && Number(li.dataset.i) !== aktiv) marker(Number(li.dataset.i));
+  });
+  inn.addEventListener("blur", () => setTimeout(lukk, 120));
+  tom.addEventListener("click", () => { inn.value = ""; oppdaterTom(); lukk(); inn.focus();
+    if (sistVerdi) { sistVerdi = ""; send("streamlit:setComponentValue", { value: { tekst: "", n: Date.now() }, dataType: "json" }); } });
+
+  window.addEventListener("message", (ev) => {
+    if (!ev.data || ev.data.type !== "streamlit:render") return;
+    const a = ev.data.args || {};
+    if (a.farger) for (const [k, v] of Object.entries(a.farger)) document.documentElement.style.setProperty("--" + k, v);
+    if (a.font) document.documentElement.style.setProperty("--font", a.font);
+    if (a.forslag && a.forslag !== forslag && a.forslag.length !== forslag.length) {
+      forslag = a.forslag.map(f => Object.assign({}, f, {
+        _n: norm(f.n), _ord: norm(f.n).split(" "), _t: (f.t || "").split(",").map(t => bare(norm(t))).filter(Boolean)
+      }));
+    }
+    if (a.plassholder) inn.placeholder = a.plassholder;
+    // Verdi fra Python (start, forslagsknapper): vis den, men ikke overskriv mens brukeren skriver.
+    if (a.verdi !== undefined && a.verdi !== sistVerdi && document.activeElement !== inn) {
+      inn.value = a.verdi || ""; sistVerdi = a.verdi; oppdaterTom();
+    }
+    hoyde();
+  });
+  send("streamlit:componentReady", { apiVersion: 1 });
+  hoyde();
+})();
+</script>
+</body>
+</html>
