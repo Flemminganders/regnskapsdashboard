@@ -18,6 +18,33 @@ import plotly.graph_objects as go
 import streamlit as st
 import streamlit.components.v1 as components
 
+
+def _last_paa_nytt_ved_endring() -> None:
+    """Streamlit Cloud henter ny kode ved push og kjører app.py på nytt, men de andre modulene blir
+    liggende i minnet i gammel versjon (gir ImportError når app.py bruker noe nytt). Last derfor inn
+    prosjektets egne moduler på nytt når fila er endret siden sist. Rekkefølgen er avhengighetsrekkefølgen."""
+    import importlib
+    import os
+    import sys
+    for navn in ("formatering", "beregninger", "brreg_api", "borsliste", "forklaringer", "stil", "valuta",
+                 "tolkning", "sammendrag", "excel_eksport"):
+        modul = sys.modules.get(navn)
+        fil = getattr(modul, "__file__", None)
+        if not fil:
+            continue
+        try:
+            endret = os.path.getmtime(fil)
+        except OSError:
+            continue
+        # Uten tidsstempel (lastet før denne sjekken fantes, f.eks. en gammel prosess i skyen) eller med
+        # endret fil: last inn på nytt. Billig – modulene er små, og det skjer bare når noe er endret.
+        if getattr(modul, "_lastet_mtime", None) != endret:
+            modul = importlib.reload(modul)
+            modul._lastet_mtime = endret
+
+
+_last_paa_nytt_ved_endring()
+
 import borsliste
 import brreg_api as api
 import formatering as fmt
