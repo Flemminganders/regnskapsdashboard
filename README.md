@@ -117,7 +117,7 @@ regnskapsdashboard/
 ├── komponenter/sok/    # Eget søkefelt (HTML/JS-komponent uten byggesteg): søker i nettleseren, kan tømmes
 ├── data/oslo_bors.json # Oslo Børs-selskapene med org.nr (lages av verktoy/oppdater_oslo_bors.py)
 ├── verktoy/            # oppdater_oslo_bors.py: henter Euronext-lista og slår opp org.nr
-├── beregninger.py      # Nøkkeltall, Altman Z'', balansekontroll, resultatbro, resultatdrivere (rene funksjoner)
+├── beregninger.py      # Nøkkeltall, balansekontroll, resultatbro, resultatdrivere (rene funksjoner)
 ├── sammendrag.py       # «Kort fortalt»: regelbasert sammendrag i klartekst
 ├── tolkning.py         # Vurdering (sterk/middels/svak) og klartekst per nøkkeltall
 ├── valuta.py           # Norges Banks valutakurser og omregning til NOK
@@ -134,7 +134,8 @@ regnskapsdashboard/
 │   ├── test_beregninger.py   # Nøkkeltall, manglende tall, kontroll, validering, API-feil
 │   ├── test_excel.py         # Formler i Excel-fila
 │   ├── test_sammendrag.py    # Sammendraget i klartekst
-│   ├── test_skatt_likviditet2_altman.py
+│   ├── test_skatt_likviditet2.py
+│   ├── test_finans.py        # Banker og forsikring (ESEF-utdrag fra DNB)
 │   └── data/                 # Lagret API-svar for Equinor (testdata)
 ├── utforsking/         # Råsvarene fra første utforsking av API-et
 ├── README.md
