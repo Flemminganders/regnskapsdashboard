@@ -17,6 +17,16 @@ alt er vanlig Python som regner på åpne data.
   på hvorfor de ikke har årsregnskap i Regnskapsregisteret.
 - **Selskapskort** – navn, org.nr, organisasjonsform, næring, adresse, ansatte,
   stiftelsesdato, aksjekapital, hjemmeside og varsel ved konkurs/avvikling.
+- **Faner** – Oversikt · Nøkkeltall · Grafer · Utvikling · Sammenlign · Detaljer, i stedet for én lang side.
+  En sammenligningslenke (`?mot=`) åpner rett på Sammenlign.
+- **Kort fortalt** – et sammendrag i klartekst øverst i Oversikt (`sammendrag.py`): en overskrift («Lønnsomt og
+  solid i 2025») og 5–8 setninger om inntekter, resultat og største driver, margin, skatt, soliditet, likviditet og
+  konkursrisiko. Fargede prikker viser retning. Regelbasert, ingen KI.
+- **Konkursrisiko (Altman Z'')** – 6,56·X1 + 3,26·X2 + 6,72·X3 + 1,05·X4 (arbeidskapital, opptjent egenkapital og
+  driftsresultat delt på eiendeler, og egenkapital delt på gjeld). Over 2,6 er trygg sone, 1,1–2,6 er gråsone og
+  under 1,1 er faresone. Vises som et kort med skala og bidraget fra hver del, og som nøkkeltall under Soliditet.
+  Mangler opptjent egenkapital, regnes den som egenkapital minus innskutt. Når nesten alt er ført som innskutt
+  (noen IFRS-konsern, f.eks. Equinor konsern), varsles det at scoren trolig er for lav.
 - **Hovedtall** – driftsinntekter, driftsresultat, årsresultat, sum eiendeler og
   egenkapital, med endring fra året før.
 - **Nøkkeltall** med formel, forklaring og tallene som er brukt:
@@ -27,10 +37,14 @@ alt er vanlig Python som regner på åpne data.
   | Resultatmargin | Ordinært resultat før skatt ÷ Sum driftsinntekter |
   | Totalrentabilitet | (Resultat før skatt + Rentekostnader) ÷ Sum eiendeler – når rentekostnader er oppgitt; ellers (Driftsresultat + Finansinntekter) ÷ Sum eiendeler |
   | Egenkapitalrentabilitet | Årsresultat ÷ Sum egenkapital |
+  | Effektiv skattesats | Skattekostnad ÷ Resultat før skatt («ikke meningsfull» ved resultat ≤ 0) |
   | Likviditetsgrad 1 | Omløpsmidler ÷ Kortsiktig gjeld |
+  | Likviditetsgrad 2 | (Omløpsmidler − Varer) ÷ Kortsiktig gjeld. Mangler varer, men fordringer + investeringer + bank = omløpsmidler, er varelageret 0 |
   | Arbeidskapital | Omløpsmidler − Kortsiktig gjeld |
   | Egenkapitalandel | Sum egenkapital ÷ Sum egenkapital og gjeld |
   | Gjeldsgrad | Sum gjeld ÷ Sum egenkapital |
+  | Rentedekningsgrad | (Resultat før skatt + Rentekostnader) ÷ Rentekostnader |
+  | Konkursrisiko (Altman Z'') | Se over |
 
 - **Balansekontroll** – sjekker at eiendeler = egenkapital + gjeld, og at
   delsummene stemmer. Små avvik (≤ 0,01 % eller ≤ 1 000) merkes som avrunding.
@@ -93,7 +107,8 @@ regnskapsdashboard/
 ├── komponenter/sok/    # Eget søkefelt (HTML/JS-komponent uten byggesteg): søker i nettleseren, kan tømmes
 ├── data/oslo_bors.json # Oslo Børs-selskapene med org.nr (lages av verktoy/oppdater_oslo_bors.py)
 ├── verktoy/            # oppdater_oslo_bors.py: henter Euronext-lista og slår opp org.nr
-├── beregninger.py      # Nøkkeltall, balansekontroll, resultatbro, resultatdrivere (rene funksjoner)
+├── beregninger.py      # Nøkkeltall, Altman Z'', balansekontroll, resultatbro, resultatdrivere (rene funksjoner)
+├── sammendrag.py       # «Kort fortalt»: regelbasert sammendrag i klartekst
 ├── excel_eksport.py    # Lager Excel-fila med formler
 ├── formatering.py      # Norsk tallformat og «mangler»
 ├── forklaringer.py     # Enkle forklaringer (i-knapper og ordliste)
@@ -105,6 +120,8 @@ regnskapsdashboard/
 ├── tests/
 │   ├── test_beregninger.py   # Nøkkeltall, manglende tall, kontroll, validering, API-feil
 │   ├── test_excel.py         # Formler i Excel-fila
+│   ├── test_sammendrag.py    # Sammendraget i klartekst
+│   ├── test_skatt_likviditet2_altman.py
 │   └── data/                 # Lagret API-svar for Equinor (testdata)
 ├── utforsking/         # Råsvarene fra første utforsking av API-et
 ├── README.md

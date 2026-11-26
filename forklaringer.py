@@ -85,6 +85,25 @@ FORKLARINGER: Dict[str, Forklaring] = {
         "regnes ut når selskapet har oppgitt rentekostnadene sine.",
     ]),
 
+    # --- Oversikt -------------------------------------------------------------
+    "sammendrag": ("Kort fortalt", [
+        "Et kort sammendrag av regnskapet, skrevet automatisk ut fra tallene i appen. Det brukes ingen KI. "
+        "Faste regler bestemmer hvilke setninger som tas med.",
+        "Prikkene viser retning: grønt er sterkt, oransje er verdt å se nærmere på, og rødt er svakt. Grå "
+        "prikker er bare informasjon.",
+        "Grensene er tommelfingerregler. En egenkapitalandel på minst 35 % kalles solid, og under 15 % kalles "
+        "lav. Normalt nivå varierer mellom bransjer.",
+    ]),
+    "altman": ("Konkursrisiko (Altman Z'')", [
+        "En kjent formel fra forskeren Edward Altman som slår sammen fire nøkkeltall til én score. Den ble laget "
+        "for å skille selskaper som senere fikk betalingsproblemer fra dem som klarte seg.",
+        "Over 2,6 er trygg sone, 1,1–2,6 er gråsone og under 1,1 er faresone. Høyere er bedre.",
+        "De fire delene er arbeidskapital, opptjent egenkapital (tilbakeholdt overskudd), driftsresultat og "
+        "egenkapital sett mot gjelden. Tallet til høyre er hvor mye hver del bidrar til scoren.",
+        "Scoren er et varsellys, ikke en spådom. Den passer dårlig for banker, forsikring, eiendomsselskaper og "
+        "rene eierselskaper.",
+    ]),
+
     # --- Seksjoner -----------------------------------------------------------
     "drivere": ("Hva drev endringen?", [
         "Årsresultatet er driftsinntekter minus driftskostnader, pluss netto finans, minus skatt. Appen ser "

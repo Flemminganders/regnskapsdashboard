@@ -24,7 +24,7 @@ def test_ark_finnes():
 def test_nokkeltall_er_formler():
     ws = lag_bok()["Nøkkeltall"]
     rader = {ws.cell(r, 2).value: r for r in range(5, ws.max_row + 1)}
-    assert len(rader) == 9
+    assert len(rader) == 12
     driftsmargin = ws.cell(rader["Driftsmargin"], 4).value
     assert driftsmargin.startswith("=IF(")
     assert "Regnskap!" in driftsmargin and "/" in driftsmargin

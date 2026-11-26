@@ -398,6 +398,60 @@ header[data-testid="stHeader"] {{
 .rd-ord dd {{ margin: 0; color: var(--ink-2); font-size: .8125rem; line-height: 1.5; }}
 .rd-ord dd p {{ margin: 0 0 6px; }}
 
+/* ---------- Faner (segmentert kontroll i Apple-stil) ---------- */
+.stTabs [data-baseweb="tab-list"] {{
+  background: var(--fill); padding: 3px; border-radius: 980px; gap: 2px; width: fit-content; max-width: 100%;
+  overflow-x: auto; scrollbar-width: none; margin-top: 26px;
+}}
+.stTabs [data-baseweb="tab-list"]::-webkit-scrollbar {{ display: none; }}
+.stTabs [data-baseweb="tab"] {{
+  height: 34px; padding: 0 18px; border-radius: 980px; background: transparent; color: var(--ink-2);
+  flex: none; transition: background-color 250ms var(--spring), box-shadow 250ms var(--spring), color 150ms ease;
+}}
+.stTabs [data-baseweb="tab"] p {{ font-size: .9375rem; font-weight: 500; letter-spacing: -0.01em; }}
+.stTabs [data-baseweb="tab"]:hover {{ color: var(--ink); }}
+.stTabs [data-baseweb="tab"][aria-selected="true"] {{ background: var(--thumb); box-shadow: var(--thumb-shadow); color: var(--ink); }}
+.stTabs [data-baseweb="tab"]:focus-visible {{ outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 1px; }}
+.stTabs [data-baseweb="tab-highlight"], .stTabs [data-baseweb="tab-border"] {{ display: none; }}
+.stTabs [data-baseweb="tab-panel"] {{ padding-top: 6px; }}
+.stTabs [data-baseweb="tab-panel"] .rd-seksjon {{ margin-top: 28px; }}
+@media (max-width: 600px) {{ .stTabs [data-baseweb="tab"] {{ padding: 0 13px; }} }}
+
+/* ---------- Kort fortalt (sammendrag) ---------- */
+.rd-sam-overskrift {{ margin: 0 0 10px; font-size: 1.375rem; line-height: 1.2; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }}
+.rd-sam {{ list-style: none; margin: 0; padding: 0; }}
+.rd-sam li {{ position: relative; padding: 9px 0 9px 20px; border-top: 1px solid var(--line); color: var(--ink-2);
+  font-size: .9375rem; line-height: 1.45; letter-spacing: -0.006em; font-variant-numeric: tabular-nums; }}
+.rd-sam li:first-child {{ border-top: none; }}
+.rd-sam li::before {{ content: ""; position: absolute; left: 2px; top: 16px; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--axis); }}
+.rd-sam li.ok::before {{ background: var(--up); }}
+.rd-sam li.adv::before {{ background: var(--warn); }}
+.rd-sam li.feil::before {{ background: var(--down); }}
+
+/* ---------- Konkursrisiko (Altman Z'') ---------- */
+.rd-z-topp {{ display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin: 2px 0 14px; }}
+.rd-z-tall {{ font-size: 2.5rem; line-height: 1; font-weight: 700; letter-spacing: -0.03em; color: var(--ink);
+  font-variant-numeric: tabular-nums; }}
+.rd-z-skala {{ position: relative; height: 10px; display: flex; gap: 2px; margin: 4px 0 6px; }}
+.rd-z-skala span {{ height: 100%; border-radius: 3px; }}
+.rd-z-skala span.fare {{ background: var(--down-bg); }}
+.rd-z-skala span.graa {{ background: var(--warn-bg); }}
+.rd-z-skala span.trygg {{ background: var(--up-bg); }}
+.rd-z-skala span:first-child {{ border-radius: 980px 3px 3px 980px; }}
+.rd-z-skala span:last-child {{ border-radius: 3px 980px 980px 3px; }}
+.rd-z-skala i {{ position: absolute; top: 50%; width: 16px; height: 16px; margin-left: -8px; transform: translateY(-50%);
+  border-radius: 50%; background: var(--ink); border: 3px solid var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,.25); }}
+.rd-z-akse {{ position: relative; height: 16px; color: var(--muted); font-size: .6875rem; font-variant-numeric: tabular-nums; }}
+.rd-z-akse span {{ position: absolute; transform: translateX(-50%); }}
+.rd-z-ledd {{ margin: 12px 0 0; }}
+.rd-z-ledd div {{ display: grid; grid-template-columns: 1fr auto auto; gap: 12px; padding: 8px 0;
+  border-top: 1px solid var(--line); font-size: .8125rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }}
+.rd-z-ledd dt {{ margin: 0; }}
+.rd-z-ledd dd {{ margin: 0; text-align: right; white-space: nowrap; }}
+.rd-z-ledd dd.bidrag {{ color: var(--ink); font-weight: 600; min-width: 3.5em; }}
+
 /* ---------- Bunntekst ---------- */
 .rd-bunn {{ margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted);
   font-size: .75rem; line-height: 1.5; }}
@@ -616,3 +670,43 @@ def pdf_lenker(lenker: List[Tuple[int, str]]) -> str:
     return '<div class="rd-pdf">' + "".join(
         f'<a href="{e(url)}" target="_blank" rel="noopener" title="Årsregnskap {aar} (PDF)">{aar}</a>'
         for aar, url in lenker) + "</div>"
+
+
+def sammendrag(overskrift: Optional[str], punkter: List[Tuple[str, str]], info_html: str = "") -> str:
+    """Kortet «Kort fortalt». ``punkter`` er (tekst, tone) der tone er ok/adv/feil/noytral."""
+    hode = tittelrad("Kort fortalt", "Laget automatisk av tallene", info_html, luft_under=True)
+    o = f'<h3 class="rd-sam-overskrift">{e(overskrift)}</h3>' if overskrift else ""
+    rader = "".join(f'<li class="{e(tone)}">{e(tekst)}</li>' for tekst, tone in punkter)
+    return f'<div class="rd-kort rd-sammendrag">{hode}{o}<ul class="rd-sam">{rader}</ul></div>'
+
+
+# Skalaen i konkursrisikokortet går fra Z_MIN til Z_MAX (scoren klemmes inn i dette området).
+Z_MIN, Z_MAX = -1.0, 5.0
+
+
+def _z_pos(z: float) -> float:
+    return max(0.0, min(100.0, (z - Z_MIN) / (Z_MAX - Z_MIN) * 100))
+
+
+def konkursrisiko(score: Optional[float], score_tekst: str, sone: Optional[str],
+                  grenser: Tuple[float, float], ledd: List[Tuple[str, str, str]], merknader: List[str],
+                  info_html: str = "") -> str:
+    """Kortet for Altman Z''. ``ledd`` er (navn, forholdstall, bidrag) som ferdig tekst."""
+    hode = tittelrad("Konkursrisiko", "Altman Z''-score for selskaper uten markedsverdi", info_html,
+                     luft_under=True)
+    merk = "".join(f'<p class="rd-merk">{e(m)}</p>' for m in merknader)
+    if score is None:
+        return (f'<div class="rd-kort">{hode}<p class="rd-tom">Scoren kan ikke regnes ut fordi noen av tallene '
+                f'mangler.</p>{merk}</div>')
+    fare, trygg = grenser
+    pille_ = {"trygg": pille("Trygg sone", "ok", "sjekk"), "grå": pille("Gråsone", "adv", "utrop"),
+              "fare": pille("Faresone", "feil", "utrop")}[sone or "grå"]
+    b1, b2 = _z_pos(fare), _z_pos(trygg)
+    skala = (f'<div class="rd-z-skala" role="img" aria-label="Score {e(score_tekst)} på skalaen">'
+             f'<span class="fare" style="width:{b1:.1f}%"></span><span class="graa" style="width:{b2 - b1:.1f}%"></span>'
+             f'<span class="trygg" style="width:{100 - b2:.1f}%"></span><i style="left:{_z_pos(score):.1f}%"></i></div>'
+             f'<div class="rd-z-akse"><span style="left:{b1:.1f}%">{e(f"{fare:.1f}".replace(".", ","))}</span>'
+             f'<span style="left:{b2:.1f}%">{e(f"{trygg:.1f}".replace(".", ","))}</span></div>')
+    rader = "".join(f"<div><dt>{e(n)}</dt><dd>{e(x)}</dd><dd class=\"bidrag\">{e(b)}</dd></div>" for n, x, b in ledd)
+    return (f'<div class="rd-kort">{hode}<div class="rd-z-topp"><span class="rd-z-tall">{e(score_tekst)}</span>'
+            f'{pille_}</div>{skala}<dl class="rd-z-ledd">{rader}</dl>{merk}</div>')

@@ -67,11 +67,12 @@ class TestNokkeltall:
     def test_gjeldsgrad(self, enkelt):
         assert nt(enkelt, "gjeldsgrad").verdi == pytest.approx(1.5)
 
-    def test_alle_ni_finnes_med_formel(self, enkelt):
+    def test_alle_finnes_med_formel(self, enkelt):
         alle = beregn_nokkeltall(enkelt)
         assert {n.kode for n in alle} == {
-            "driftsmargin", "resultatmargin", "totalrentabilitet", "egenkapitalrentabilitet",
-            "likviditetsgrad1", "arbeidskapital", "egenkapitalandel", "gjeldsgrad", "rentedekningsgrad"}
+            "driftsmargin", "resultatmargin", "totalrentabilitet", "egenkapitalrentabilitet", "skattesats",
+            "likviditetsgrad1", "likviditetsgrad2", "arbeidskapital", "egenkapitalandel", "gjeldsgrad",
+            "rentedekningsgrad", "altman_z"}
         assert all(n.formel and n.forklaring for n in alle)
 
     def test_negativ_arbeidskapital(self, enkelt):

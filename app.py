@@ -23,8 +23,10 @@ import brreg_api as api
 import formatering as fmt
 import forklaringer
 import stil
-from beregninger import (balansedrivere, balansekontroll, beregn_nokkeltall, er_eierselskap, finans_er_netto,
-                         resultatbro, resultatdrivere, samlet_status, sammenligningstyper, sterkest)
+from beregninger import (ALTMAN_FARE, ALTMAN_TRYGG, altman_z, balansedrivere, balansekontroll, beregn_nokkeltall,
+                         er_eierselskap, finans_er_netto, resultatbro, resultatdrivere, samlet_status,
+                         sammenligningstyper, sterkest)
+from sammendrag import lag_sammendrag
 from excel_eksport import POSTER, lag_excel
 
 MAPPE = Path(__file__).parent
@@ -247,6 +249,27 @@ def vis_hovedtall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]]) -> None:
         kort.append(stil.kpi(navn, tall, enhet, delta, f"Nøyaktig: {fmt.belop(t.get(nokkel), valuta, kort=False)}",
                              forklar(nokkel)))
     st.html(f'<div class="rd-kpier">{"".join(kort)}</div>')
+
+
+def vis_oversikt(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eierselskap_alene: bool,
+                 balanse_avvik: bool) -> None:
+    """«Kort fortalt» (sammendrag i klartekst) og konkursrisiko side om side."""
+    sam = lag_sammendrag(r, forrige, eierselskap_alene, balanse_avvik)
+    venstre = stil.sammendrag(sam.overskrift, [(p.tekst, p.tone) for p in sam.punkter], forklar("sammendrag"))
+
+    az = altman_z(r["tall"])
+    ledd = [(navn, fmt.ganger(x), "mangler" if b is None else f"{'+' if b >= 0 else '−'}{fmt.ganger(abs(b))}")
+            for _, navn, x, _, b in az.ledd]
+    merknader = []
+    if eierselskap_alene:
+        merknader.append("Scoren er laget for selskaper med egen drift. For et eierselskap gir konsernet et bedre bilde.")
+    if balanse_avvik:
+        merknader.append("Balansen i registerets tall går ikke opp, så scoren kan være misvisende.")
+    if az.merknad:
+        merknader.append(az.merknad)
+    hoyre = stil.konkursrisiko(az.score, fmt.ganger(az.score), az.sone, (ALTMAN_FARE, ALTMAN_TRYGG), ledd,
+                               merknader, forklar("altman"))
+    st.html(f'<div class="rd-to" style="margin-top:6px">{venstre}{hoyre}</div>')
 
 
 def vis_nokkeltall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]]) -> None:
@@ -700,6 +723,37 @@ def vis_ordliste(r: Dict[str, Any]) -> None:
         st.html(stil.ordliste(innslag))
 
 
+def vis_detaljer(enhet: Dict[str, Any], orgnr: str, siste: Dict[str, Any], forrige: Optional[Dict[str, Any]],
+                 regnskaper: List[Dict[str, Any]], til_og_med_valgt: List[Dict[str, Any]], valgt: str,
+                 aar_liste: List[int], kontroller: list, status: str) -> None:
+    st.html(stil.seksjon("Detaljer"))
+    vis_ordliste(siste)
+    vis_tabell(regnskaper[:3])
+    if status not in ("avvik", "mangler"):
+        vis_balansedetaljer(siste, kontroller, status)
+
+    st.html(stil.seksjon("Last ned"))
+    with st.container(key="kort-last"):
+        st.html(stil.tittelrad("Excel med formler", f"Regnskapet for {siste['aar']}"
+                               + (f" og {forrige['aar']}" if forrige else "")
+                               + " med nøkkeltallene som ekte Excel-formler, så du kan se og endre "
+                                 "utregningene selv.", forklar("excel"), luft_under=True))
+        st.download_button(
+            "Last ned Excel",
+            data=lag_excel(enhet, til_og_med_valgt),
+            file_name=f"regnskap_{orgnr}_{siste['aar']}_{valgt.lower()}.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            type="primary", icon=":material/download:",
+        )
+    pdf_aar = hent_pdf_aar(orgnr)
+    if pdf_aar:
+        st.html('<div class="rd-kort" style="margin-top:14px">'
+                + stil.tittelrad("Årsregnskap som PDF", f"Kopi av det innsendte årsregnskapet fra "
+                                 f"Brønnøysundregistrene, {pdf_aar[-1]}–{pdf_aar[0]}. Her finner du også årene "
+                                 f"før {aar_liste[-1]}.", forklar("pdf"))
+                + stil.pdf_lenker([(a, api.pdf_lenke(orgnr, a)) for a in pdf_aar]) + "</div>")
+
+
 def sett_sok(nokkel: str, verdi: str) -> None:
     st.session_state[nokkel] = verdi
 
@@ -874,48 +928,43 @@ def main() -> None:
     if status in ("avvik", "mangler"):
         vis_balansedetaljer(siste, kontroller, status)
 
-    vis_hovedtall(siste, forrige)
+    eierselskap_alene = eierselskap and valgt == "SELSKAP"
     hendelser = api.tolk_hendelser(enhet_raa, hent_roller(orgnr))
-    vis_endringer(siste, forrige, hendelser)
-    vis_nokkeltall(siste, forrige)
-
-    st.html(stil.seksjon("Grafer", f"Regnskapsår {siste['aar']}"))
     f = stil.graffarger(m)
-    g1, g2 = st.columns(2, gap="small")
-    with g1, st.container(key="kort-balanse"):
-        graf_balanse(siste, f)
-    with g2, st.container(key="kort-resultat"):
-        graf_resultat(siste, f)
+    # En delt sammenligningslenke (?mot=…) åpner rett på Sammenlign.
+    fane_oversikt, fane_nt, fane_grafer, fane_utv, fane_sml, fane_detaljer = st.tabs(
+        ["Oversikt", "Nøkkeltall", "Grafer", "Utvikling", "Sammenlign", "Detaljer"],
+        default="Sammenlign" if st.query_params.get("mot") else "Oversikt")
 
-    vis_utvikling(regnskaper, valgt_aar, f)
-    vis_sammenligning(enhet, raa, valgt, valgt_aar, f)
+    with fane_oversikt:
+        vis_oversikt(siste, forrige, eierselskap_alene, status == "avvik")
+        vis_hovedtall(siste, forrige)
+        vis_endringer(siste, forrige, hendelser)
 
-    st.html(stil.seksjon("Detaljer"))
-    vis_ordliste(siste)
-    vis_tabell(regnskaper[:3])
-    if status not in ("avvik", "mangler"):
-        vis_balansedetaljer(siste, kontroller, status)
+    with fane_nt:
+        vis_nokkeltall(siste, forrige)
 
-    st.html(stil.seksjon("Last ned"))
-    with st.container(key="kort-last"):
-        st.html(stil.tittelrad("Excel med formler", f"Regnskapet for {siste['aar']}"
-                               + (f" og {forrige['aar']}" if forrige else "")
-                               + " med nøkkeltallene som ekte Excel-formler, så du kan se og endre "
-                                 "utregningene selv.", forklar("excel"), luft_under=True))
-        st.download_button(
-            "Last ned Excel",
-            data=lag_excel(enhet, til_og_med_valgt),
-            file_name=f"regnskap_{orgnr}_{siste['aar']}_{valgt.lower()}.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            type="primary", icon=":material/download:",
-        )
-    pdf_aar = hent_pdf_aar(orgnr)
-    if pdf_aar:
-        st.html('<div class="rd-kort" style="margin-top:14px">'
-                + stil.tittelrad("Årsregnskap som PDF", f"Kopi av det innsendte årsregnskapet fra "
-                                 f"Brønnøysundregistrene, {pdf_aar[-1]}–{pdf_aar[0]}. Her finner du også årene "
-                                 f"før {aar_liste[-1]}.", forklar("pdf"))
-                + stil.pdf_lenker([(a, api.pdf_lenke(orgnr, a)) for a in pdf_aar]) + "</div>")
+    with fane_grafer:
+        st.html(stil.seksjon("Grafer", f"Regnskapsår {siste['aar']}"))
+        g1, g2 = st.columns(2, gap="small")
+        with g1, st.container(key="kort-balanse"):
+            graf_balanse(siste, f)
+        with g2, st.container(key="kort-resultat"):
+            graf_resultat(siste, f)
+
+    with fane_utv:
+        if len(regnskaper) < 2:
+            st.html(stil.seksjon("Utvikling"))
+            st.info("Regnskapsregisteret har bare ett år for dette selskapet. Eldre år finnes som PDF under "
+                    "Detaljer.", icon=":material/info:")
+        vis_utvikling(regnskaper, valgt_aar, f)
+
+    with fane_sml:
+        vis_sammenligning(enhet, raa, valgt, valgt_aar, f)
+
+    with fane_detaljer:
+        vis_detaljer(enhet, orgnr, siste, forrige, regnskaper, til_og_med_valgt, valgt, aar_liste, kontroller,
+                     status)
 
     st.html(stil.bunn())
 

@@ -75,7 +75,9 @@
 
   // --- Streamlit-protokollen (komponent-API v1) ---
   const send = (type, data) => window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type }, data), "*");
-  const hoyde = () => send("streamlit:setFrameHeight", { height: Math.ceil(document.body.scrollHeight) });
+  // Høyden sendes ikke mens feltet er skjult (f.eks. i en fane som ikke er valgt): da er den 0.
+  // ResizeObserver sender riktig høyde så snart feltet blir synlig.
+  const hoyde = () => { const h = Math.ceil(document.body.scrollHeight); if (h > 0) send("streamlit:setFrameHeight", { height: h }); };
   const velg = (tekst) => {
     lukk();
     inn.value = tekst; sistVerdi = tekst; oppdaterTom();
@@ -190,6 +192,7 @@
     hoyde();
   });
   send("streamlit:componentReady", { apiVersion: 1 });
+  if (window.ResizeObserver) new ResizeObserver(hoyde).observe(document.body);
   hoyde();
 })();
 </script>

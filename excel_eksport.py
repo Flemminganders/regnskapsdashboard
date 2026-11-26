@@ -103,6 +103,24 @@ def _formel(kode: str, ref: Dict[str, str]) -> str:
         renter = f"SUM({r1},{r2})"
         return (f'=IF(AND(OR(ISNUMBER({r1}),ISNUMBER({r2})),ISNUMBER({rfs})),'
                 f'IF({renter}=0,"ingen renter",({rfs}+{renter})/{renter}),"{MANGLER}")')
+    if kode == "skattesats":
+        s, rfs = r["skattekostnad"], r["resultat_for_skatt"]
+        return f'=IF({_er_tall(s, rfs)},IF({rfs}<=0,"ikke meningsfull",{s}/{rfs}),"{MANGLER}")'
+    if kode == "likviditetsgrad2":
+        # Mangler varelageret, men resten av omløpspostene utgjør hele omløpsmidlene, er varelageret 0.
+        o, v, k = r["omlopsmidler"], r["varer"], r["kortsiktig_gjeld"]
+        f, i, b = r["fordringer"], r["investeringer"], r["bankinnskudd"]
+        uten_varer = (f'IF(AND(COUNT({f},{i},{b})>0,ABS({o}-SUM({f},{i},{b}))<=MAX({ABSOLUTT_TOLERANSE:.0f},'
+                      f'{RELATIV_TOLERANSE}*ABS({o}))),{o}/{k},"{MANGLER}")')
+        return (f'=IF({_er_tall(o, k)},IF({k}=0,"{MANGLER}",IF(ISNUMBER({v}),({o}-{v})/{k},{uten_varer})),'
+                f'"{MANGLER}")')
+    if kode == "altman_z":
+        o, k, d, ek = r["omlopsmidler"], r["kortsiktig_gjeld"], r["driftsresultat"], r["egenkapital"]
+        g, ta, op, inn = r["sum_gjeld"], r["sum_eiendeler"], r["opptjent_egenkapital"], r["innskutt_egenkapital"]
+        opptjent = f"IF(ISNUMBER({op}),{op},{ek}-{inn})"
+        return (f'=IF(AND({_er_tall(o, k, d, ek, g, ta)[4:-1]},OR(ISNUMBER({op}),ISNUMBER({inn}))),'
+                f'IF(OR({ta}=0,{g}=0),"{MANGLER}",6.56*({o}-{k})/{ta}+3.26*{opptjent}/{ta}'
+                f'+6.72*{d}/{ta}+1.05*{ek}/{g}),"{MANGLER}")')
     raise ValueError(f"Ukjent nøkkeltall: {kode}")
 
 
