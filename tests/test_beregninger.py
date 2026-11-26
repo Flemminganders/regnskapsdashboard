@@ -72,7 +72,7 @@ class TestNokkeltall:
         assert {n.kode for n in alle} == {
             "driftsmargin", "resultatmargin", "totalrentabilitet", "egenkapitalrentabilitet", "skattesats",
             "likviditetsgrad1", "likviditetsgrad2", "arbeidskapital", "egenkapitalandel", "gjeldsgrad",
-            "rentedekningsgrad", "altman_z"}
+            "rentedekningsgrad"}
         assert all(n.formel and n.forklaring for n in alle)
 
     def test_negativ_arbeidskapital(self, enkelt):

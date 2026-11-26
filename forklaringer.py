@@ -95,14 +95,46 @@ FORKLARINGER: Dict[str, Forklaring] = {
         "Grensene er tommelfingerregler. En egenkapitalandel på minst 35 % kalles solid, og under 15 % kalles "
         "lav. Normalt nivå varierer mellom bransjer.",
     ]),
-    "altman": ("Konkursrisiko (Altman Z'')", [
-        "En kjent formel fra forskeren Edward Altman som slår sammen fire nøkkeltall til én score. Den ble laget "
-        "for å skille selskaper som senere fikk betalingsproblemer fra dem som klarte seg.",
-        "Over 2,6 er trygg sone, 1,1–2,6 er gråsone og under 1,1 er faresone. Høyere er bedre.",
-        "De fire delene er arbeidskapital, opptjent egenkapital (tilbakeholdt overskudd), driftsresultat og "
-        "egenkapital sett mot gjelden. Tallet til høyre er hvor mye hver del bidrar til scoren.",
-        "Scoren er et varsellys, ikke en spådom. Den passer dårlig for banker, forsikring, eiendomsselskaper og "
-        "rene eierselskaper.",
+
+    "styrker": ("Styrker og svakheter", [
+        "Her samles nøkkeltallene som er tydelig sterke eller svake etter enkle tommelfingerregler. Tall i "
+        "mellomsjiktet vises ikke her, men finnes under Nøkkeltall.",
+        "Grensene passer for et vanlig selskap. Normalt nivå varierer mye mellom bransjer: en dagligvarekjede har "
+        "lave marginer, et programvareselskap høye. Bruk dette som en pekepinn, ikke en fasit.",
+    ]),
+
+    # --- Banker og forsikring ---------------------------------------------------
+    "finans_kilde": ("Hvor kommer banktallene fra?", [
+        "Brønnøysundregistrene deler ikke regnskapstall for banker og forsikringsselskaper i det åpne API-et, fordi "
+        "regnskapene deres er satt opp annerledes enn for vanlige selskaper.",
+        "Børsnoterte selskaper må levere årsrapporten i et maskinlesbart format (ESEF), der hvert tall er merket. "
+        "Appen henter tallene derfra, via filings.xbrl.org. Tallene gjelder hele konsernet.",
+        "Mindre banker som ikke er børsnotert, har ikke slike rapporter. Da finnes bare PDF-en.",
+    ]),
+    "risiko": ("Risiko", [
+        "Hvor trygt banken driver: hvor mye den taper på utlån, og hvor mye av utlånene som er finansiert med "
+        "kundenes innskudd i stedet for lån i markedet.",
+    ]),
+    "sum_inntekter": ("Sum inntekter", [
+        "Alt banken tjener: netto renteinntekter (renter fra utlån minus renter på innskudd og lån), provisjoner "
+        "og gebyrer, og andre inntekter.",
+    ]),
+    "utlan": ("Utlån til kunder", [
+        "Pengene banken har lånt ut til personer og bedrifter, for eksempel boliglån. Det er bankens viktigste "
+        "eiendel.",
+    ]),
+    "innskudd": ("Innskudd fra kunder", [
+        "Pengene kundene har på konto i banken. For banken er dette gjeld, fordi kundene kan ta pengene ut.",
+    ]),
+    "forsikringsinntekter": ("Forsikringsinntekter", [
+        "Premiene kundene betaler for forsikringene som gjaldt i året.",
+    ]),
+    "forsikringsresultat": ("Forsikringsresultat", [
+        "Premiene minus erstatninger og kostnader: det selskapet tjener på selve forsikringen, før avkastningen "
+        "på pengene det har investert.",
+    ]),
+    "resultat_for_skatt": ("Resultat før skatt", [
+        "Overskuddet etter alle inntekter og kostnader, men før skatten er trukket fra.",
     ]),
 
     # --- Seksjoner -----------------------------------------------------------

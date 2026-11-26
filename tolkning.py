@@ -11,7 +11,6 @@ from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
 import formatering as fmt
-from beregninger import ALTMAN_FARE, ALTMAN_TRYGG
 
 # kode -> (svak under, sterk fra, høyere er bedre). For gjeldsgrad er lavere bedre.
 GRENSER: Dict[str, Tuple[float, float, bool]] = {
@@ -24,7 +23,11 @@ GRENSER: Dict[str, Tuple[float, float, bool]] = {
     "egenkapitalandel": (0.15, 0.35, True),
     "gjeldsgrad": (5.0, 2.0, False),
     "rentedekningsgrad": (1.0, 3.0, True),
-    "altman_z": (ALTMAN_FARE, ALTMAN_TRYGG, True),
+    # Banker og forsikring (finans.py)
+    "kostnadsgrad": (0.60, 0.40, False),
+    "tap_utlan": (0.005, 0.001, False),
+    "innskuddsdekning": (0.5, 0.7, True),
+    "combined_ratio": (1.0, 0.9, False),
 }
 
 NIVA_TEKST = {"sterk": "Sterk", "middels": "Middels", "svak": "Svak"}
@@ -37,7 +40,9 @@ class Vurdering:
 
 
 def _tall(x: float, prosent: bool) -> str:
-    return fmt.prosent(x, 0) if prosent else fmt.ganger(x, 1)
+    if prosent:
+        return fmt.prosent(x, 1 if abs(x) < 0.01 else 0)
+    return fmt.ganger(x, 1)
 
 
 def vurder(kode: str, verdi: Optional[float]) -> Optional[Vurdering]:
@@ -46,15 +51,13 @@ def vurder(kode: str, verdi: Optional[float]) -> Optional[Vurdering]:
         return None
     svak, sterk, hoyere = GRENSER[kode]
     prosent = kode in ("driftsmargin", "resultatmargin", "totalrentabilitet", "egenkapitalrentabilitet",
-                       "egenkapitalandel")
+                       "egenkapitalandel", "kostnadsgrad", "tap_utlan", "innskuddsdekning", "combined_ratio")
     if hoyere:
         niva = "sterk" if verdi >= sterk else "svak" if verdi < svak else "middels"
         regel = f"Tommelfingerregel: {_tall(sterk, prosent)} eller mer er sterkt, under {_tall(svak, prosent)} er svakt."
     else:
         niva = "sterk" if verdi <= sterk else "svak" if verdi > svak else "middels"
         regel = f"Tommelfingerregel: {_tall(sterk, prosent)} eller lavere er sterkt, over {_tall(svak, prosent)} er svakt."
-    if kode == "altman_z":
-        regel = "Over 2,6 er trygg sone, under 1,1 er faresone."
     return Vurdering(niva, regel)
 
 
@@ -104,9 +107,22 @@ def klartekst(kode: str, verdi: Optional[float], valuta: str = "NOK") -> Optiona
         return "Gjelden er større enn alt selskapet eier, så eierne har i praksis ingenting igjen."
     if kode == "gjeldsgrad":
         return f"Selskapet har {fmt.ganger(verdi)} kr i gjeld for hver krone eierne har i selskapet."
+    if kode == "kostnadsgrad":
+        return f"Av hver 100 kr i inntekter gikk {_kr(verdi)} til å drive banken: lønn, IT, lokaler og annet."
+    if kode == "rentemargin":
+        return f"Banken tjente netto {_kr(verdi)} i renter for hver 100 kr den har i eiendeler."
+    if kode == "tap_utlan":
+        if verdi >= 0:
+            return f"For hver 100 kr banken har lånt ut, regnet den med å tape {fmt.ganger(verdi * 100, 2)} kr i år."
+        return "Banken fikk tilbake mer enn den fryktet å tape på utlån: tidligere avsetninger ble løst opp."
+    if kode == "innskuddsdekning":
+        return (f"For hver 100 kr banken har lånt ut, har kundene {_kr(verdi)} stående på konto i banken. "
+                "Resten er lånt i markedet.")
+    if kode == "combined_ratio":
+        return (f"Av hver 100 kr i forsikringspremie gikk om lag {_kr(verdi)} til erstatninger og kostnader. "
+                "Under 100 kr betyr overskudd på selve forsikringen.")
+    if kode == "egenkapitalandel_finans":
+        return f"Av hver 100 kr selskapet har i eiendeler, er {_kr(verdi)} eiernes egne penger. Resten er lånt eller innskudd."
     if kode == "rentedekningsgrad":
         return f"Overskuddet før renter var {fmt.ganger(verdi, 1)} ganger så stort som rentene selskapet måtte betale."
-    if kode == "altman_z":
-        sone = "trygg sone" if verdi > ALTMAN_TRYGG else "gråsonen" if verdi >= ALTMAN_FARE else "faresonen"
-        return f"Scoren {fmt.ganger(verdi)} er i {sone}. Den samler lønnsomhet, likviditet og gjeld i ett tall."
     return None

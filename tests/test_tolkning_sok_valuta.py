@@ -14,7 +14,6 @@ import valuta
     ("likviditetsgrad1", 0.88, "svak"), ("likviditetsgrad1", 2.0, "sterk"),
     ("egenkapitalandel", 0.379, "sterk"), ("egenkapitalandel", 0.20, "middels"),
     ("gjeldsgrad", 1.5, "sterk"), ("gjeldsgrad", 3.0, "middels"), ("gjeldsgrad", 6.0, "svak"),
-    ("altman_z", 1.93, "middels"), ("altman_z", 3.0, "sterk"), ("altman_z", 0.5, "svak"),
 ])
 def test_vurdering(kode, verdi, niva):
     assert tolkning.vurder(kode, verdi).niva == niva

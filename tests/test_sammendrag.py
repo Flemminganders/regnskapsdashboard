@@ -63,7 +63,7 @@ def test_negativ_egenkapital_og_svak_likviditet():
 def test_eierselskap_og_balanseavvik():
     s = lag_sammendrag(regnskap(2025), regnskap(2024), eierselskap_alene=True, balanse_avvik=True)
     assert s.punkter[0].tone == "feil" and "går ikke opp" in s.punkter[0].tekst
-    assert "eierselskap" in tekst(s) and "Altman" not in tekst(s)
+    assert "eierselskap" in tekst(s)
 
 
 def test_ulik_valuta_sammenlignes_ikke():
@@ -78,7 +78,7 @@ def test_equinor_konsern():
     rs = api.velg_regnskap(raa, "KONSERN")
     s = lag_sammendrag(rs[0], rs[1])
     assert s.overskrift and len(s.punkter) >= 5
-    assert "skattesats" in tekst(s) and "trolig for lav" in tekst(s)
+    assert "skattesats" in tekst(s) and "Altman" not in tekst(s)
 
 
 def test_overskrift_nevner_svakheter():

@@ -11,7 +11,8 @@ APP = (Path(__file__).parent.parent / "app.py").read_text()
 def test_alle_noekler_i_appen_finnes():
     brukt = set(re.findall(r'\bforklar\("([a-z_]+)"', APP))
     # Hovedtall og nøkkeltallgrupper hentes med variabel nøkkel:
-    brukt |= {"sum_driftsinntekter", "driftsresultat", "aarsresultat", "sum_eiendeler", "egenkapital",
+    brukt |= {"sum_driftsinntekter", "driftsresultat", "aarsresultat", "sum_eiendeler", "egenkapital", "risiko",
+              "sum_inntekter", "utlan", "innskudd", "forsikringsinntekter", "forsikringsresultat", "resultat_for_skatt",
               "lonnsomhet", "likviditet", "soliditet"}
     mangler = brukt - set(forklaringer.FORKLARINGER)
     assert not mangler, f"Mangler forklaring for: {mangler}"

@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
 import formatering as fmt
-from beregninger import ALTMAN_FARE, ALTMAN_TRYGG, beregn_nokkeltall, resultatdrivere
+from beregninger import beregn_nokkeltall, resultatdrivere
 
 # Grenser for ordene som brukes om egenkapitalandelen.
 EK_SOLID = 0.35
@@ -153,25 +153,11 @@ def lag_sammendrag(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eiersel
             punkter.append(Punkt(f"Omløpsmidlene dekker den kortsiktige gjelden (likviditetsgrad 1: {tall}).",
                                  "noytral"))
 
-    # --- Konkursrisiko ---------------------------------------------------------
-    z = nt["altman_z"].verdi
-    if z is not None and not eierselskap_alene:
-        start = f"Konkursrisikoscoren (Altman Z'') er {fmt.ganger(z)}"
-        if z > ALTMAN_TRYGG:
-            p = Punkt(f"{start}, i trygg sone.", "ok")
-        elif z >= ALTMAN_FARE:
-            p = Punkt(f"{start}, i gråsonen.", "noytral")
-        else:
-            p = Punkt(f"{start}, i faresonen.", "adv")
-        if nt["altman_z"].merknad and "IFRS" in nt["altman_z"].merknad:
-            p.tekst += " Den er trolig for lav, fordi registeret fører nesten all egenkapital som innskutt."
-        punkter.append(p)
-
-    return Sammendrag(_overskrift(ar, ek, eka, aar, lg1, None if eierselskap_alene else z), punkter)
+    return Sammendrag(_overskrift(ar, ek, eka, aar, lg1), punkter)
 
 
 def _overskrift(ar: Optional[float], ek: Optional[float], eka: Optional[float], aar: int,
-                lg1: Optional[float] = None, z: Optional[float] = None) -> Optional[str]:
+                lg1: Optional[float] = None) -> Optional[str]:
     """Én linje som oppsummerer: lønnsomt eller ikke, solid eller ikke, og de viktigste svakhetene."""
     if ar is None:
         return None
@@ -196,8 +182,6 @@ def _overskrift(ar: Optional[float], ek: Optional[float], eka: Optional[float], 
     svakheter = []
     if lg1 is not None and lg1 < 1:
         svakheter.append("stram likviditet")
-    if z is not None and z < ALTMAN_FARE:
-        svakheter.append("høy konkursrisiko")
     if svakheter:
         bindeord = " og " if ("men" in hoved or hoved.startswith("Underskudd og")) else ", men "
         hoved += bindeord + " og ".join(svakheter)

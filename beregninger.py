@@ -99,69 +99,6 @@ def varelager(t: Tall) -> tuple:
     return None, False
 
 
-def opptjent_egenkapital(t: Tall) -> tuple:
-    """(opptjent egenkapital, utledet). Er den ikke oppgitt, regnes den som sum egenkapital
-    minus innskutt egenkapital (egenkapitalen består av de to delene)."""
-    opptjent = t.get("opptjent_egenkapital")
-    if opptjent is not None:
-        return opptjent, False
-    rest = minus(t.get("egenkapital"), t.get("innskutt_egenkapital"))
-    return rest, rest is not None
-
-
-# Altman Z''-score (Altman 1995, versjonen uten markedsverdi, for selskaper som ikke er
-# industriselskaper eller ikke er børsnoterte). Grenser for sonene:
-ALTMAN_VEKTER = {"x1": 6.56, "x2": 3.26, "x3": 6.72, "x4": 1.05}
-ALTMAN_TRYGG = 2.6
-ALTMAN_FARE = 1.1
-
-
-@dataclass
-class Altman:
-    score: Optional[float]
-    ledd: List[tuple]              # (kode, navn, forholdstall, vekt, bidrag)
-    merknad: Optional[str] = None
-
-    @property
-    def sone(self) -> Optional[str]:
-        """«trygg», «grå» eller «fare» (None hvis scoren mangler)."""
-        if self.score is None:
-            return None
-        if self.score > ALTMAN_TRYGG:
-            return "trygg"
-        if self.score >= ALTMAN_FARE:
-            return "grå"
-        return "fare"
-
-
-def altman_z(t: Tall) -> Altman:
-    """Altman Z'' = 6,56·X1 + 3,26·X2 + 6,72·X3 + 1,05·X4.
-
-    X1 = arbeidskapital ÷ sum eiendeler, X2 = opptjent egenkapital ÷ sum eiendeler,
-    X3 = driftsresultat ÷ sum eiendeler, X4 = sum egenkapital ÷ sum gjeld.
-    """
-    ta = t.get("sum_eiendeler")
-    opptjent, utledet = opptjent_egenkapital(t)
-    forhold = [
-        ("x1", "Arbeidskapital ÷ eiendeler", del_(minus(t.get("omlopsmidler"), t.get("kortsiktig_gjeld")), ta)),
-        ("x2", "Opptjent egenkapital ÷ eiendeler", del_(opptjent, ta)),
-        ("x3", "Driftsresultat ÷ eiendeler", del_(t.get("driftsresultat"), ta)),
-        ("x4", "Egenkapital ÷ gjeld", del_(t.get("egenkapital"), t.get("sum_gjeld"))),
-    ]
-    ledd = [(k, n, x, ALTMAN_VEKTER[k], None if x is None else ALTMAN_VEKTER[k] * x) for k, n, x in forhold]
-    score = None if any(b is None for *_, b in ledd) else sum(b for *_, b in ledd)
-    merknader = []
-    if utledet:
-        merknader.append("Opptjent egenkapital er ikke oppgitt, så den er regnet som sum egenkapital minus "
-                         "innskutt egenkapital.")
-    ek, innskutt = t.get("egenkapital"), t.get("innskutt_egenkapital")
-    if (score is not None and ek and ek > 0 and innskutt is not None and opptjent is not None
-            and innskutt > 0.9 * ek and opptjent < 0.05 * ek):
-        merknader.append("Nesten hele egenkapitalen er ført som innskutt. Noen IFRS-konsern rapporterer slik til "
-                         "registeret, og da blir scoren trolig for lav.")
-    return Altman(score, ledd, " ".join(merknader) or None)
-
-
 def beregn_nokkeltall(t: Tall) -> List[Nokkeltall]:
     ek = t.get("egenkapital")
     driftsinntekter = t.get("sum_driftsinntekter")
@@ -311,20 +248,6 @@ def beregn_nokkeltall(t: Tall) -> List[Nokkeltall]:
     elif renter == 0:
         rdg.merknad = "Selskapet har ingen rentekostnader, så det er ingen renter å dekke."
     resultat.append(rdg)
-
-    az = altman_z(t)
-    resultat.append(Nokkeltall(
-        kode="altman_z", navn="Konkursrisiko (Altman Z'')", gruppe="Soliditet", enhet="ganger",
-        verdi=az.score,
-        formel="6,56·(Arbeidskapital ÷ Eiendeler) + 3,26·(Opptjent EK ÷ Eiendeler) "
-               "+ 6,72·(Driftsresultat ÷ Eiendeler) + 1,05·(Egenkapital ÷ Gjeld)",
-        forklaring="En samlet score for risikoen for økonomiske problemer, laget av fire nøkkeltall fra "
-                   "balansen og resultatet. Over 2,6 er trygg sone, 1,1–2,6 er gråsone og under 1,1 er "
-                   "faresone. Høyere er bedre.",
-        merknad=az.merknad,
-        inndata=["omlopsmidler", "kortsiktig_gjeld", "opptjent_egenkapital", "driftsresultat", "egenkapital",
-                 "sum_gjeld", "sum_eiendeler"],
-    ))
 
     return resultat
 
@@ -589,7 +512,7 @@ HOYERE_ER_BEDRE: Dict[str, Optional[bool]] = {
     "driftsmargin": True, "resultatmargin": True, "totalrentabilitet": True,
     "egenkapitalrentabilitet": True, "skattesats": None, "likviditetsgrad1": True,
     "likviditetsgrad2": True, "arbeidskapital": None, "egenkapitalandel": True, "gjeldsgrad": False,
-    "rentedekningsgrad": True, "altman_z": True,
+    "rentedekningsgrad": True,
 }
 
 

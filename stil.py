@@ -221,6 +221,8 @@ header[data-testid="stHeader"] {{
 
 /* ---------- Hovedtall ---------- */
 .rd-kpier {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }}
+.rd-kpier.seks {{ grid-template-columns: repeat(3, 1fr); }}
+@media (max-width: 760px) {{ .rd-kpier.seks {{ grid-template-columns: 1fr 1fr; }} }}
 @media (max-width: 520px) {{ .rd-kpier {{ grid-template-columns: 1fr 1fr; gap: 10px; }}
   .rd-kpi {{ padding: 16px; border-radius: 18px; }} .rd-kpi .big {{ font-size: 1.5rem; }}
   .rd-kpi .big .unit {{ display: block; margin: 4px 0 0; font-size: .8125rem; }} }}
@@ -430,27 +432,19 @@ header[data-testid="stHeader"] {{
 .rd-sam li.adv::before {{ background: var(--warn); }}
 .rd-sam li.feil::before {{ background: var(--down); }}
 
-/* ---------- Konkursrisiko (Altman Z'') ---------- */
-.rd-z-topp {{ display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin: 2px 0 14px; }}
-.rd-z-tall {{ font-size: 2.5rem; line-height: 1; font-weight: 700; letter-spacing: -0.03em; color: var(--ink);
-  font-variant-numeric: tabular-nums; }}
-.rd-z-skala {{ position: relative; height: 10px; display: flex; gap: 2px; margin: 4px 0 6px; }}
-.rd-z-skala span {{ height: 100%; border-radius: 3px; }}
-.rd-z-skala span.fare {{ background: var(--down-bg); }}
-.rd-z-skala span.graa {{ background: var(--warn-bg); }}
-.rd-z-skala span.trygg {{ background: var(--up-bg); }}
-.rd-z-skala span:first-child {{ border-radius: 980px 3px 3px 980px; }}
-.rd-z-skala span:last-child {{ border-radius: 3px 980px 980px 3px; }}
-.rd-z-skala i {{ position: absolute; top: 50%; width: 16px; height: 16px; margin-left: -8px; transform: translateY(-50%);
-  border-radius: 50%; background: var(--ink); border: 3px solid var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,.25); }}
-.rd-z-akse {{ position: relative; height: 16px; color: var(--muted); font-size: .6875rem; font-variant-numeric: tabular-nums; }}
-.rd-z-akse span {{ position: absolute; transform: translateX(-50%); }}
-.rd-z-ledd {{ margin: 12px 0 0; }}
-.rd-z-ledd div {{ display: grid; grid-template-columns: 1fr auto auto; gap: 12px; padding: 8px 0;
-  border-top: 1px solid var(--line); font-size: .8125rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }}
-.rd-z-ledd dt {{ margin: 0; }}
-.rd-z-ledd dd {{ margin: 0; text-align: right; white-space: nowrap; }}
-.rd-z-ledd dd.bidrag {{ color: var(--ink); font-weight: 600; min-width: 3.5em; }}
+
+/* ---------- Styrker og svakheter ---------- */
+.rd-ss + .rd-ss {{ margin-top: 14px; }}
+.rd-ss h4 {{ margin: 0 0 4px; font-size: .6875rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }}
+.rd-ss h4.sterk {{ color: var(--up); }}
+.rd-ss h4.svak {{ color: var(--warn); }}
+.rd-ss-rad {{ padding: 9px 0 9px 12px; border-top: 1px solid var(--line); position: relative; }}
+.rd-ss-rad::before {{ content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 2px; }}
+.rd-ss-rad.sterk::before {{ background: var(--up); }}
+.rd-ss-rad.svak::before {{ background: var(--warn); }}
+.rd-ss-topp {{ display: flex; justify-content: space-between; gap: 12px; font-size: .9375rem; color: var(--ink); }}
+.rd-ss-topp b {{ font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }}
+.stApp .rd-ss-rad p {{ margin: 3px 0 0; color: var(--ink-2); font-size: .8125rem; line-height: 1.45; }}
 
 /* ---------- Vurdering og klartekst i nøkkeltallene ---------- */
 .rd-nt .verdi {{ display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }}
@@ -671,7 +665,11 @@ def ordliste(innslag: List[Tuple[str, List[str]]]) -> str:
     return f'<dl class="rd-ordliste">{rader}</dl>'
 
 
-def bunn() -> str:
+def bunn(finans: bool = False) -> str:
+    if finans:
+        return ('<div class="rd-bunn">Kilde: selskapets årsrapport i ESEF-format (filings.xbrl.org), LEI-kode fra GLEIF, '
+                'og Enhetsregisteret (data.brreg.no). Tallene gjelder konsernet og er slik selskapet har rapportert dem. '
+                'Nøkkeltallene er forenklede og regnet på balansen ved årets slutt. Appen bruker ingen KI.</div>')
     return ('<div class="rd-bunn">Kilde: Enhetsregisteret og Regnskapsregisteret (data.brreg.no), lisens NLOD. '
             'Tallene er slik selskapet har rapportert dem. Nøkkeltallene er forenklede og regnet på balansen '
             'ved årets slutt. Appen bruker ingen KI.</div>')
@@ -734,33 +732,22 @@ def sammendrag(overskrift: Optional[str], punkter: List[Tuple[str, str]], info_h
     return f'<div class="rd-kort rd-sammendrag">{hode}{o}<ul class="rd-sam">{rader}</ul></div>'
 
 
-# Skalaen i konkursrisikokortet går fra Z_MIN til Z_MAX (scoren klemmes inn i dette området).
-Z_MIN, Z_MAX = -1.0, 5.0
-
-
-def _z_pos(z: float) -> float:
-    return max(0.0, min(100.0, (z - Z_MIN) / (Z_MAX - Z_MIN) * 100))
-
-
-def konkursrisiko(score: Optional[float], score_tekst: str, sone: Optional[str],
-                  grenser: Tuple[float, float], ledd: List[Tuple[str, str, str]], merknader: List[str],
-                  info_html: str = "") -> str:
-    """Kortet for Altman Z''. ``ledd`` er (navn, forholdstall, bidrag) som ferdig tekst."""
-    hode = tittelrad("Konkursrisiko", "Altman Z''-score for selskaper uten markedsverdi", info_html,
+def styrker_svakheter(sterke: List[Tuple[str, str, str]], svake: List[Tuple[str, str, str]],
+                      info_html: str = "", merknad: Optional[str] = None) -> str:
+    """Kortet «Styrker og svakheter»: nøkkeltallene som er sterke eller svake, med én setning hver."""
+    hode = tittelrad("Styrker og svakheter", "Nøkkeltall som skiller seg ut, etter tommelfingerregler", info_html,
                      luft_under=True)
-    merk = "".join(f'<p class="rd-merk">{e(m)}</p>' for m in merknader)
-    if score is None:
-        return (f'<div class="rd-kort">{hode}<p class="rd-tom">Scoren kan ikke regnes ut fordi noen av tallene '
-                f'mangler.</p>{merk}</div>')
-    fare, trygg = grenser
-    pille_ = {"trygg": pille("Trygg sone", "ok", "sjekk"), "grå": pille("Gråsone", "adv", "utrop"),
-              "fare": pille("Faresone", "feil", "utrop")}[sone or "grå"]
-    b1, b2 = _z_pos(fare), _z_pos(trygg)
-    skala = (f'<div class="rd-z-skala" role="img" aria-label="Score {e(score_tekst)} på skalaen">'
-             f'<span class="fare" style="width:{b1:.1f}%"></span><span class="graa" style="width:{b2 - b1:.1f}%"></span>'
-             f'<span class="trygg" style="width:{100 - b2:.1f}%"></span><i style="left:{_z_pos(score):.1f}%"></i></div>'
-             f'<div class="rd-z-akse"><span style="left:{b1:.1f}%">{e(f"{fare:.1f}".replace(".", ","))}</span>'
-             f'<span style="left:{b2:.1f}%">{e(f"{trygg:.1f}".replace(".", ","))}</span></div>')
-    rader = "".join(f"<div><dt>{e(n)}</dt><dd>{e(x)}</dd><dd class=\"bidrag\">{e(b)}</dd></div>" for n, x, b in ledd)
-    return (f'<div class="rd-kort">{hode}<div class="rd-z-topp"><span class="rd-z-tall">{e(score_tekst)}</span>'
-            f'{pille_}</div>{skala}<dl class="rd-z-ledd">{rader}</dl>{merk}</div>')
+
+    def liste(tittel: str, klasse: str, rader: List[Tuple[str, str, str]], tom: str) -> str:
+        if not rader:
+            innhold = f'<p class="rd-tom">{e(tom)}</p>'
+        else:
+            innhold = "".join(f'<div class="rd-ss-rad {klasse}"><div class="rd-ss-topp"><span>{e(n)}</span>'
+                              f'<b>{e(v)}</b></div><p>{e(t)}</p></div>' for n, v, t in rader)
+        return f'<div class="rd-ss"><h4 class="{klasse}">{e(tittel)}</h4>{innhold}</div>'
+
+    m = f'<p class="rd-merk">{e(merknad)}</p>' if merknad else ""
+    return (f'<div class="rd-kort">{hode}'
+            + liste("Sterkt", "sterk", sterke, "Ingen nøkkeltall er over grensen for sterkt.")
+            + liste("Svakt", "svak", svake, "Ingen nøkkeltall er under grensen for svakt.")
+            + f"{m}</div>")

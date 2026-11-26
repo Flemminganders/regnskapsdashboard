@@ -1,0 +1,370 @@
+{
+"documentInfo": {
+"documentType": "https://xbrl.org/2021/xbrl-json"
+},
+"facts": {
+"fact-36": {
+"value": "64731000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:InterestRevenueExpense",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-37": {
+"value": "64190000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:InterestRevenueExpense",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-54": {
+"value": "90649000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:RevenueAndOperatingIncome",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-55": {
+"value": "86537000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:RevenueAndOperatingIncome",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-62": {
+"value": "34476000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:OperatingExpense",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-63": {
+"value": "30448000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:OperatingExpense",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-68": {
+"value": "2803000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ImpairmentLossImpairmentGainAndReversalOfImpairmentLossDeterminedInAccordanceWithIFRS9",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-69": {
+"value": "1209000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ImpairmentLossImpairmentGainAndReversalOfImpairmentLossDeterminedInAccordanceWithIFRS9",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-70": {
+"value": "53398000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLossBeforeTax",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-71": {
+"value": "54878000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLossBeforeTax",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-76": {
+"value": "43586000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLoss",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-77": {
+"value": "45804000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLoss",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-84": {
+"value": "43586000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLoss",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-85": {
+"value": "45804000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLoss",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-86": {
+"value": "28.45",
+"decimals": 2,
+"dimensions": {
+"concept": "ifrs-full:DilutedEarningsLossPerShare",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK/xbrli:shares"
+}
+},
+"fact-87": {
+"value": "29.34",
+"decimals": 2,
+"dimensions": {
+"concept": "ifrs-full:DilutedEarningsLossPerShare",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK/xbrli:shares"
+}
+},
+"fact-88": {
+"value": "43586000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLoss",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-89": {
+"value": "45804000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLoss",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-120": {
+"value": "2403340000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:LoansAndAdvancesToCustomers",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-121": {
+"value": "2251513000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:LoansAndAdvancesToCustomers",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-144": {
+"value": "3695290000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Assets",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-145": {
+"value": "3614125000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Assets",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-148": {
+"value": "1521872000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:DepositsFromCustomers",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-149": {
+"value": "1487763000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:DepositsFromCustomers",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-174": {
+"value": "3399434000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Liabilities",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-175": {
+"value": "3330800000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Liabilities",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-186": {
+"value": "295855000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Equity",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-187": {
+"value": "283325000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Equity",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-190": {
+"value": "168000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Equity",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00",
+"ifrs-full:ComponentsOfEquityAxis": "ifrs-full:NoncontrollingInterestsMember",
+"unit": "iso4217:NOK"
+}
+},
+"fact-191": {
+"value": "18960000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Equity",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00",
+"ifrs-full:ComponentsOfEquityAxis": "dnbbankasa:ShareCapitalMember",
+"unit": "iso4217:NOK"
+}
+},
+"fact-192": {
+"value": "18733000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Equity",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00",
+"ifrs-full:ComponentsOfEquityAxis": "ifrs-full:SharePremiumMember",
+"unit": "iso4217:NOK"
+}
+},
+"fact-197": {
+"value": "269296000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Equity",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-201": {
+"value": "45804000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLoss",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2024-01-01T00:00:00/2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-250": {
+"value": "283325000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Equity",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-254": {
+"value": "43586000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:ProfitLoss",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2025-01-01T00:00:00/2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+},
+"fact-303": {
+"value": "295855000000.0",
+"decimals": -6,
+"dimensions": {
+"concept": "ifrs-full:Equity",
+"entity": "scheme:549300GKFG0RYRRQ1414",
+"period": "2026-01-01T00:00:00",
+"unit": "iso4217:NOK"
+}
+}
+}
+}

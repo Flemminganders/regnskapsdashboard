@@ -1,4 +1,4 @@
-"""Tester for effektiv skattesats, likviditetsgrad 2 og Altman Z''-scoren."""
+"""Tester for effektiv skattesats og likviditetsgrad 2."""
 import io
 import json
 from pathlib import Path
@@ -7,7 +7,7 @@ import pytest
 from openpyxl import load_workbook
 
 import brreg_api as api
-from beregninger import altman_z, beregn_nokkeltall, opptjent_egenkapital, varelager
+from beregninger import beregn_nokkeltall, varelager
 from excel_eksport import lag_excel
 
 DATA = Path(__file__).parent / "data"
@@ -66,48 +66,13 @@ def test_likviditetsgrad2_mangler_naar_varer_ikke_kan_utledes(t):
     assert n.verdi is None and "ikke oppgitt" in n.merknad
 
 
-# --- Altman Z'' ---------------------------------------------------------------
-def test_altman_z_fasit(t):
-    # X1 = 250/2000, X2 = 500/2000, X3 = 200/2000, X4 = 800/1200
-    fasit = 6.56 * 0.125 + 3.26 * 0.25 + 6.72 * 0.1 + 1.05 * (800 / 1200)
-    a = altman_z(t)
-    assert a.score == pytest.approx(fasit)
-    assert sum(b for *_, b in a.ledd) == pytest.approx(fasit)
-    assert a.sone == "trygg"                            # 3,01 > 2,6
-    assert nt(t, "altman_z").verdi == pytest.approx(fasit)
-
-
-def test_altman_soner(t):
-    a = altman_z(t)
-    for score, sone in ((3.0, "trygg"), (2.6, "grå"), (1.1, "grå"), (1.09, "fare"), (-2.0, "fare")):
-        a.score = score
-        assert a.sone == sone
-
-
-def test_altman_utleder_opptjent_egenkapital(t):
-    t["opptjent_egenkapital"] = None
-    assert opptjent_egenkapital(t) == (500.0, True)
-    a = altman_z(t)
-    assert a.score is not None and "innskutt" in a.merknad
-
-
-def test_altman_mangler_naar_tall_mangler(t):
-    t["sum_gjeld"] = None
-    assert altman_z(t).score is None and altman_z(t).sone is None
-
-
-def test_altman_varsler_naar_nesten_alt_er_innskutt(t):
-    t["innskutt_egenkapital"], t["opptjent_egenkapital"] = 790.0, 10.0
-    assert "IFRS" in altman_z(t).merknad
-
-
 # --- Excel-formlene ------------------------------------------------------------
 def test_nye_formler_i_excel():
     raa = json.loads((DATA / "equinor_regnskap.json").read_text())
     enhet = api.tolk_enhet(json.loads((DATA / "equinor_enhet.json").read_text()))
     ws = load_workbook(io.BytesIO(lag_excel(enhet, api.velg_regnskap(raa, "SELSKAP"))))["Nøkkeltall"]
     rader = {ws.cell(r, 2).value: r for r in range(5, ws.max_row + 1)}
-    for navn in ("Effektiv skattesats", "Likviditetsgrad 2", "Konkursrisiko (Altman Z'')"):
+    for navn in ("Effektiv skattesats", "Likviditetsgrad 2"):
         formel = ws.cell(rader[navn], 4).value
         assert formel.startswith("=IF(") and "Regnskap!" in formel
         assert formel.count("(") == formel.count(")")

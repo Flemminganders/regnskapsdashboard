@@ -27,7 +27,7 @@ def _last_paa_nytt_ved_endring() -> None:
     import os
     import sys
     for navn in ("formatering", "beregninger", "brreg_api", "borsliste", "forklaringer", "stil", "valuta",
-                 "tolkning", "sammendrag", "excel_eksport"):
+                 "tolkning", "sammendrag", "excel_eksport", "finans"):
         modul = sys.modules.get(navn)
         fil = getattr(modul, "__file__", None)
         if not fil:
@@ -50,9 +50,10 @@ import brreg_api as api
 import formatering as fmt
 import forklaringer
 import stil
-from beregninger import (ALTMAN_FARE, ALTMAN_TRYGG, altman_z, balansedrivere, balansekontroll, beregn_nokkeltall,
+from beregninger import (balansedrivere, balansekontroll, beregn_nokkeltall,
                          er_eierselskap, finans_er_netto, resultatbro, resultatdrivere, samlet_status,
                          sammenligningstyper, sterkest)
+import finans
 import tolkning
 import valuta as valutamodul
 from sammendrag import lag_sammendrag
@@ -297,46 +298,52 @@ def vis_hovedtall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], regnskap
     st.html(f'<div class="rd-kpier">{"".join(kort)}</div>')
 
 
+def styrker_og_svakheter(nokkeltall: list, valuta: str) -> Tuple[List[Tuple[str, str, str]], List[Tuple[str, str, str]]]:
+    """Nøkkeltallene som får «Sterk» og «Svak» etter tommelfingerreglene, som (navn, verdi, klartekst)."""
+    sterke, svake = [], []
+    for n in nokkeltall:
+        v = tolkning.vurder(n.kode, n.verdi)
+        if v is None or v.niva == "middels":
+            continue
+        rad = (n.navn, fmt.nokkeltall(n.verdi, n.enhet, valuta), tolkning.klartekst(n.kode, n.verdi, valuta) or "")
+        (sterke if v.niva == "sterk" else svake).append(rad)
+    return sterke, svake
+
+
 def vis_oversikt(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eierselskap_alene: bool,
                  balanse_avvik: bool) -> None:
-    """«Kort fortalt» (sammendrag i klartekst) og konkursrisiko side om side."""
+    """«Kort fortalt» (sammendrag i klartekst) og styrker/svakheter side om side."""
     kurs = hent_kurser(r["valuta"]).get(r["aar"]) if r["valuta"] != "NOK" else None
     sam = lag_sammendrag(r, forrige, eierselskap_alene, balanse_avvik, kurs)
     venstre = stil.sammendrag(sam.overskrift, [(p.tekst, p.tone) for p in sam.punkter], forklar("sammendrag"))
-
-    az = altman_z(r["tall"])
-    ledd = [(navn, fmt.ganger(x), "mangler" if b is None else f"{'+' if b >= 0 else '−'}{fmt.ganger(abs(b))}")
-            for _, navn, x, _, b in az.ledd]
-    merknader = []
-    if eierselskap_alene:
-        merknader.append("Scoren er laget for selskaper med egen drift. For et eierselskap gir konsernet et bedre bilde.")
-    if balanse_avvik:
-        merknader.append("Balansen i registerets tall går ikke opp, så scoren kan være misvisende.")
-    if az.merknad:
-        merknader.append(az.merknad)
-    hoyre = stil.konkursrisiko(az.score, fmt.ganger(az.score), az.sone, (ALTMAN_FARE, ALTMAN_TRYGG), ledd,
-                               merknader, forklar("altman"))
+    sterke, svake = styrker_og_svakheter(beregn_nokkeltall(r["tall"]), r["valuta"])
+    merk = ("Morselskapet er et eierselskap, så lønnsomhetstallene sier lite om driften. Se konsernet."
+            if eierselskap_alene else None)
+    hoyre = stil.styrker_svakheter(sterke, svake, forklar("styrker"), merk)
     st.html(f'<div class="rd-to" style="margin-top:6px">{venstre}{hoyre}</div>')
 
 
-def vis_nokkeltall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]]) -> None:
-    st.html(stil.seksjon("Nøkkeltall", "Trykk på et nøkkeltall for å se hva det betyr, formelen og tallene bak. "
-                                       "Sterk / Middels / Svak er tommelfingerregler – normalt nivå varierer mellom "
-                                       "bransjer."))
-    t, valuta = r["tall"], r["valuta"]
-    na = beregn_nokkeltall(t)
-    for_ = {n.kode: n for n in beregn_nokkeltall(forrige["tall"])} if forrige else {}
-    grupper = []
-    for gruppenavn in ("Lønnsomhet", "Likviditet", "Soliditet"):
+def nt_tekst(n: Any, valuta: str) -> str:
+    """Nøkkeltallet som tekst. Små andeler (tap på utlån) får to desimaler, så 0,12 % ikke blir 0,1 %."""
+    if n.enhet == "prosent" and n.kode == "tap_utlan" and n.verdi is not None:
+        return fmt.prosent(n.verdi, 2)
+    return fmt.nokkeltall(n.verdi, n.enhet, valuta)
+
+
+def html_nokkeltallgrupper(na: list, for_liste: Optional[list], forrige_aar: Optional[int], t: Dict[str, Any],
+                           valuta: str, etiketter: Dict[str, str], grupper: Tuple[str, ...]) -> str:
+    """Nøkkeltallene som iOS-grupper med vurdering, klartekst, formel og tallene bak."""
+    for_ = {n.kode: n for n in for_liste} if for_liste else {}
+    html = []
+    for gruppenavn in grupper:
         rader = []
         for n in (x for x in na if x.gruppe == gruppenavn):
-            verdi = fmt.nokkeltall(n.verdi, n.enhet, valuta)
+            verdi = nt_tekst(n, valuta)
             if n.verdi is None and n.merknad and "meningsfull" in n.merknad:
                 verdi = "ikke meningsfull"
             tidligere = for_.get(n.kode)
-            forrige_tekst = f"{forrige['aar']}: {fmt.nokkeltall(tidligere.verdi, n.enhet, valuta)}" \
-                if tidligere else None
-            inndata = [(ETIKETT.get(f, f), fmt.belop(t.get(f), valuta, kort=False)) for f in n.inndata]
+            forrige_tekst = f"{forrige_aar}: {nt_tekst(tidligere, valuta)}" if tidligere else None
+            inndata = [(etiketter.get(f, f), fmt.belop(t.get(f), valuta, kort=False)) for f in n.inndata]
             enhet = ""
             if n.enhet == "belop" and n.verdi is not None:
                 verdi, enhet = delt_belop(n.verdi, valuta)
@@ -345,9 +352,21 @@ def vis_nokkeltall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]]) -> None
             rader.append(stil.nokkeltall_rad(n.navn, verdi, forrige_tekst, n.formel, n.forklaring,
                                              inndata, n.merknad, enhet, tolkning.klartekst(n.kode, n.verdi, valuta),
                                              vurdering))
-        nokkel = gruppenavn.lower().replace("ø", "o")
-        grupper.append(stil.gruppe(gruppenavn, rader, forklar(nokkel)))
-    st.html(f'<div class="rd-grupper">{"".join(grupper)}</div>')
+        if rader:
+            nokkel = gruppenavn.lower().replace("ø", "o")
+            html.append(stil.gruppe(gruppenavn, rader, forklar(nokkel)))
+    return f'<div class="rd-grupper">{"".join(html)}</div>'
+
+
+NOKKELTALL_UNDERTEKST = ("Trykk på et nøkkeltall for å se hva det betyr, formelen og tallene bak. Sterk / Middels / "
+                         "Svak er tommelfingerregler – normalt nivå varierer mellom bransjer.")
+
+
+def vis_nokkeltall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]]) -> None:
+    st.html(stil.seksjon("Nøkkeltall", NOKKELTALL_UNDERTEKST))
+    st.html(html_nokkeltallgrupper(beregn_nokkeltall(r["tall"]), beregn_nokkeltall(forrige["tall"]) if forrige else None,
+                                   forrige["aar"] if forrige else None, r["tall"], r["valuta"], ETIKETT,
+                                   ("Lønnsomhet", "Likviditet", "Soliditet")))
 
 
 def graf_balanse(r: Dict[str, Any], f: Dict[str, Any]) -> None:
@@ -629,6 +648,99 @@ def vis_utvikling(regnskaper: List[Dict[str, Any]], valgt_aar: int, f: Dict[str,
             rader.append([n.navn] + celler)
         grupperader = [i for i, rad in enumerate(rader) if len(rad) == 1]
         st.html(stil.tabell(overskrift, rader, valgt_kol, grupperader))
+
+
+# ---------------------------------------------------------------------------
+# Banker og forsikringsselskaper (tall fra ESEF-årsrapporten, se finans.py)
+# ---------------------------------------------------------------------------
+@st.cache_data(ttl=24 * 3600, show_spinner=False)
+def hent_finans(orgnr: str) -> Tuple[Dict[int, Dict[str, Optional[float]]], str]:
+    return finans.hent(orgnr)
+
+
+FINANS_KPI = {
+    "bank": [("Sum inntekter", "sum_inntekter"), ("Resultat før skatt", "resultat_for_skatt"),
+             ("Årsresultat", "aarsresultat"), ("Utlån til kunder", "utlan"), ("Innskudd fra kunder", "innskudd"),
+             ("Egenkapital", "egenkapital")],
+    "forsikring": [("Forsikringsinntekter", "forsikringsinntekter"), ("Forsikringsresultat", "forsikringsresultat"),
+                   ("Resultat før skatt", "resultat_for_skatt"), ("Årsresultat", "aarsresultat"),
+                   ("Sum eiendeler", "sum_eiendeler"), ("Egenkapital", "egenkapital")],
+    "finans": [("Resultat før skatt", "resultat_for_skatt"), ("Årsresultat", "aarsresultat"),
+               ("Sum eiendeler", "sum_eiendeler"), ("Egenkapital", "egenkapital")],
+}
+
+
+def vis_finans(orgnr: str, tall: Dict[int, Dict[str, Optional[float]]], valuta: str) -> None:
+    """Dashboard for bank/forsikring: samme oppbygning som ellers, med nøkkeltall som passer bransjen."""
+    aar_liste = sorted(tall, reverse=True)[:3]
+    valgt_aar = aar_liste[0]
+    with st.container(horizontal=True, gap="medium", key="valg", vertical_alignment="center"):
+        if len(aar_liste) > 1:
+            with st.container(key="aarvalg"):
+                svar = st.segmented_control("Regnskapsår", aar_liste, default=aar_liste[0], key=f"finansaar-{orgnr}",
+                                            label_visibility="collapsed")
+                valgt_aar = svar or aar_liste[0]
+    t = tall[valgt_aar]
+    f = tall.get(valgt_aar - 1)
+    typ = finans.selskapstype(t)
+    typenavn = {"bank": "Bank", "forsikring": "Forsikring"}.get(typ, "Finans")
+    st.html(f'<div class="rd-piller" style="margin:12px 0 0">'
+            f'{stil.pille(f"Regnskapsår {valgt_aar}", ikon="kalender")}'
+            f'{stil.pille(f"Beløp i {valuta}", "" if valuta == "NOK" else "adv", "valuta")}'
+            f'{stil.pille(f"{typenavn} · konsern", ikon="bok")}'
+            f'{stil.pille("Tall fra årsrapporten (ESEF)", "ok", "sjekk")}{forklar("finans_kilde", "venstre")}</div>')
+
+    na = finans.nokkeltall(t)
+    fane_oversikt, fane_nt, fane_utv, fane_detaljer = st.tabs(["Oversikt", "Nøkkeltall", "Utvikling", "Detaljer"])
+    with fane_oversikt:
+        overskrift, punkter = finans.sammendrag(t, f, valgt_aar, valuta)
+        venstre = stil.sammendrag(overskrift, punkter, forklar("sammendrag"))
+        sterke, svake = styrker_og_svakheter(na, valuta)
+        hoyre = stil.styrker_svakheter(sterke, svake, forklar("styrker"))
+        st.html(f'<div class="rd-to" style="margin-top:6px">{venstre}{hoyre}</div>')
+        under = f"Beløp i {valuta}" + (f" · endring fra {valgt_aar - 1}" if f else "")
+        st.html(stil.seksjon("Hovedtall", under))
+        kort = []
+        for navn, felt in FINANS_KPI[typ]:
+            verdi_, enhet = delt_belop(t.get(felt), valuta)
+            pst = endring(t.get(felt), f.get(felt)) if f else None
+            trend = [(str(a), tall[a].get(felt), a == valgt_aar) for a in sorted(aar_liste)]
+            kort.append(stil.kpi(navn, verdi_, enhet, (pst, str(valgt_aar - 1)) if pst is not None else None,
+                                 f"Nøyaktig: {fmt.belop(t.get(felt), valuta, kort=False)}", forklar(felt), trend))
+        st.html(f'<div class="rd-kpier{" seks" if len(kort) == 6 else ""}">{"".join(kort)}</div>')
+    with fane_nt:
+        st.html(stil.seksjon("Nøkkeltall", NOKKELTALL_UNDERTEKST))
+        st.html(html_nokkeltallgrupper(na, finans.nokkeltall(f) if f else None, valgt_aar - 1 if f else None, t,
+                                       valuta, finans.ETIKETTER, ("Lønnsomhet", "Risiko", "Soliditet")))
+    with fane_utv:
+        aarene = sorted(aar_liste)
+        st.html(stil.seksjon("Utvikling", f"{aarene[0]}–{aarene[-1]}"))
+        with st.container(key="kort-utviklingstabell"):
+            rader: List[List[str]] = [["Hovedtall"]]
+            for navn, felt in FINANS_KPI[typ]:
+                rader.append([navn] + [fmt.belop(tall[a].get(felt), valuta) for a in aarene])
+            rader.append(["Nøkkeltall"])
+            per_aar = [{n.kode: n for n in finans.nokkeltall(tall[a])} for a in aarene]
+            for n in na:
+                rader.append([n.navn] + [nt_tekst(x[n.kode], valuta) if n.kode in x else "mangler" for x in per_aar])
+            st.html(stil.tabell([""] + [str(a) for a in aarene], rader, 1 + aarene.index(valgt_aar),
+                                [i for i, r in enumerate(rader) if len(r) == 1]))
+    with fane_detaljer:
+        st.html(stil.seksjon("Detaljer"))
+        with st.expander("Alle tall fra årsrapporten", expanded=True):
+            aarene = sorted(aar_liste, reverse=True)
+            df = pd.DataFrame([{"Post": finans.ETIKETTER[k],
+                                **{str(a): fmt.belop(tall[a].get(k), valuta, kort=False) for a in aarene}}
+                               for k in finans.KONSEPTER if any(tall[a].get(k) is not None for a in aarene)])
+            st.dataframe(df, hide_index=True, width="stretch")
+            st.caption("Konserntall merket med standard IFRS-begreper i selskapets ESEF-årsrapport, hentet fra "
+                       "filings.xbrl.org. Poster selskapet ikke har merket, vises ikke.")
+        pdf_aar = hent_pdf_aar(orgnr)
+        if pdf_aar:
+            st.html('<div class="rd-kort" style="margin-top:14px">'
+                    + stil.tittelrad("Årsregnskap som PDF", "Kopi av det innsendte årsregnskapet fra "
+                                     "Brønnøysundregistrene.", forklar("pdf"))
+                    + stil.pdf_lenker([(a, api.pdf_lenke(orgnr, a)) for a in pdf_aar]) + "</div>")
 
 
 def standard_regnskap(raa: List[Dict[str, Any]]) -> Tuple[Optional[str], List[str], bool]:
@@ -934,6 +1046,21 @@ def main() -> None:
         with st.spinner("Henter årsregnskap …"):
             raa = hent_regnskap(orgnr)
     except api.IngenRegnskap as feil:
+        if "oppstilling" in str(feil):
+            # Banker og forsikringsselskap: Brreg leverer ikke tallene, men børsnoterte selskaper har
+            # en maskinlesbar årsrapport (ESEF) vi kan lese i stedet.
+            try:
+                with st.spinner("Brønnøysund har ikke tall for banker og forsikring. Henter årsrapporten …"):
+                    tall, valuta_ = hent_finans(orgnr)
+            except finans.IngenFinansdata:
+                tall = None
+            if tall:
+                vis_finans(orgnr, tall, valuta_)
+                st.html(stil.bunn(finans=True))
+                return
+            feil = api.IngenRegnskap(
+                "Brønnøysundregistrene deler ikke regnskapstall for banker og forsikringsselskaper, og vi fant ingen "
+                "maskinlesbar årsrapport (det finnes bare for børsnoterte selskaper). Se PDF-ene under.")
         st.warning(str(feil), icon=":material/inbox:")
         # Banker o.l. har ikke tall i API-et, men kan ha årsregnskapet som PDF.
         pdf_aar = hent_pdf_aar(orgnr)

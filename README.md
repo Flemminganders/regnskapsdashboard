@@ -24,16 +24,20 @@ alt er vanlig Python som regner på åpne data.
 - **Beløp i kroner** (`valuta.py`) – for selskaper som rapporterer i USD, EUR o.l. vises hovedtallene også omtrent i
   NOK, omregnet med Norges Banks årlige snittkurs (åpent API). Feiler kurs-oppslaget, vises bare originalvalutaen.
 - **Minisøyler** i hovedtallkortene viser utviklingen over årene (valgt år uthevet, underskudd rødt).
+- **Styrker og svakheter** – kortet ved siden av «Kort fortalt» samler nøkkeltallene som er Sterk eller Svak, med én
+  setning hver. (Altman Z'' ble prøvd og fjernet 2026-11-26: den plasserte solide selskaper som Equinor og
+  Kongsberg i «gråsonen» og forvirret mer enn den forklarte.)
+- **Banker og forsikringsselskaper** (`finans.py`) – Brønnøysunds API leverer ikke tall for dem («oppstillingsplan som
+  ikke er støttet (BANK)»). For børsnoterte selskaper hentes tallene i stedet fra ESEF-årsrapporten: org.nr → LEI-kode
+  (GLEIF) → rapportene på filings.xbrl.org → IFRS-merkede konserntall. Egen visning med fanene Oversikt, Nøkkeltall,
+  Utvikling og Detaljer, og nøkkeltall som passer bransjen: egenkapitalrentabilitet, kostnadsgrad, netto
+  renteinntekter i % av eiendeler, tap i % av utlån, innskuddsdekning, egenkapitalandel – og omtrentlig combined
+  ratio for forsikring. Ikke-børsnoterte banker har ingen slik rapport; da vises PDF-ene.
 - **Faner** – Oversikt · Nøkkeltall · Grafer · Utvikling · Sammenlign · Detaljer, i stedet for én lang side.
   En sammenligningslenke (`?mot=`) åpner rett på Sammenlign.
 - **Kort fortalt** – et sammendrag i klartekst øverst i Oversikt (`sammendrag.py`): en overskrift («Lønnsomt og
-  solid i 2025») og 5–8 setninger om inntekter, resultat og største driver, margin, skatt, soliditet, likviditet og
-  konkursrisiko. Fargede prikker viser retning. Regelbasert, ingen KI.
-- **Konkursrisiko (Altman Z'')** – 6,56·X1 + 3,26·X2 + 6,72·X3 + 1,05·X4 (arbeidskapital, opptjent egenkapital og
-  driftsresultat delt på eiendeler, og egenkapital delt på gjeld). Over 2,6 er trygg sone, 1,1–2,6 er gråsone og
-  under 1,1 er faresone. Vises som et kort med skala og bidraget fra hver del, og som nøkkeltall under Soliditet.
-  Mangler opptjent egenkapital, regnes den som egenkapital minus innskutt. Når nesten alt er ført som innskutt
-  (noen IFRS-konsern, f.eks. Equinor konsern), varsles det at scoren trolig er for lav.
+  solid i 2025») og 5–8 setninger om inntekter, resultat og største driver, margin, skatt, soliditet og likviditet. Fargede prikker viser retning. Regelbasert, ingen KI.
+
 - **Hovedtall** – driftsinntekter, driftsresultat, årsresultat, sum eiendeler og
   egenkapital, med endring fra året før.
 - **Nøkkeltall** med formel, forklaring og tallene som er brukt:
@@ -51,7 +55,6 @@ alt er vanlig Python som regner på åpne data.
   | Egenkapitalandel | Sum egenkapital ÷ Sum egenkapital og gjeld |
   | Gjeldsgrad | Sum gjeld ÷ Sum egenkapital |
   | Rentedekningsgrad | (Resultat før skatt + Rentekostnader) ÷ Rentekostnader |
-  | Konkursrisiko (Altman Z'') | Se over |
 
 - **Balansekontroll** – sjekker at eiendeler = egenkapital + gjeld, og at
   delsummene stemmer. Små avvik (≤ 0,01 % eller ≤ 1 000) merkes som avrunding.
@@ -118,6 +121,7 @@ regnskapsdashboard/
 ├── sammendrag.py       # «Kort fortalt»: regelbasert sammendrag i klartekst
 ├── tolkning.py         # Vurdering (sterk/middels/svak) og klartekst per nøkkeltall
 ├── valuta.py           # Norges Banks valutakurser og omregning til NOK
+├── finans.py           # Banker og forsikring: ESEF-årsrapport via GLEIF + filings.xbrl.org
 ├── excel_eksport.py    # Lager Excel-fila med formler
 ├── formatering.py      # Norsk tallformat og «mangler»
 ├── forklaringer.py     # Enkle forklaringer (i-knapper og ordliste)

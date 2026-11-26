@@ -114,13 +114,6 @@ def _formel(kode: str, ref: Dict[str, str]) -> str:
                       f'{RELATIV_TOLERANSE}*ABS({o}))),{o}/{k},"{MANGLER}")')
         return (f'=IF({_er_tall(o, k)},IF({k}=0,"{MANGLER}",IF(ISNUMBER({v}),({o}-{v})/{k},{uten_varer})),'
                 f'"{MANGLER}")')
-    if kode == "altman_z":
-        o, k, d, ek = r["omlopsmidler"], r["kortsiktig_gjeld"], r["driftsresultat"], r["egenkapital"]
-        g, ta, op, inn = r["sum_gjeld"], r["sum_eiendeler"], r["opptjent_egenkapital"], r["innskutt_egenkapital"]
-        opptjent = f"IF(ISNUMBER({op}),{op},{ek}-{inn})"
-        return (f'=IF(AND({_er_tall(o, k, d, ek, g, ta)[4:-1]},OR(ISNUMBER({op}),ISNUMBER({inn}))),'
-                f'IF(OR({ta}=0,{g}=0),"{MANGLER}",6.56*({o}-{k})/{ta}+3.26*{opptjent}/{ta}'
-                f'+6.72*{d}/{ta}+1.05*{ek}/{g}),"{MANGLER}")')
     raise ValueError(f"Ukjent nøkkeltall: {kode}")
 
 
