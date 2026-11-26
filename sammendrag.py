@@ -42,7 +42,7 @@ _DRIVERTEKST = {
 
 
 def lag_sammendrag(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eierselskap_alene: bool = False,
-                   balanse_avvik: bool = False) -> Sammendrag:
+                   balanse_avvik: bool = False, kurs: Optional[float] = None) -> Sammendrag:
     """``r`` og ``forrige`` er tolkede regnskap (fra ``brreg_api``). ``eierselskap_alene`` er True når
     morselskapet er et eierselskap og vises alene (da sier marginene lite)."""
     t, valuta, aar = r["tall"], r["valuta"], r["aar"]
@@ -57,6 +57,7 @@ def lag_sammendrag(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eiersel
 
     # --- Inntekter ---------------------------------------------------------
     di, di_for = t.get("sum_driftsinntekter"), (f or {}).get("sum_driftsinntekter")
+    start = len(punkter)
     if di is not None:
         if di_for and di_for > 0 and di >= 0:
             endr = (di - di_for) / di_for
@@ -68,6 +69,9 @@ def lag_sammendrag(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eiersel
                                      "ok" if endr > 0 else "adv"))
         else:
             punkter.append(Punkt(f"Driftsinntektene var {fmt.belop(di, valuta)}.", "noytral"))
+        if kurs and valuta != "NOK" and len(punkter) > start:
+            p = punkter[start]
+            p.tekst = p.tekst[:-1] + f" (om lag {fmt.belop(di * kurs, 'kr')})."
 
     # --- Resultat og største driver -------------------------------------
     ar, ar_for = t.get("aarsresultat"), (f or {}).get("aarsresultat")
@@ -163,26 +167,38 @@ def lag_sammendrag(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eiersel
             p.tekst += " Den er trolig for lav, fordi registeret fører nesten all egenkapital som innskutt."
         punkter.append(p)
 
-    return Sammendrag(_overskrift(ar, ek, eka, aar), punkter)
+    return Sammendrag(_overskrift(ar, ek, eka, aar, lg1, None if eierselskap_alene else z), punkter)
 
 
-def _overskrift(ar: Optional[float], ek: Optional[float], eka: Optional[float], aar: int) -> Optional[str]:
+def _overskrift(ar: Optional[float], ek: Optional[float], eka: Optional[float], aar: int,
+                lg1: Optional[float] = None, z: Optional[float] = None) -> Optional[str]:
+    """Én linje som oppsummerer: lønnsomt eller ikke, solid eller ikke, og de viktigste svakhetene."""
     if ar is None:
         return None
-    if ek is not None and ek < 0:
-        solid = None
-    else:
-        solid = None if eka is None else eka >= EK_SOLID
+    negativ_ek = ek is not None and ek < 0
+    solid = None if (eka is None or negativ_ek) else eka >= EK_SOLID
     if ar >= 0:
-        if solid is True:
-            return f"Lønnsomt og solid i {aar}"
-        if ek is not None and ek < 0:
-            return f"Overskudd i {aar}, men negativ egenkapital"
-        if solid is False:
-            return f"Overskudd i {aar}, men moderat egenkapital"
-        return f"Overskudd i {aar}"
-    if solid is True:
-        return f"Underskudd i {aar}, men solid egenkapital"
-    if ek is not None and ek < 0:
-        return f"Underskudd og negativ egenkapital i {aar}"
-    return f"Underskudd i {aar}"
+        if solid:
+            hoved = "Lønnsomt og solid"
+        elif negativ_ek:
+            hoved = "Overskudd, men negativ egenkapital"
+        elif solid is False:
+            hoved = "Overskudd, men " + ("lav" if eka < EK_LAV else "moderat") + " egenkapital"
+        else:
+            hoved = "Overskudd"
+    else:
+        if solid:
+            hoved = "Underskudd, men solid egenkapital"
+        elif negativ_ek:
+            hoved = "Underskudd og negativ egenkapital"
+        else:
+            hoved = "Underskudd"
+    svakheter = []
+    if lg1 is not None and lg1 < 1:
+        svakheter.append("stram likviditet")
+    if z is not None and z < ALTMAN_FARE:
+        svakheter.append("høy konkursrisiko")
+    if svakheter:
+        bindeord = " og " if ("men" in hoved or hoved.startswith("Underskudd og")) else ", men "
+        hoved += bindeord + " og ".join(svakheter)
+    return f"{hoved} i {aar}"

@@ -35,7 +35,7 @@ def test_vekst_og_overskrift():
 def test_fra_overskudd_til_underskudd():
     s = lag_sammendrag(regnskap(2025, aarsresultat=-50e6), regnskap(2024))
     assert "fra overskudd på 171,6 mill. NOK til underskudd på 50,0 mill. NOK" in tekst(s)
-    assert s.overskrift == "Underskudd i 2025, men solid egenkapital"
+    assert s.overskrift == "Underskudd, men solid egenkapital i 2025"
     assert any(p.tone == "feil" for p in s.punkter)
 
 
@@ -57,7 +57,7 @@ def test_negativ_egenkapital_og_svak_likviditet():
     s = lag_sammendrag(na, None)
     assert "Egenkapitalen er negativ" in tekst(s)
     assert "likviditetsgrad 1: 0,83" in tekst(s)
-    assert s.overskrift == "Overskudd i 2025, men negativ egenkapital"
+    assert s.overskrift == "Overskudd, men negativ egenkapital og stram likviditet i 2025"
 
 
 def test_eierselskap_og_balanseavvik():
@@ -79,3 +79,15 @@ def test_equinor_konsern():
     s = lag_sammendrag(rs[0], rs[1])
     assert s.overskrift and len(s.punkter) >= 5
     assert "skattesats" in tekst(s) and "trolig for lav" in tekst(s)
+
+
+def test_overskrift_nevner_svakheter():
+    s = lag_sammendrag(regnskap(2025, kortsiktig_gjeld=600e6, langsiktig_gjeld=600e6), None)
+    assert s.overskrift == "Lønnsomt og solid, men stram likviditet i 2025"
+
+
+def test_kronebelop_for_utenlandsk_valuta():
+    r = regnskap(2025)
+    r["valuta"] = "USD"
+    s = lag_sammendrag(r, None, kurs=10.0)
+    assert "(om lag 10,0 mrd. kr)" in tekst(s)

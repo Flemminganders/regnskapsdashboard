@@ -21,6 +21,7 @@ ROLLER_URL = "https://data.brreg.no/enhetsregisteret/api/enheter/{orgnr}/roller"
 REGNSKAP_URL = "https://data.brreg.no/regnskapsregisteret/regnskap/{orgnr}"
 # Kopi av innsendt årsregnskap som PDF. Finnes langt bakover i tid (ofte fra 2011),
 # mens tallene i JSON-API-et bare dekker de tre siste årene.
+SOK_URL = "https://data.brreg.no/enhetsregisteret/api/enheter"
 PDF_AAR_URL = "https://data.brreg.no/regnskapsregisteret/regnskap/aarsregnskap/kopi/{orgnr}/aar"
 PDF_URL = "https://data.brreg.no/regnskapsregisteret/regnskap/aarsregnskap/kopi/{orgnr}/{aar}"
 TIMEOUT_SEKUNDER = 15
@@ -373,3 +374,51 @@ def tolk_hendelser(enhet_raa: Dict[str, Any], roller_raa: Dict[str, Any],
 
     aktuelle = [h for h in hendelser if h["dato"] and grense <= h["dato"] <= i_dag]
     return sorted(aktuelle, key=lambda h: h["dato"], reverse=True)
+
+
+# Selskapsformer som leverer årsregnskap. De sorteres først i navnesøket.
+REGNSKAPSPLIKTIGE = {"ASA", "AS", "SA", "SF", "KF", "IKS", "ANS", "DA", "NUF", "BA", "STI", "SAM"}
+
+
+def tolk_sokeresultat(raa: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Gjør svaret fra navnesøket om til en kort liste: orgnr, navn, form, kommune, ansatte, konkurs.
+    Selskaper som normalt har årsregnskap (AS, ASA o.l.) og som ikke er slettet kommer først,
+    deretter de med flest ansatte."""
+    ut = []
+    for e in (raa.get("_embedded") or {}).get("enheter", []):
+        form = (e.get("organisasjonsform") or {}).get("kode") or ""
+        ut.append({
+            "orgnr": e.get("organisasjonsnummer"),
+            "navn": e.get("navn") or "",
+            "form": form,
+            "kommune": ((e.get("forretningsadresse") or e.get("postadresse") or {}).get("kommune") or "").title(),
+            "ansatte": e.get("antallAnsatte"),
+            "konkurs": bool(e.get("konkurs") or e.get("underAvvikling") or e.get("slettedato")),
+        })
+    ut.sort(key=lambda x: (x["form"] not in REGNSKAPSPLIKTIGE, x["konkurs"], -(x["ansatte"] or 0)))
+    return [x for x in ut if x["orgnr"]]
+
+
+def sok_navn(tekst: str, antall: int = 8) -> List[Dict[str, Any]]:
+    """Søker i Enhetsregisteret etter selskaper med navnet. Tom liste hvis ingenting passer."""
+    tekst = (tekst or "").strip()
+    if len(tekst) < 2:
+        return []
+    try:
+        svar = requests.get(SOK_URL, params={"navn": tekst, "size": 50}, headers={"Accept": "application/json"},
+                            timeout=TIMEOUT_SEKUNDER)
+    except requests.RequestException as e:
+        raise TjenesteFeil("Fikk ikke kontakt med Brønnøysundregistrene. Sjekk nettforbindelsen og prøv igjen.") from e
+    if svar.status_code != 200:
+        raise TjenesteFeil(f"Navnesøket hos Brønnøysundregistrene svarte med feil ({svar.status_code}).")
+    return filtrer_treff(tolk_sokeresultat(svar.json()), tekst)[:antall]
+
+
+def filtrer_treff(treff: List[Dict[str, Any]], tekst: str) -> List[Dict[str, Any]]:
+    """Brregs navnesøk er løst («rema 1000» gir også «1000 Ballonger DA»). Behold bare navn der
+    alle ordene i søket finnes, med treff som starter med søket først."""
+    ord_ = re.sub(r"[^\wæøå ]+", " ", tekst.lower()).split()
+    # Bare selskapsformer som leverer årsregnskap (ikke enkeltpersonforetak, foreninger o.l.).
+    beholdt = [x for x in treff if x["form"] in REGNSKAPSPLIKTIGE and all(o in x["navn"].lower() for o in ord_)]
+    starter = [x for x in beholdt if x["navn"].lower().startswith(" ".join(ord_))]
+    return starter + [x for x in beholdt if x not in starter]

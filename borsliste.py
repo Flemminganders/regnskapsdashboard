@@ -85,6 +85,9 @@ def tolk(tekst: Optional[str]) -> Tuple[str, Any]:
     if not tekst:
         return "tom", None
     s = _etiketter().get(tekst)
+    valgt = re.search(r"·\s*(\d{9})\s*$", tekst)       # «Rema 1000 Norge AS · 982254604» fra navnesøket
+    if s is None and valgt:
+        return "orgnr", valgt.group(1)
     if s is None:
         if re.fullmatch(r"[\d\s.\-]+", tekst):
             return "orgnr", tekst          # valideres av brreg_api.valider_orgnr

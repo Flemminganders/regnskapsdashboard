@@ -27,7 +27,8 @@ FORKLARINGER: Dict[str, Forklaring] = {
     ]),
     "status": ("Om merkene", [
         "Regnskapsår: perioden regnskapet gjelder, vanligvis 1. januar til 31. desember.",
-        "Valuta: noen selskaper rapporterer i for eksempel USD. Da vises alle beløp i den valutaen.",
+        "Valuta: noen selskaper rapporterer i for eksempel USD. Da vises beløpene i den valutaen, og omtrent i "
+        "kroner under hovedtallene (omregnet med Norges Banks gjennomsnittskurs for året).",
         "Regnskapsregler: IFRS er internasjonale regler som børsnoterte konsern må bruke. Regnskapsloven "
         "er de norske reglene. Forenklet IFRS er en blanding som mange morselskaper bruker.",
         "Balansen går opp: appen sjekker at det selskapet eier (eiendeler) er lik det som er finansiert med "

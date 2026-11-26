@@ -452,6 +452,32 @@ header[data-testid="stHeader"] {{
 .rd-z-ledd dd {{ margin: 0; text-align: right; white-space: nowrap; }}
 .rd-z-ledd dd.bidrag {{ color: var(--ink); font-weight: 600; min-width: 3.5em; }}
 
+/* ---------- Vurdering og klartekst i nøkkeltallene ---------- */
+.rd-nt .verdi {{ display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }}
+.rd-vurd {{ font-style: normal; font-size: .6875rem; font-weight: 600; letter-spacing: .02em; line-height: 1;
+  padding: 3px 7px; border-radius: 980px; }}
+.rd-vurd.sterk {{ color: var(--up); background: var(--up-bg); }}
+.rd-vurd.middels {{ color: var(--ink-2); background: var(--fill-2); }}
+.rd-vurd.svak {{ color: var(--warn); background: var(--warn-bg); }}
+.rd-klartekst {{ margin: 0 0 6px !important; color: var(--ink); font-size: .9375rem !important; font-weight: 500;
+  line-height: 1.45 !important; letter-spacing: -0.008em; }}
+.rd-regel {{ margin: 0 0 10px !important; color: var(--muted); font-size: .8125rem !important; }}
+
+/* ---------- Minisøyler og kronebeløp i hovedtallene ---------- */
+.rd-ikr {{ margin-top: 4px; color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }}
+.rd-mini {{ display: flex; align-items: flex-end; gap: 6px; height: 46px; margin-top: 14px; }}
+.rd-mini span {{ flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;
+  align-items: stretch; gap: 3px; }}
+.rd-mini i {{ display: block; border-radius: 4px 4px 2px 2px; background: color-mix(in srgb, var(--accent) 28%, transparent);
+  min-height: 2px; }}
+.rd-mini span.valgt i {{ background: var(--accent); }}
+.rd-mini span.neg i {{ background: color-mix(in srgb, var(--down) 35%, transparent); }}
+.rd-mini span.neg.valgt i {{ background: var(--down); }}
+.rd-mini span.tom i {{ background: var(--line); }}
+.rd-mini b {{ font-size: .625rem; font-weight: 500; color: var(--muted); text-align: center; line-height: 1;
+  font-variant-numeric: tabular-nums; }}
+.rd-mini span.valgt b {{ color: var(--ink); font-weight: 600; }}
+
 /* ---------- Bunntekst ---------- */
 .rd-bunn {{ margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted);
   font-size: .75rem; line-height: 1.5; }}
@@ -508,8 +534,8 @@ def ikon_css() -> str:
 def topp() -> str:
     return ('<div class="rd-brand"><img src="app/static/favicon.png" alt="">Regnskap</div>'
             '<h1 class="rd-h1">Regnskapsdashboard</h1>'
-            '<p class="rd-lede">Søk opp et selskap på Oslo Børs, eller skriv inn et hvilket som helst org.nr, og se nøkkeltallene fra siste årsregnskap. '
-            'Data rett fra Brønnøysundregistrene.</p>')
+            '<p class="rd-lede">Søk opp et hvilket som helst norsk selskap og se hvordan det går: inntekter, overskudd, gjeld og '
+            'nøkkeltall fra årsregnskapet, forklart i vanlig språk. Data rett fra Brønnøysundregistrene.</p>')
 
 
 def seksjon(tittel: str, undertekst: Optional[str] = None) -> str:
@@ -558,7 +584,10 @@ def fakta(par: Iterable[Tuple[str, Optional[str], bool]]) -> str:
 
 
 def kpi(etikett: str, tall: str, enhet: str, delta: Optional[Tuple[float, str]], tittel: str,
-        info_html: str = "") -> str:
+        info_html: str = "", trend: Optional[List[Tuple[str, Optional[float], bool]]] = None,
+        i_kroner: Optional[str] = None) -> str:
+    """Hovedtallkort. ``trend`` er (år, verdi, valgt) eldst først – tegnes som små søyler.
+    ``i_kroner`` er beløpet omregnet til NOK for selskaper som rapporterer i annen valuta."""
     if tall == "mangler":
         big = '<div class="big" style="color:var(--muted);font-size:1.25rem;font-style:italic">mangler</div>'
     else:
@@ -572,21 +601,46 @@ def kpi(etikett: str, tall: str, enhet: str, delta: Optional[Tuple[float, str]],
     else:
         d = '<div class="delta">&nbsp;</div>'
     big = big.replace('<div class="big"', f'<div class="big" title="{e(tittel)}"', 1)
-    return f'<div class="rd-kpi"><div class="lbl"><span>{e(etikett)}</span>{info_html}</div>{big}{d}</div>'
+    kr = f'<div class="rd-ikr">≈ {e(i_kroner)}</div>' if i_kroner else ""
+    return (f'<div class="rd-kpi"><div class="lbl"><span>{e(etikett)}</span>{info_html}</div>{big}{kr}{d}'
+            f'{minisoyler(trend) if trend else ""}</div>')
+
+
+def minisoyler(trend: List[Tuple[str, Optional[float], bool]]) -> str:
+    """Små søyler for utviklingen over årene (CSS, ikke SVG – st.html fjerner SVG).
+    Negative verdier tegnes røde. Valgt år er uthevet."""
+    verdier = [abs(v) for _, v, _ in trend if v is not None]
+    if len(verdier) < 2:
+        return ""
+    storst = max(verdier) or 1
+    soyler = []
+    for aar, v, valgt in trend:
+        if v is None:
+            soyler.append(f'<span class="tom" title="{e(aar)}: mangler"><i style="height:2px"></i><b>{e(aar)}</b></span>')
+            continue
+        h = max(3.0, abs(v) / storst * 30)          # px; søylene er maks 30 px høye
+        klasse = " ".join(k for k in ("valgt" if valgt else "", "neg" if v < 0 else "") if k)
+        soyler.append(f'<span class="{klasse}" title="{e(aar)}"><i style="height:{h:.0f}px"></i><b>{e(aar)}</b></span>')
+    return f'<div class="rd-mini" aria-hidden="true">{"".join(soyler)}</div>'
 
 
 def nokkeltall_rad(navn: str, verdi: str, forrige: Optional[str], formel: str,
                    forklaring: str, inndata: List[Tuple[str, str]], merknad: Optional[str],
-                   enhet: str = "") -> str:
+                   enhet: str = "", klartekst: Optional[str] = None,
+                   vurdering: Optional[Tuple[str, str, str]] = None) -> str:
+    """``vurdering`` er (nivå, etikett, tommelfingerregel), f.eks. («sterk», «Sterk», «… »)."""
     mangler = verdi in ("mangler", "ikke meningsfull")
     f = f'<span class="forrige">{e(forrige)}</span>' if forrige else ""
     inn = "".join(f"<dt>{e(a)}</dt><dd>{e(b)}</dd>" for a, b in inndata)
     m = f'<p class="rd-merknad">{e(merknad)}</p>' if merknad else ""
+    vurd = (f'<em class="rd-vurd {e(vurdering[0])}">{e(vurdering[1])}</em>' if vurdering and not mangler else "")
+    kt = f'<p class="rd-klartekst">{e(klartekst)}</p>' if klartekst else ""
+    regel = f'<p class="rd-regel">{e(vurdering[2])}</p>' if vurdering and not mangler else ""
     return (f'<details class="rd-nt"><summary>'
             f'<span class="navn">{e(navn)}{f}</span>'
-            f'<span class="verdi{" mangler" if mangler else ""}">{e(verdi)}'
-            f'{f"<small>{e(enhet)}</small>" if enhet and not mangler else ""}</span>'
-            f'</summary><div class="innhold"><span class="rd-formel">{e(formel)}</span>'
+            f'<span class="verdi{" mangler" if mangler else ""}"><span>{e(verdi)}'
+            f'{f"<small>{e(enhet)}</small>" if enhet and not mangler else ""}</span>{vurd}</span>'
+            f'</summary><div class="innhold">{kt}{regel}<span class="rd-formel">{e(formel)}</span>'
             f'<div>{e(forklaring)}</div><dl class="rd-inndata">{inn}</dl>{m}</div></details>')
 
 

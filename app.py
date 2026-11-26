@@ -26,6 +26,8 @@ import stil
 from beregninger import (ALTMAN_FARE, ALTMAN_TRYGG, altman_z, balansedrivere, balansekontroll, beregn_nokkeltall,
                          er_eierselskap, finans_er_netto, resultatbro, resultatdrivere, samlet_status,
                          sammenligningstyper, sterkest)
+import tolkning
+import valuta as valutamodul
 from sammendrag import lag_sammendrag
 from excel_eksport import POSTER, lag_excel
 
@@ -109,6 +111,16 @@ def hent_regnskap(orgnr: str) -> List[Dict[str, Any]]:
 @st.cache_data(ttl=3600, show_spinner=False)
 def hent_roller(orgnr: str) -> Dict[str, Any]:
     return api.hent_roller(orgnr)
+
+
+@st.cache_data(ttl=24 * 3600, show_spinner=False)
+def hent_kurser(valuta: str) -> Dict[int, float]:
+    return valutamodul.hent_kurser(valuta)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def sok_navn(tekst: str) -> List[Dict[str, Any]]:
+    return api.sok_navn(tekst)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -234,27 +246,35 @@ def vis_balansedetaljer(r: Dict[str, Any], kontroller: list, status: str) -> Non
         st.dataframe(df, hide_index=True, width="stretch")
 
 
-def vis_hovedtall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]]) -> None:
-    under = f"Beløp i {r['valuta']}" + (f" · endring fra {forrige['aar']}" if forrige else "")
-    st.html(stil.seksjon("Hovedtall", under))
+def vis_hovedtall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], regnskaper: List[Dict[str, Any]]) -> None:
     t, valuta = r["tall"], r["valuta"]
+    kurser = hent_kurser(valuta) if valuta != "NOK" else {}
+    kurs = kurser.get(r["aar"])
+    under = f"Beløp i {valuta}" + (f" · endring fra {forrige['aar']}" if forrige else "")
+    if kurs:
+        under += f" · ≈ i kroner med snittkursen for {r['aar']} ({fmt.ganger(kurs)} kr per {valuta}, Norges Bank)"
+    st.html(stil.seksjon("Hovedtall", under))
     felt = [("Driftsinntekter", "sum_driftsinntekter"), ("Driftsresultat", "driftsresultat"),
             ("Årsresultat", "aarsresultat"), ("Sum eiendeler", "sum_eiendeler"),
             ("Egenkapital", "egenkapital")]
+    aarene = sorted((x for x in regnskaper if x["valuta"] == valuta), key=lambda x: x["aar"])
     kort = []
     for navn, nokkel in felt:
         tall, enhet = delt_belop(t.get(nokkel), valuta)
         pst = endring(t.get(nokkel), forrige["tall"].get(nokkel)) if forrige else None
         delta = (pst, str(forrige["aar"])) if pst is not None else None
+        trend = [(str(x["aar"]), x["tall"].get(nokkel), x["aar"] == r["aar"]) for x in aarene]
+        i_kr = valutamodul.til_nok(t.get(nokkel), r["aar"], kurser)
         kort.append(stil.kpi(navn, tall, enhet, delta, f"Nøyaktig: {fmt.belop(t.get(nokkel), valuta, kort=False)}",
-                             forklar(nokkel)))
+                             forklar(nokkel), trend, fmt.belop(i_kr, "kr") if i_kr is not None else None))
     st.html(f'<div class="rd-kpier">{"".join(kort)}</div>')
 
 
 def vis_oversikt(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eierselskap_alene: bool,
                  balanse_avvik: bool) -> None:
     """«Kort fortalt» (sammendrag i klartekst) og konkursrisiko side om side."""
-    sam = lag_sammendrag(r, forrige, eierselskap_alene, balanse_avvik)
+    kurs = hent_kurser(r["valuta"]).get(r["aar"]) if r["valuta"] != "NOK" else None
+    sam = lag_sammendrag(r, forrige, eierselskap_alene, balanse_avvik, kurs)
     venstre = stil.sammendrag(sam.overskrift, [(p.tekst, p.tone) for p in sam.punkter], forklar("sammendrag"))
 
     az = altman_z(r["tall"])
@@ -273,7 +293,9 @@ def vis_oversikt(r: Dict[str, Any], forrige: Optional[Dict[str, Any]], eierselsk
 
 
 def vis_nokkeltall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]]) -> None:
-    st.html(stil.seksjon("Nøkkeltall", "Trykk på et nøkkeltall for å se formelen og tallene bak."))
+    st.html(stil.seksjon("Nøkkeltall", "Trykk på et nøkkeltall for å se hva det betyr, formelen og tallene bak. "
+                                       "Sterk / Middels / Svak er tommelfingerregler – normalt nivå varierer mellom "
+                                       "bransjer."))
     t, valuta = r["tall"], r["valuta"]
     na = beregn_nokkeltall(t)
     for_ = {n.kode: n for n in beregn_nokkeltall(forrige["tall"])} if forrige else {}
@@ -291,8 +313,11 @@ def vis_nokkeltall(r: Dict[str, Any], forrige: Optional[Dict[str, Any]]) -> None
             enhet = ""
             if n.enhet == "belop" and n.verdi is not None:
                 verdi, enhet = delt_belop(n.verdi, valuta)
+            v = tolkning.vurder(n.kode, n.verdi)
+            vurdering = (v.niva, tolkning.NIVA_TEKST[v.niva], v.regel) if v else None
             rader.append(stil.nokkeltall_rad(n.navn, verdi, forrige_tekst, n.formel, n.forklaring,
-                                             inndata, n.merknad, enhet))
+                                             inndata, n.merknad, enhet, tolkning.klartekst(n.kode, n.verdi, valuta),
+                                             vurdering))
         nokkel = gruppenavn.lower().replace("ø", "o")
         grupper.append(stil.gruppe(gruppenavn, rader, forklar(nokkel)))
     st.html(f'<div class="rd-grupper">{"".join(grupper)}</div>')
@@ -611,7 +636,7 @@ def vis_sammenligning(enhet_a: Dict[str, Any], raa_a: List[Dict[str, Any]], valg
         st.html(stil.tittelrad("Sammenlign med et annet selskap",
                                "Søk på navn, ticker eller org.nr. Samme regnskapsår og regnskapstype brukes når "
                                "det finnes.", forklar("sammenlign"), luft_under=True))
-        tekst = sokefelt("mot_inn", "mot", "Sammenlign med … (navn, ticker eller org.nr)")
+        tekst = sokefelt("mot_inn", "mot", "Sammenlign med … (selskapsnavn, ticker eller org.nr)")
         if not tekst:
             if "mot" in st.query_params:
                 del st.query_params["mot"]
@@ -767,6 +792,18 @@ def velg_eksempel(orgnr: str) -> None:
 _sok_komponent = components.declare_component("sokefelt", path=str(MAPPE / "komponenter" / "sok"))
 
 
+def navneetikett(orgnr: str) -> str:
+    """«Rema 1000 Norge AS · 982254604» for et org.nr fra en lenke, så feltet viser navnet.
+    Faller tilbake til org.nr hvis oppslaget feiler."""
+    if not re.fullmatch(r"\d{9}", orgnr or ""):
+        return orgnr
+    try:
+        navn = api.tolk_enhet(hent_enhet(orgnr)).get("navn")
+    except api.BrregFeil:
+        return orgnr
+    return f"{stil.pent_navn(navn)} · {orgnr}" if navn else orgnr
+
+
 def sokefelt(nokkel: str, query: str, plassholder: str) -> Optional[str]:
     """Søkefelt med Oslo Børs-selskapene som forslag. Godtar også et hvilket som helst org.nr.
 
@@ -774,7 +811,7 @@ def sokefelt(nokkel: str, query: str, plassholder: str) -> Optional[str]:
     teksten som skal tolkes som org.nr, eller None (og viser da selv en melding hvis det trengs)."""
     if nokkel not in st.session_state:
         q = st.query_params.get(query, "")
-        st.session_state[nokkel] = (borsliste.etikett_for_orgnr(q) or q) or None
+        st.session_state[nokkel] = (borsliste.etikett_for_orgnr(q) or navneetikett(q)) or None
     # Komponenten husker siste svar (i session_state under sin key); et nytt løpenummer betyr at brukeren
     # har valgt noe nytt. Leses FØR komponenten tegnes, så den får den nye verdien og ikke den gamle.
     svar = st.session_state.get(f"komp-{nokkel}")
@@ -801,8 +838,24 @@ def sokefelt(nokkel: str, query: str, plassholder: str) -> Optional[str]:
                 st.button(borsliste.visningsnavn(s), key=f"eks-{nokkel}-{s['isin']}", on_click=sett_sok,
                           args=(nokkel, borsliste.etikett(s)), help=", ".join(s["tickere"]))
     elif art == "ukjent":
-        st.warning(f"Fant ikke «{tekst}» blant selskapene på Oslo Børs. Andre selskaper kan du søke opp "
-                   "med org.nr (9 siffer).", icon=":material/search_off:")
+        try:
+            treff = sok_navn(tekst)
+        except api.BrregFeil as feil:
+            st.error(str(feil), icon=":material/cloud_off:")
+            return None
+        if not treff:
+            st.warning(f"Fant ikke noe selskap som heter «{tekst}». Sjekk stavingen, eller søk med org.nr "
+                       "(9 siffer).", icon=":material/search_off:")
+            return None
+        st.html('<p class="rd-forslag-tittel">Selskaper i Enhetsregisteret som passer</p>')
+        with st.container(horizontal=True, gap="small", key=f"flere-{nokkel}"):
+            for s in treff:
+                navn = stil.pent_navn(s["navn"])
+                hjelp = " · ".join(x for x in (s["form"], s["kommune"],
+                                               f"{s['ansatte']} ansatte" if s["ansatte"] else "",
+                                               f"org.nr {s['orgnr']}") if x)
+                st.button(navn, key=f"eks-{nokkel}-{s['orgnr']}", on_click=sett_sok,
+                          args=(nokkel, f"{navn} · {s['orgnr']}"), help=hjelp)
     return None
 
 
@@ -815,7 +868,7 @@ def main() -> None:
     st.html(stil.topp())
 
     with st.container(key="sok"):
-        tekst = sokefelt("sok_inn", "orgnr", "Søk på selskap på Oslo Børs, ticker eller org.nr")
+        tekst = sokefelt("sok_inn", "orgnr", "Søk på selskapsnavn, ticker eller org.nr")
 
     if not st.session_state.get("sok_inn"):
         for q in ("orgnr", "mot"):                 # søket er tømt: fjern det fra lenken også
@@ -938,7 +991,7 @@ def main() -> None:
 
     with fane_oversikt:
         vis_oversikt(siste, forrige, eierselskap_alene, status == "avvik")
-        vis_hovedtall(siste, forrige)
+        vis_hovedtall(siste, forrige, regnskaper)
         vis_endringer(siste, forrige, hendelser)
 
     with fane_nt:

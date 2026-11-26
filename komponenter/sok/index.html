@@ -133,7 +133,7 @@
       `<li role="option" data-i="${i}" class="${i === aktiv ? "aktiv" : ""}">` +
       `<span class="navn">${uthev(f.n, q)}</span><span class="info">${f.t ? f.t.replace(/[<&]/g, "") + " · " : ""}${f.o || ""}${f.m ? (f.o ? " · " : "") + f.m : ""}</span></li>`).join("");
     if (!treff.length) {
-      html = `<li class="hint">${tall ? "Trykk Enter for å slå opp org.nr" : "Ingen børsnoterte selskaper passer. Søk med org.nr (9 siffer) for andre selskaper."}</li>`;
+      html = `<li class="hint">${tall ? "Trykk Enter for å slå opp org.nr" : "Trykk Enter for å søke blant alle selskaper i Norge"}</li>`;
     }
     liste.innerHTML = html;
     apen = true; liste.classList.add("vis"); inn.setAttribute("aria-expanded", "true");

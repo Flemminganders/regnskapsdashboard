@@ -17,6 +17,13 @@ alt er vanlig Python som regner på åpne data.
   på hvorfor de ikke har årsregnskap i Regnskapsregisteret.
 - **Selskapskort** – navn, org.nr, organisasjonsform, næring, adresse, ansatte,
   stiftelsesdato, aksjekapital, hjemmeside og varsel ved konkurs/avvikling.
+- **Søk på alle norske selskaper** – finnes ikke navnet blant børsselskapene, søkes det i Enhetsregisteret
+  (bare selskapsformer som leverer årsregnskap: AS, ASA, SA osv.). Treffene vises som knapper.
+- **Nøkkeltall i vanlig språk** (`tolkning.py`) – hvert nøkkeltall får en vurdering (Sterk / Middels / Svak etter en
+  tommelfingerregel) og én setning i kroner, f.eks. «Av hver 100 kr i inntekter satt selskapet igjen med 8,2 kr».
+- **Beløp i kroner** (`valuta.py`) – for selskaper som rapporterer i USD, EUR o.l. vises hovedtallene også omtrent i
+  NOK, omregnet med Norges Banks årlige snittkurs (åpent API). Feiler kurs-oppslaget, vises bare originalvalutaen.
+- **Minisøyler** i hovedtallkortene viser utviklingen over årene (valgt år uthevet, underskudd rødt).
 - **Faner** – Oversikt · Nøkkeltall · Grafer · Utvikling · Sammenlign · Detaljer, i stedet for én lang side.
   En sammenligningslenke (`?mot=`) åpner rett på Sammenlign.
 - **Kort fortalt** – et sammendrag i klartekst øverst i Oversikt (`sammendrag.py`): en overskrift («Lønnsomt og
@@ -109,6 +116,8 @@ regnskapsdashboard/
 ├── verktoy/            # oppdater_oslo_bors.py: henter Euronext-lista og slår opp org.nr
 ├── beregninger.py      # Nøkkeltall, Altman Z'', balansekontroll, resultatbro, resultatdrivere (rene funksjoner)
 ├── sammendrag.py       # «Kort fortalt»: regelbasert sammendrag i klartekst
+├── tolkning.py         # Vurdering (sterk/middels/svak) og klartekst per nøkkeltall
+├── valuta.py           # Norges Banks valutakurser og omregning til NOK
 ├── excel_eksport.py    # Lager Excel-fila med formler
 ├── formatering.py      # Norsk tallformat og «mangler»
 ├── forklaringer.py     # Enkle forklaringer (i-knapper og ordliste)
